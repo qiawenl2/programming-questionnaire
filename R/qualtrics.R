@@ -7,12 +7,28 @@ registerOptions(api_token = creds$api_token, root_url = creds$root_url)
 
 get_responses <- function(survey_name, ...) {
   survey_id <- get_survey_id_from_name(survey_name)
-
+  
   # Get raw responses in wide format (one column per subquestion)
   data_dir <- "data"
   if (!dir.exists(data_dir)) dir.create(data_dir)
   results <- getSurvey(survey_id, save_dir = data_dir, ...)
+  
+  as_data_frame(results)
+}
 
+get_programming_languages <- function(responses) {
+  languages <- responses %>%
+    select(subj_id = ResponseID, contains("Q13")) %>%
+    gather(question_label, language, -subj_id)
+  
+  languages$language_ix <- as.integer(str_match(languages$question_label, "Q13_([[:digit:]])_TEXT")[,2])
+  
+  languages %>%
+    arrange(subj_id, language_ix) %>%
+    select(subj_id, language_ix, language)
+}
+
+get_question_labels <- function(results) {
   # Extract subquestion info from column attributes
   subquestion_labels <- lapply(results, attributes) %>%
     map(extract_subquestion_label)
@@ -20,7 +36,15 @@ get_responses <- function(survey_name, ...) {
     subq_id = names(subquestion_labels),
     subq_label = unlist(subquestion_labels)
   )
+  subquestions
+}
 
+extract_subquestion_label <- function(question_attributes) {
+  if (!("label" %in% names(question_attributes))) return("")
+  question_attributes$label[[1]]
+}
+
+function() {
   # Melt the wide results to long format
   # Ignore warning about unequal attributes
   suppressWarnings({
@@ -53,10 +77,7 @@ get_responses <- function(survey_name, ...) {
   tidied
 }
 
-extract_subquestion_label <- function(question_attributes) {
-  if (!("label" %in% names(question_attributes))) return("")
-  question_attributes$label[[1]]
-}
+
 
 list_recent_surveys <- function(n = 10) {
   getSurveys() %>%
@@ -70,6 +91,3 @@ get_survey_id_from_name <- function(survey_name) {
     .$id %>%
     as.character()
 }
-
-responses <- get_responses("programming questionnaire")
-write.csv(responses, "data/programming-questionnaire.csv", row.names=FALSE)
