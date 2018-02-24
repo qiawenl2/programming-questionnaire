@@ -17,6 +17,11 @@ cp qualtrics.yml.template qualtrics.yml
 # edit qualtrics.yml to replace YOUR_API_TOKEN_HERE with your Qualtrics API token.
 ```
 
+## Required packages
+
+- qualtRics
+- RSQLite
+
 ## Downloading the data
 
 Note: The R package "qualtRics" is required for downloading the data.
@@ -43,12 +48,29 @@ responses
 languages
 : Programming languages represented in the the sample.
 
-demographics
-: Demographic questions about each participant
-
 ## Create all tables
+
+Note: The R package "RSQLite" is required for storing the data in a SQLite DB.
 
 ```bash
 Rscript make-sqlite.R  # creates programming-questionnaire.sqlite with all tables above
 ```
 
+## Reading tables from the SQLite DB
+
+The logic for reading a table in from the SQLite DB is simple.
+
+```R
+library(dplyr)
+table_name <- "responses"
+con <- DBI::dbConnect(RSQLite::SQLite(), db_name)
+responses <- tbl(con, table_name) %>%
+  collect()
+```
+
+SQLite helper functions are stored in "R/sqlite.R".
+
+```
+source("R/sqlite.R")
+responses <- collect_table("responses")  # expected "programming-questionnaire.sqlite"
+```
