@@ -1,8 +1,8 @@
 library(WikidataR)
 
 
-get_language_info <- function(language_names) {
-  language_names %>%
+get_language_info <- function(languages) {
+  unique(languages$response_str) %>%
     map(get_programming_paradigms) %>%
     bind_rows() %>%
     as_data_frame()

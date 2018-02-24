@@ -28,3 +28,42 @@ ggplot(filter(frequencies, rank <= 20)) +
   xlab("") +
   coord_flip()
 ```
+
+# Intuitiveness
+
+```{r intuitiveness}
+source("R/question-types.R")
+
+intuitiveness <- collect_table("language_ratings") %>%
+  filter(question_name == "intuitiveness") %>%
+  select(subj_id, language_name, question_tag, response_str) %>%
+  drop_na() %>%
+  recode_agreement() %>%
+  group_by(language_name, question_tag) %>%
+  summarize(
+    n = n(),
+    agreement_num = mean(agreement_num)
+  ) %>%
+  ungroup()
+
+top20_languages <- frequencies[frequencies$rank <= 20, ]$response_str
+top20_intuitive <- filter(intuitiveness, language_name %in% top20_languages)
+
+intuitive_for_all <- top20_intuitive %>%
+  filter(question_tag == "forAll") %>%
+  arrange(agreement_num) %>%
+  .$language_name
+
+top20_intuitive$language_ordered <- factor(top20_intuitive$language_name, levels = intuitive_for_all)
+
+ggplot(top20_intuitive) +
+  aes(language_ordered, agreement_num) +
+  geom_point() +
+  coord_flip(ylim = 1:5) +
+  scale_y_continuous("Agreement", breaks = 1:5, labels = rev(recode_agreement()$agreement_label)) +
+  facet_wrap("question_tag") +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1)
+  ) +
+  ylab("")
+```
