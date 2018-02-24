@@ -21,6 +21,7 @@ cp qualtrics.yml.template qualtrics.yml
 
 - qualtRics
 - RSQLite
+- WikidataR
 
 ## Downloading the data
 
@@ -47,6 +48,9 @@ responses
 
 languages
 : Programming languages represented in the the sample.
+
+language_info
+: Information about programming languages taken from Wikipedia.
 
 ## Create all tables
 

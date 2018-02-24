@@ -8,6 +8,7 @@ qualtrics <- get_qualtrics_responses("programming questionnaire")
 questions <- get_qualtrics_questions("programming questionnaire")
 responses <- tidy_qualtrics(qualtrics)
 languages <- get_languages(responses)
+language_info <- get_language_info(languages$response_str)
 
 # demographics not working because of duplicate question name isNative.
 # The duplication has been fixed, but Qualtrics DBs need to refresh.
@@ -20,5 +21,6 @@ write_tables_to_sqlite(db_name,
                        questions = questions,
                        responses = responses,
                        languages = languages,
+                       language_info = language_info,
                        # demographics = demographics,
                        overwrite = TRUE)
