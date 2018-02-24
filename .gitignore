@@ -1,7 +1,11 @@
+# contains secrets
+qualtrics.yml
+
+# reproducible
+data-raw/*.rds
+*.sqlite
+
 .Rproj.user
 .Rhistory
 .RData
 .Ruserdata
-data/*.rds
-data/*.csv
-qualtrics.yml
