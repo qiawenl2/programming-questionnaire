@@ -19,5 +19,6 @@ write_tables_to_sqlite(db_name,
                        qualtrics = responses,
                        questions = questions,
                        responses = responses,
+                       languages = languages,
                        # demographics = demographics,
                        overwrite = TRUE)

@@ -12,6 +12,8 @@ get_languages <- function(responses) {
   responses %>%
     filter(question_label %in% language_questions) %>%
     left_join(question_label_map) %>%
+    mutate(response_str = str_to_lower(response_str)) %>%
     select(subj_id, language_ix, response_str) %>%
+    drop_na() %>%
     arrange(subj_id, language_ix)
 }

@@ -97,12 +97,3 @@ write_tables_to_sqlite <- function(sqlite_db, ..., overwrite = FALSE) {
   DBI::dbDisconnect(con)
 }
 
-
-# List the tables in a SQLite DB.
-list_tables <- function(sqlite_db) {
-  con <- DBI::dbConnect(RSQLite::SQLite(), sqlite_db)
-  table_names <- DBI::dbListTables(con)
-  DBI::dbDisconnect(con)
-  table_names
-}
-
