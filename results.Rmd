@@ -5,6 +5,7 @@ title: Programming questionnaire
 library(tidyverse)
 
 source("R/qualtrics.R")
-responses <- get_wide_responses("programming questionnaire", force_request = TRUE)
+responses <- get_responses("programming questionnaire")
+get_question_labels(responses)
 languages <- get_programming_languages(responses)
 ```
