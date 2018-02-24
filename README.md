@@ -50,15 +50,17 @@ languages
 
 ## Create all tables
 
+To create all tables and store them in the SQLite DB, run the "make-sqlite.R" script.
+
 Note: The R package "RSQLite" is required for storing the data in a SQLite DB.
 
 ```bash
-Rscript make-sqlite.R  # creates programming-questionnaire.sqlite with all tables above
+./make-sqlite.R  # creates programming-questionnaire.sqlite with all tables
 ```
 
 ## Reading tables from the SQLite DB
 
-The logic for reading a table in from the SQLite DB is simple.
+The logic for reading a table in from a SQLite DB is simple.
 
 ```R
 library(dplyr)
@@ -72,5 +74,5 @@ SQLite helper functions are stored in "R/sqlite.R".
 
 ```
 source("R/sqlite.R")
-responses <- collect_table("responses")  # expected "programming-questionnaire.sqlite"
+responses <- collect_table("responses")  # expects "programming-questionnaire.sqlite"
 ```
