@@ -49,6 +49,9 @@ responses
 languages
 : Programming languages represented in the the sample.
 
+questionnaire
+: Responses to agreement questions and short responses in wide format.
+
 language_info
 : Information about programming languages taken from Wikipedia.
 
@@ -57,6 +60,7 @@ language_info
 To create all tables and store them in the SQLite DB, run the "make-sqlite.R" script.
 
 Note: The R package "RSQLite" is required for storing the data in a SQLite DB.
+Note: The R package "WikidataR" is required for downloading language info.
 
 ```bash
 ./make-sqlite.R  # creates programming-questionnaire.sqlite with all tables
@@ -64,17 +68,24 @@ Note: The R package "RSQLite" is required for storing the data in a SQLite DB.
 
 ## Reading tables from the SQLite DB
 
-The logic for reading a table in from a SQLite DB is simple.
+The logic for reading a table in from a SQLite DB file is simple in R and python.
 
 ```R
+# in R
 library(dplyr)
-table_name <- "responses"
-con <- DBI::dbConnect(RSQLite::SQLite(), db_name)
-responses <- tbl(con, table_name) %>%
-  collect()
+con <- DBI::dbConnect(RSQLite::SQLite(), "programming-questionnaire.sqlite")
+responses <- tbl(con, "responses") %>% collect()
 ```
 
-SQLite helper functions are stored in "R/sqlite.R".
+```python
+# in python
+import sqlite3
+import pandas
+con = sqlite3.connect("programming-questionnaire.sqlite")
+responses <- pandas.read_sql_query('select * from responses', con)
+```
+
+SQLite wrapper functions are stored in "R/sqlite.R".
 
 ```
 source("R/sqlite.R")

@@ -1,5 +1,5 @@
-
-recode_agreement <- function(frame, agree_high = TRUE, response_str_col = "response_str", replace = FALSE) {
+# Recode agreement from response text to agreement
+recode_agreement <- function(frame, response_str_col = "response_str", agree_high = TRUE, replace_with_num = FALSE) {
   levels <- c("Strongly disagree", "Somewhat disagree", "Neither agree nor disagree", "Somewhat agree", "Strongly agree")
   if(!agree_high) levels <- rev(levels)
   
@@ -13,10 +13,19 @@ recode_agreement <- function(frame, agree_high = TRUE, response_str_col = "respo
 
   result <- left_join(frame, agreement_map)
 
-  if(replace) {
+  if(replace_with_num) {
     result[response_str_col] <- result$agreement_num
     result <- select(result, -agreement_num, -agreement_label)
   }
 
   result
+}
+
+
+# Recode a bunch of agreement columns, replacing each with a number.
+recode_all_agreement <- function(frame, agreement_cols) {
+  for(response_str_col in agreement_cols) {
+    frame <- recode_agreement(frame, response_str_col, replace_with_num = TRUE)
+  }
+  frame
 }

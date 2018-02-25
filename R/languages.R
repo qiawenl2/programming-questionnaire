@@ -56,7 +56,9 @@ get_language_ratings <- function(responses) {
 
   ratings %>%
     left_join(language_names) %>%
-    select(subj_id, question_str, question_name, language_ix, language_name, question_tag, response_str)
+    select(subj_id, question_name, language_ix, language_name, question_tag, agreement_str = response_str) %>%
+    arrange(question_name, question_tag, subj_id, language_ix) %>%
+    recode_agreement("agreement_str")
 }
 
 

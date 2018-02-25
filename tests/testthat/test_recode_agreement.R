@@ -22,12 +22,12 @@ test_that("recode custom column", {
 
 test_that("replace response column", {
   result <- data_frame(response_str = labels) %>%
-    recode_agreement(replace = TRUE)
+    recode_agreement(replace_with_num = TRUE)
   expect_equal(result$response_str, 1:5)
 })
 
 test_that("replace custom response column", {
   result <- data_frame(custom_response_col = labels) %>%
-    recode_agreement(response_str_col = "custom_response_col", replace = TRUE)
+    recode_agreement(response_str_col = "custom_response_col", replace_with_num = TRUE)
   expect_equal(result$custom_response_col, 1:5)
 })

@@ -1,0 +1,16 @@
+---
+title: Beliefs about the effects of programming on thinking.
+---
+```{r config, include=FALSE}
+library(knitr)
+library(tidyverse)
+opts_chunk$set(echo=FALSE, dpi=200)
+```
+
+# Questions
+
+```{r question-map, echo=TRUE}
+source("R/sqlite.R")
+questionnaire <- collect_table("questionnaire")
+head(questionnaire)
+```

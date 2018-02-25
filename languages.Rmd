@@ -9,16 +9,17 @@ opts_chunk$set(echo=FALSE, dpi=200)
 
 # Top languages
 
-```{r top-languages}
+```{r top-languages, echo=1:2}
 source("R/sqlite.R")
 languages <- collect_table("languages")
+kable(head(languages))
 
 frequencies <- languages %>%
   count(response_str) %>%
   arrange(desc(n)) %>%
   mutate(rank = 1:n())
 
-# Set factor levels for ggplot
+# Set factor levels as order in plot
 levels <- rev(frequencies$response_str)
 frequencies$language_ordered <- factor(frequencies$response_str, levels = levels)
 
@@ -29,7 +30,14 @@ ggplot(filter(frequencies, rank <= 20)) +
   coord_flip()
 ```
 
-# Intuitiveness
+# Language ratings
+
+```{r, echo=1}
+language_ratings <- collect_table("language_ratings")
+kable(head(language_ratings))
+```
+
+## Intuitiveness
 
 ```{r intuitiveness}
 source("R/question-types.R")
