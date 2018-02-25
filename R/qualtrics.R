@@ -47,7 +47,7 @@ melt_responses <- function(responses, subj_id_col = "ResponseID") {
 
 # Label question name from Qualtrics question label.
 label_question_name <- function(melted) {
-  re_question_name <- "^([A-Za-z]+)\\.?"
+  re_question_name <- "^([A-Za-z\\d_]+)\\.?"
   question_names <- str_match(melted$question_str, re_question_name)[, 2]
   mutate(melted, question_name = question_names)
 }
