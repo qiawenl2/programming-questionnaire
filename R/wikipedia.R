@@ -1,6 +1,7 @@
 library(WikidataR)
 
 
+# Extract programming language metadata from Wikipedia
 get_language_info <- function(languages) {
   unique(languages$response_str) %>%
     map(get_programming_paradigms) %>%
@@ -9,51 +10,48 @@ get_language_info <- function(languages) {
 }
 
 
+# Get the Wikidata item for a programming language
+get_programming_language <- function(name) {
+  candidates <- find_item(name)
+  for(candidate in candidates) {
+    is_programming_language <- grepl("programming language", candidate$description, ignore.case = TRUE)
+    if(is_programming_language) {
+      return(get_item(candidate$id))
+    }
+  }
+  print(paste(name, "is not a programming language"))
+}
+
+
+# Get the programming paradigms associated with this language
 get_programming_paradigms <- function(name) {
   language_info <- data.frame()
   tryCatch({
-    programming_paradigm <- "P3966"
+    instance_of <- "P31"
     programming_language <- get_programming_language(name)
-    paradigms <- programming_language[[1]][["claims"]][[programming_paradigm]][["mainsnak"]][["datavalue"]][["value"]][["id"]] %>%
+    paradigms <- programming_language[[1]][["claims"]][[instance_of]][["mainsnak"]][["datavalue"]][["value"]][["id"]] %>%
       purrr::map(get_label_from_id) %>%
       unlist()
     language_info <- data_frame(
       language = name,
+      wikidata_id = programming_language[[1]]$id,
       paradigms = paradigms
     )
   }, error = function(e) {
-    print(paste0('Error getting paradigms for language: ', name))
+    print(paste0('Error getting paradigms for language \'', name, '\': ', e))
   })
   language_info
 }
 
 
-# Get the Wikidata item for a programming language.
-get_programming_language <- function(name) {
-  candidates <- find_item(name)
-  for (candidate in items) {
-    is_programming_language <- grepl("programming language", candidate$description)
-    if(is_programming_language) {
-      return(get_item(candidate$id))
-    }
-  }
-  stop(paste(name, "is not a programming language"))
-}
-
-
-get_label_from_id <- function(id) {
-  item <- get_item(id)
-  get_label(item)
-}
-
-
-get_label <- function(item) {
+# Extract the label of a Wikidata item
+get_wikidata_label <- function(item) {
   item[[1]]$labels$en$value
 }
 
 
-get_item_from_name <- function(name) {
-  id <- find_item(name)[[1]]$id
-  get_item(id)
+# Get the label for a Wikidata item from its id
+get_label_from_id <- function(id) {
+  item <- get_item(id)
+  get_wikidata_label(item)
 }
-

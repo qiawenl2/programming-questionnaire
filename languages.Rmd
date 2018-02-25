@@ -42,7 +42,7 @@ intuitiveness <- collect_table("language_ratings") %>%
   group_by(language_name, question_tag) %>%
   summarize(
     n = n(),
-    agreement_num = mean(agreement_num)
+    agreement_num = mean(agreement_num, na.rm = TRUE)
   ) %>%
   ungroup()
 
@@ -65,5 +65,5 @@ ggplot(top20_intuitive) +
   theme(
     axis.text.x = element_text(angle = 45, hjust = 1)
   ) +
-  ylab("")
+  xlab("")
 ```
