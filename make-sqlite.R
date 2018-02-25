@@ -3,6 +3,7 @@ source("R/qualtrics.R")
 source("R/languages.R")
 source("R/changed-reasoning.R")
 source("R/demographics.R")
+source("R/irq.R")
 source("R/wikipedia.R")
 
 
@@ -16,6 +17,7 @@ changed_reasoning <- get_changed_reasoning(responses)
 demographics <- get_demographics(responses)
 language_ratings <- get_language_ratings(responses)
 language_info <- get_language_info(languages)
+irq <- get_irq(responses)
 
 
 db_name = "programming-questionnaire.sqlite"
@@ -27,4 +29,6 @@ write_tables_to_sqlite(db_name,
                        demographics = demographics,
                        language_info = language_info,
                        language_ratings = language_ratings,
+                       changed_reasoning = changed_reasoning,
+                       irq = irq,
                        overwrite = TRUE)
