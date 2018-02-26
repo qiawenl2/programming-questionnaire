@@ -5,15 +5,17 @@ title: Programming languages
 library(knitr)
 library(tidyverse)
 library(magrittr)
-opts_chunk$set(echo=FALSE, dpi=200)
+opts_chunk$set(echo=FALSE, message=FALSE, dpi=200, fig.width=4, fig.height=4)
 ```
 
 # Top languages
 
-```{r top-languages, echo=1:2}
+```{r top-languages}
 source("R/sqlite.R")
+source("R/question-types.R")
+
 languages <- collect_table("languages")
-kable(head(languages))
+kable(head(languages), caption = "Sample rows of languages data.")
 
 # Create rank columns for ordering languages
 rank_by <- function(frame, values, rank_col_str = paste0(values, "_rank")) {
@@ -65,6 +67,20 @@ not_top20_language_summary <- language_summary %>%
 top20_language_summary <- language_summary %>%
   filter(language_name %in% top20_languages) %>%
   bind_rows(not_top20_language_summary)
+
+language_ratings <- collect_table("language_ratings")
+kable(head(language_ratings))
+
+language_ratings_summary <- collect_table("language_ratings") %>%
+  group_by(language_name, question_name, question_tag) %>%
+  summarize(
+    n = n(),
+    agreement_num = mean(agreement_num, na.rm = TRUE)
+  ) %>%
+  ungroup()
+
+top20_ratings_summary <- language_ratings_summary %>%
+  filter(language_name %in% top20_languages)
 ```
 
 ## Frequency
@@ -120,29 +136,17 @@ top20_language_summary %>%
   labs(x = "", y = "", title = "Rank correlations")
 ```
 
-# Language ratings
-
-```{r, echo=1}
-language_ratings <- collect_table("language_ratings")
-kable(head(language_ratings))
-
-source("R/question-types.R")
-
-language_ratings_summary <- collect_table("language_ratings") %>%
-  group_by(language_name, question_name, question_tag) %>%
-  summarize(
-    n = n(),
-    agreement_num = mean(agreement_num, na.rm = TRUE)
-  ) %>%
-  ungroup()
-
-top20_ratings_summary <- language_ratings_summary %>%
-  filter(language_name %in% top20_languages)
+```{r experience-proficiency-correlation}
+library(ggrepel)
+ggplot(top20_language_summary) +
+  aes(years_used, proficiency) +
+  geom_label_repel(aes(label = language_name)) +
+  ggtitle("Experience-proficiency correlation")
 ```
 
 ## Intuitiveness
 
-```{r intuitive}
+```{r intuitiveness}
 top20_intuitive <- filter(top20_ratings_summary, question_name == "intuitiveness")
 
 top20_intuitive_for_all_levels <- top20_intuitive %>%
@@ -150,6 +154,7 @@ top20_intuitive_for_all_levels <- top20_intuitive %>%
   rank_by("agreement_num") %>%
   order_language_by("agreement_num_rank", levels_only = TRUE)
 top20_intuitive %<>% order_language_by(use_levels = top20_intuitive_for_all_levels, reverse = TRUE)
+
 ggplot(top20_intuitive) +
   aes(language_ordered, agreement_num) +
   geom_point() +
@@ -180,6 +185,7 @@ top20_reuse_adaptive_levels <- top20_reuse %>%
   rank_by("agreement_num") %>%
   order_language_by("agreement_num_rank", levels_only = TRUE)
 top20_reuse %<>% order_language_by(use_levels = top20_reuse_adaptive_levels, reverse = TRUE)
+
 ggplot(top20_reuse) +
   aes(language_ordered, agreement_num) +
   geom_point() +
