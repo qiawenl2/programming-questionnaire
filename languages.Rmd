@@ -5,7 +5,7 @@ title: Programming languages
 library(knitr)
 library(tidyverse)
 library(magrittr)
-opts_chunk$set(echo=FALSE, message=FALSE, dpi=200, fig.width=4, fig.height=4)
+opts_chunk$set(echo=FALSE, message=FALSE, fig.width=3, fig.height=3)
 ```
 
 # Top languages
@@ -146,7 +146,7 @@ ggplot(top20_language_summary) +
 
 ## Intuitiveness
 
-```{r intuitiveness}
+```{r intuitiveness, fig.width=6}
 top20_intuitive <- filter(top20_ratings_summary, question_name == "intuitiveness")
 
 top20_intuitive_for_all_levels <- top20_intuitive %>%
@@ -166,7 +166,7 @@ ggplot(top20_intuitive) +
 
 ## Reuse
 
-```{r reuse}
+```{r reuse, fig.width=6}
 recode_reuse <- function(frame) {
   reuse_levels <- c("adapt",  "reuse", "adopt")
   reuse_map <- data_frame(
