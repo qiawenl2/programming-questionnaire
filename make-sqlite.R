@@ -8,7 +8,7 @@ source("R/wikipedia.R")
 
 
 # Load SQLite DB with programming questionnaire
-refresh <- TRUE
+refresh <- FALSE
 qualtrics <- get_qualtrics_responses("programming questionnaire", force_request = refresh)
 questions <- get_qualtrics_questions("programming questionnaire", force_request = refresh)
 

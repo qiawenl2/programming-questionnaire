@@ -9,8 +9,20 @@ opts_chunk$set(echo=FALSE, dpi=200)
 
 # Questions
 
-```{r question-map, echo=TRUE}
+```{r question-map}
 source("R/sqlite.R")
+questions <- collect_table("questions")
+question_names <- c("cr1", "cr1describe", "cr2describe", "cp1", "cp1describe",
+                    "repo1", "repo1describe", "rec1", "rec1describe",
+                    "cfo1", "cfo2", "cfo3", "oss1", "oss2", "env1", "env2",
+                    "inter1", "inter2", "inter3")
+questions %>%
+  filter(question_name %in% question_names) %>%
+  select(question_name, question_text) %>%
+  kable()
+```
+
+```{r questionnaire, echo=1}
 questionnaire <- collect_table("questionnaire")
-head(questionnaire)
+kable(head(questionnaire))
 ```
