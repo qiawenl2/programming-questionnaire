@@ -15,7 +15,8 @@ source("R/sqlite.R")
 source("R/question-types.R")
 
 languages <- collect_table("languages")
-kable(head(languages), caption = "Sample rows of languages data.")
+language_ratings <- collect_table("language_ratings")
+# kable(head(languages), caption = "Sample rows of languages data.")
 
 # Create rank columns for ordering languages
 rank_by <- function(frame, values, rank_col_str = paste0(values, "_rank")) {
@@ -68,10 +69,7 @@ top20_language_summary <- language_summary %>%
   filter(language_name %in% top20_languages) %>%
   bind_rows(not_top20_language_summary)
 
-language_ratings <- collect_table("language_ratings")
-kable(head(language_ratings))
-
-language_ratings_summary <- collect_table("language_ratings") %>%
+language_ratings_summary <- language_ratings %>%
   group_by(language_name, question_name, question_tag) %>%
   summarize(
     n = n(),
