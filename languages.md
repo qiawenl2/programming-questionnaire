@@ -14,9 +14,21 @@ languages <- collect_table("languages")
 | R\_02lGHY18refVcJj |            5 | haskell        |           47 |           4 |           3 |
 | R\_08jNDkIvkIto1tT |            1 | c              |           18 |           5 |           8 |
 
-![](languages_files/figure-gfm/top-languages-1.png)<!-- -->
+## Frequency
 
-![](languages_files/figure-gfm/most-experience-1.png)<!-- -->![](languages_files/figure-gfm/most-experience-2.png)<!-- -->
+![](languages_files/figure-gfm/frequency-1.png)<!-- -->
+
+## Experience
+
+![](languages_files/figure-gfm/experience-1.png)<!-- -->
+
+## Proficiency
+
+![](languages_files/figure-gfm/proficiency-1.png)<!-- -->
+
+## Rank correlations
+
+![](languages_files/figure-gfm/correlations-1.png)<!-- -->
 
 # Language ratings
 
@@ -35,4 +47,10 @@ language_ratings <- collect_table("language_ratings")
 
 ## Intuitiveness
 
-![](languages_files/figure-gfm/intuitiveness-1.png)<!-- -->
+![](languages_files/figure-gfm/intuitive-1.png)<!-- -->
+
+## Reuse
+
+    ## Joining, by = "question_tag"
+
+![](languages_files/figure-gfm/reuse-1.png)<!-- -->

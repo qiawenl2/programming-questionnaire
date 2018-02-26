@@ -22,10 +22,14 @@ rank_by <- function(frame, values, rank_col_str = paste0(values, "_rank")) {
 }
 
 # Order language by rank column
-order_language_by <- function(frame, rank_col, levels_only = FALSE, reverse = FALSE) {
-  levels <- frame %>%
-    arrange_(.dots = list(rank_col)) %>%
-    .$language_name
+order_language_by <- function(frame, rank_col, levels_only = FALSE, reverse = FALSE, use_levels = NULL) {
+  if(!is.null(use_levels)) {
+    levels <- use_levels
+  } else {
+    levels <- frame %>%
+      arrange_(.dots = list(rank_col)) %>%
+      .$language_name
+  }
   if(reverse) levels <- rev(levels)
   if(levels_only) return(levels)
   frame$language_ordered <- factor(frame$language_name, levels = levels)
@@ -63,6 +67,8 @@ top20_language_summary <- language_summary %>%
   bind_rows(not_top20_language_summary)
 ```
 
+## Frequency
+
 ```{r frequency}
 top20_language_summary %<>% order_language_by("frequency_rank", reverse = TRUE)
 ggplot(top20_language_summary) +
@@ -72,6 +78,8 @@ ggplot(top20_language_summary) +
   labs(x = "", y = "", title = "Frequency")
 ```
 
+## Experience
+
 ```{r experience}
 top20_language_summary %<>% order_language_by("years_used_rank", reverse = TRUE)
 ggplot(top20_language_summary) +
@@ -80,6 +88,8 @@ ggplot(top20_language_summary) +
   coord_flip() +
   labs(x = "", y = "average years used", title = "Experience")
 ```
+
+## Proficiency
 
 ```{r proficiency}
 top20_language_summary %<>% order_language_by("proficiency_rank", reverse = TRUE)
@@ -91,69 +101,90 @@ ggplot(top20_language_summary) +
   labs(x = "", title = "Proficiency")
 ```
 
+## Rank correlations
+
+```{r correlations}
+top20_language_summary %>%
+  rank_by("proficiency") %>%
+  rank_by("years_used") %>%
+  filter(language_name != "other") %>%
+  select(-c(frequency, proficiency, years_used, language_ordered)) %>%
+  gather(rank_var, rank, -language_name) %>%
+  ggplot() +
+  aes(rank_var, rank, group = language_name) +
+  geom_line() +
+  scale_y_reverse(breaks = 1:20, labels = top20_languages) +
+  theme(
+    panel.grid.minor.y = element_blank()
+  ) +
+  labs(x = "", y = "", title = "Rank correlations")
+```
+
 # Language ratings
 
 ```{r, echo=1}
 language_ratings <- collect_table("language_ratings")
 kable(head(language_ratings))
-```
 
-## Intuitiveness
-
-```{r intuitiveness}
 source("R/question-types.R")
 
-intuitiveness <- collect_table("language_ratings") %>%
-  filter(question_name == "intuitiveness") %>%
-  select(subj_id, language_name, question_tag, agreement_num) %>%
-  drop_na() %>%
-  group_by(language_name, question_tag) %>%
+language_ratings_summary <- collect_table("language_ratings") %>%
+  group_by(language_name, question_name, question_tag) %>%
   summarize(
     n = n(),
     agreement_num = mean(agreement_num, na.rm = TRUE)
   ) %>%
   ungroup()
 
-top20_intuitive <- filter(intuitiveness, language_name %in% top20_languages)
+top20_ratings_summary <- language_ratings_summary %>%
+  filter(language_name %in% top20_languages)
+```
 
-intuitive_for_all <- top20_intuitive %>%
+## Intuitiveness
+
+```{r intuitive}
+top20_intuitive <- filter(top20_ratings_summary, question_name == "intuitiveness")
+
+top20_intuitive_for_all_levels <- top20_intuitive %>%
   filter(question_tag == "forAll") %>%
-  arrange(agreement_num) %>%
-  .$language_name
-
-top20_intuitive$language_ordered <- factor(top20_intuitive$language_name, levels = intuitive_for_all)
-
+  rank_by("agreement_num") %>%
+  order_language_by("agreement_num_rank", levels_only = TRUE)
+top20_intuitive %<>% order_language_by(use_levels = top20_intuitive_for_all_levels, reverse = TRUE)
 ggplot(top20_intuitive) +
   aes(language_ordered, agreement_num) +
   geom_point() +
   coord_flip(ylim = 1:5) +
-  scale_y_continuous("Agreement", breaks = 1:5) +
+  scale_y_continuous(breaks = 1:5) +
   facet_wrap("question_tag") +
-  xlab("")
+  labs(x = "", y = "", title = "Intuitiveness") 
 ```
 
 ## Reuse
 
 ```{r reuse}
-reuse <- collect_table("language_ratings") %>%
-  filter(question_name == "reuse") %>%
-  select(subj_id, language_name, question_tag, agreement_num) %>%
-  drop_na() %>%
-  group_by(language_name, question_tag) %>%
-  summarize(
-    n = n(),
-    agreement_num = mean(agreement_num, na.rm = TRUE)
-  ) %>%
-  ungroup()
+recode_reuse <- function(frame) {
+  reuse_levels <- c("adapt",  "reuse", "adopt")
+  reuse_map <- data_frame(
+    question_tag = reuse_levels,
+    reuse_label = factor(reuse_levels, levels = reuse_levels)
+  )
+  if(missing(frame)) return(reuse_map)
+  left_join(frame, reuse_map)
+}
 
-top20_reuse <- filter(reuse, language_name %in% top20_languages)
+top20_reuse <- filter(top20_ratings_summary, question_name == "reuse") %>%
+  recode_reuse()
 
-
-
+top20_reuse_adaptive_levels <- top20_reuse %>%
+  filter(question_tag == "adapt") %>%
+  rank_by("agreement_num") %>%
+  order_language_by("agreement_num_rank", levels_only = TRUE)
+top20_reuse %<>% order_language_by(use_levels = top20_reuse_adaptive_levels, reverse = TRUE)
 ggplot(top20_reuse) +
-  aes(language_name, agreement_num) +
+  aes(language_ordered, agreement_num) +
   geom_point() +
   coord_flip(ylim = 1:5) +
-  scale_y_continuous("Agreement", breaks = 1:5) +
-  facet_wrap("question_tag")
+  scale_y_continuous(breaks = 1:5) +
+  facet_wrap("reuse_label") +
+  labs(x = "", y = "", title = "Reuse")
 ```
