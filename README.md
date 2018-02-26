@@ -1,13 +1,20 @@
-# Reproducing
+# Programming questionnaire
 
-## Getting the scripts
+## Reports
+
+- [Languages](languages.md)
+- [Questionnaire](questionnaire.md)
+
+## Reproducing
+
+### Getting the scripts
 
 ```bash
 git clone https://github.com/lupyanlab/programming-questionnaire.git
 cd programming-questionnaire/
 ```
 
-## Authenticating
+### Authenticating
 
 Replace the template yaml file with the expected file, "qualtrics.yml",
 and update it with your authentication credentials.
@@ -17,13 +24,13 @@ cp qualtrics.yml.template qualtrics.yml
 # edit qualtrics.yml to replace YOUR_API_TOKEN_HERE with your Qualtrics API token.
 ```
 
-## Required packages
+### Required packages
 
 - qualtRics
 - RSQLite
 - WikidataR
 
-## Downloading the data
+### Downloading the data
 
 Note: The R package "qualtRics" is required for downloading the data.
 
@@ -33,9 +40,9 @@ qualtrics <- get_qualtrics_responses("programming questionnaire")
 questions <- get_qualtrics_questions("programming questionnaire")
 ```
 
-# Data
+## Data
 
-## Tables
+### Tables
 
 qualtrics
 : Raw responses in wide format as if downloaded directly from Qualtrics.
@@ -55,7 +62,7 @@ questionnaire
 language_info
 : Information about programming languages taken from Wikipedia.
 
-## Create all tables
+### Create all tables
 
 To create all tables and store them in the SQLite DB, run the "make-sqlite.R" script.
 
@@ -66,7 +73,7 @@ Note: The R package "WikidataR" is required for downloading language info.
 ./make-sqlite.R  # creates programming-questionnaire.sqlite with all tables
 ```
 
-## Reading tables from the SQLite DB
+### Reading tables from the SQLite DB
 
 The logic for reading a table in from a SQLite DB file is simple in R and python.
 
@@ -91,3 +98,4 @@ SQLite wrapper functions are stored in "R/sqlite.R".
 source("R/sqlite.R")
 responses <- collect_table("responses")  # expects "programming-questionnaire.sqlite"
 ```
+
