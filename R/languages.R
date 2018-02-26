@@ -15,8 +15,8 @@ get_languages <- function(responses) {
   languages <- responses %>%
     filter(question_label %in% language_questions) %>%
     left_join(question_label_map) %>%
-    mutate(response_str = str_to_lower(response_str)) %>%
-    select(subj_id, language_ix, response_str) %>%
+    mutate(language_name = str_to_lower(response_str)) %>%
+    select(subj_id, language_ix, language_name) %>%
     drop_na() %>%
     arrange(subj_id, language_ix)
   
@@ -35,9 +35,7 @@ get_languages <- function(responses) {
       age_started = as.integer(age_started),
       years_used = as.integer(years_used)
     ) %>%
-    recode_agreement(response_str_col = "proficiency") %>%
-    select(-proficiency, -agreement_label) %>%
-    rename(proficiency = agreement_num)
+    recode_agreement("proficiency", replace_with_num = TRUE)
 
   languages <- left_join(languages, experience)
   
@@ -52,7 +50,7 @@ get_language_ratings <- function(responses) {
     match_language_question_str()
 
   language_names <- get_languages(responses) %>%
-    select(subj_id, language_ix, language_name = response_str)
+    select(subj_id, language_ix, language_name)
 
   ratings %>%
     left_join(language_names) %>%

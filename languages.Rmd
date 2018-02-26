@@ -15,19 +15,48 @@ languages <- collect_table("languages")
 kable(head(languages))
 
 frequencies <- languages %>%
-  count(response_str) %>%
+  count(language_name) %>%
   arrange(desc(n)) %>%
   mutate(rank = 1:n())
 
-# Set factor levels as order in plot
-levels <- rev(frequencies$response_str)
-frequencies$language_ordered <- factor(frequencies$response_str, levels = levels)
+top20_languages <- filter(frequencies, rank <= 20)$language_name
 
-ggplot(filter(frequencies, rank <= 20)) +
+# Set factor levels as order in plot
+levels <- rev(frequencies$language_name)
+frequencies$language_ordered <- factor(frequencies$language_name, levels = levels)
+
+ggplot(filter(frequencies, language_name %in% top20_languages)) +
   aes(language_ordered, n) +
   geom_bar(stat = "identity") +
   xlab("") +
   coord_flip()
+```
+
+```{r most-experience}
+most_experience <- languages %>%
+  group_by(language_name) %>%
+  summarize(
+    n = n(),
+    proficiency = mean(proficiency, na.rm = TRUE),
+    years_used = mean(years_used, na.rm = TRUE)
+  )
+
+# Set factor levels as order in plot
+most_experience$language_ordered <- factor(most_experience$language_name, levels = levels)
+
+ggplot(filter(most_experience, language_name %in% top20_languages)) +
+  aes(language_ordered, years_used) +
+  geom_bar(stat = "identity") +
+  xlab("") +
+  coord_flip() +
+  ggtitle("Years experience")
+
+ggplot(filter(most_experience, language_name %in% top20_languages)) +
+  aes(language_ordered, proficiency) +
+  geom_point(stat = "identity") +
+  xlab("") +
+  coord_flip(ylim = c(1, 5)) +
+  ggtitle("Proficiency")
 ```
 
 # Language ratings
@@ -44,9 +73,8 @@ source("R/question-types.R")
 
 intuitiveness <- collect_table("language_ratings") %>%
   filter(question_name == "intuitiveness") %>%
-  select(subj_id, language_name, question_tag, response_str) %>%
+  select(subj_id, language_name, question_tag, agreement_num) %>%
   drop_na() %>%
-  recode_agreement() %>%
   group_by(language_name, question_tag) %>%
   summarize(
     n = n(),
@@ -54,7 +82,6 @@ intuitiveness <- collect_table("language_ratings") %>%
   ) %>%
   ungroup()
 
-top20_languages <- frequencies[frequencies$rank <= 20, ]$response_str
 top20_intuitive <- filter(intuitiveness, language_name %in% top20_languages)
 
 intuitive_for_all <- top20_intuitive %>%
