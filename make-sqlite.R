@@ -21,7 +21,7 @@ irq <- get_irq(responses)
 
 # Fetch data about each language from Wikidata.
 # Takes a few minutes.
-# language_info <- get_language_info(languages)
+language_info <- get_language_info(languages)
 
 db_name = "programming-questionnaire.sqlite"
 write_tables_to_sqlite(db_name,
@@ -33,5 +33,5 @@ write_tables_to_sqlite(db_name,
                        language_ratings = language_ratings,
                        questionnaire = questionnaire,
                        irq = irq,
-                       # language_info = language_info,
+                       language_info = language_info,
                        overwrite = TRUE)
