@@ -114,10 +114,12 @@ top20_language_summary %>%
   labs(x = "", y = "", title = "Rank correlations")
 ```
 
-```{r experience-proficiency-correlation}
+```{r experience-proficiency-correlation, fig.width=8, fig.height=6}
 library(ggrepel)
-ggplot(top20_language_summary) +
+set.seed(543)
+ggplot(filter(top20_language_summary, language_name != "other")) +
   aes(years_used, proficiency) +
+  geom_point(data = filter(language_summary, !(language_name %in% top20_languages))) +
   geom_label_repel(aes(label = language_name)) +
   ggtitle("Experience-proficiency correlation")
 ```
