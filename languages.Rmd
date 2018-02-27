@@ -13,31 +13,11 @@ opts_chunk$set(echo=FALSE, message=FALSE, fig.width=3, fig.height=3)
 ```{r top-languages}
 source("R/sqlite.R")
 source("R/question-types.R")
+source("R/ranks.R")
 
 languages <- collect_table("languages")
 language_ratings <- collect_table("language_ratings")
 # kable(head(languages), caption = "Sample rows of languages data.")
-
-# Create rank columns for ordering languages
-rank_by <- function(frame, values, rank_col_str = paste0(values, "_rank")) {
-  frame[rank_col_str] <- rank(-frame[values], ties.method = "first")
-  frame
-}
-
-# Order language by rank column
-order_language_by <- function(frame, rank_col, levels_only = FALSE, reverse = FALSE, use_levels = NULL) {
-  if(!is.null(use_levels)) {
-    levels <- use_levels
-  } else {
-    levels <- frame %>%
-      arrange_(.dots = list(rank_col)) %>%
-      .$language_name
-  }
-  if(reverse) levels <- rev(levels)
-  if(levels_only) return(levels)
-  frame$language_ordered <- factor(frame$language_name, levels = levels)
-  frame
-}
 
 language_summary <- languages %>%
   group_by(language_name) %>%
@@ -191,4 +171,37 @@ ggplot(top20_reuse) +
   scale_y_continuous(breaks = 1:5) +
   facet_wrap("reuse_label") +
   labs(x = "", y = "", title = "Reuse")
+```
+
+## Paradigms
+
+```{r paradigms}
+language_info <- collect_table("language_info")
+language_info_summary <- language_info %>%
+  group_by(paradigms) %>%
+  summarize(n = n()) %>%
+  mutate(pct = prop.table(n)) %>%
+  arrange(desc(n))
+
+top20_language_info <- language_info %>%
+  filter(language_name %in% top20_languages)
+
+top20_language_info_summary <- top20_language_info %>%
+  group_by(paradigms) %>%
+  summarize(n = n()) %>%
+  mutate(pct = prop.table(n)) %>%
+  arrange(desc(n))
+
+top_paradigms_tbl <- left_join(top20_language_info_summary, language_info_summary, by = "paradigms", suffix = c("_top20", "_all")) %>%
+  filter(row_number() <= 8)
+top_paradigms <- top_paradigms_tbl$paradigms
+kable(top_paradigms_tbl)
+
+top20_language_paradigms <- top20_language_info %>%
+  filter(paradigms %in% top_paradigms)
+
+top20_language_paradigms %>%
+  group_by(language_name) %>%
+  summarize(n_top8_paradigms = n()) %>%
+  kable()
 ```

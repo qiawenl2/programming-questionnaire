@@ -34,3 +34,9 @@ questionnaire <- collect_table("questionnaire")
 | R\_0ctalwcZioraWVX |  NA |  NA |    NA |   NA |   NA |   NA |   NA |   NA |   NA |   NA |   NA |     NA |     NA |     NA |
 | R\_0OQ4IaRWONn8aDD |  NA |  NA |    NA |   NA |   NA |   NA |   NA |   NA |   NA |   NA |   NA |     NA |     NA |     NA |
 | R\_0PUV8ogrj6xS9u9 |   3 |  NA |    NA |   NA |   NA |   NA |   NA |   NA |   NA |   NA |   NA |     NA |     NA |     NA |
+
+## Changed reasoning
+
+    ## Joining, by = "subj_id"
+
+![](questionnaire_files/figure-gfm/changed-reasoning-1.png)<!-- -->

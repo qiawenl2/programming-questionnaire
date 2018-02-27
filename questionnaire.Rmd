@@ -4,6 +4,7 @@ title: Beliefs about the effects of programming on thinking.
 ```{r config, include=FALSE}
 library(knitr)
 library(tidyverse)
+library(magrittr)
 opts_chunk$set(echo=FALSE, dpi=200)
 ```
 
@@ -17,6 +18,10 @@ question_names <- c(
   "repo1", "repo1describe", "rec1", "rec1describe", "cfo1", "cfo2", "cfo3",
   "oss1", "oss2", "env1", "env2", "inter1", "inter2", "inter3"
 )
+
+get_question_text <- function(question_name) {
+  filter(questions, question_name == "cr1")$question_text
+}
 
 questions %>%
   filter(question_name %in% question_names) %>%
@@ -33,4 +38,43 @@ agreement_questions <- c(
 )
 
 kable(head(questionnaire[c("subj_id", agreement_questions)]))
+```
+
+## Changed reasoning
+
+```{r changed-reasoning}
+source("R/ranks.R")
+
+language_summary <- collect_table("languages") %>%
+  group_by(language_name) %>%
+  summarize(
+    frequency = n(),
+    proficiency = mean(proficiency, na.rm = TRUE),
+    years_used = mean(years_used, na.rm = TRUE)
+  ) %>%
+  rank_by("frequency") %>%
+  rank_by("years_used") %>%
+  rank_by("proficiency")
+
+# must be ordered!
+top20_languages <- order_language_by(language_summary, "frequency_rank", levels_only = TRUE)[1:20]
+
+questionnaire_by_top20_language <- collect_table("languages") %>%
+  filter(language_name %in% top20_languages) %>%
+  left_join(questionnaire, .) %>%
+  drop_na(language_name) %>%
+  group_by(language_name) %>%
+  summarize(
+    cr1 = mean(cr1, na.rm = TRUE)
+  ) %>%
+  rank_by("cr1")
+
+questionnaire_by_top20_language %<>% order_language_by("cr1_rank")
+ggplot(questionnaire_by_top20_language) +
+  aes(language_ordered, cr1) +
+  geom_point() +
+  annotate("label", x = "python", y = 2.5, label = paste(strwrap(get_question_text("cr1"), 33), collapse = "\n")) +
+  coord_flip(ylim = c(1,5)) +
+  scale_x_discrete(position = "top") +
+  labs(x = "", y = "agreement")
 ```

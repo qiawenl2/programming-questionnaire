@@ -20,7 +20,7 @@ get_programming_paradigms <- function(name) {
       purrr::map(get_label_from_id) %>%
       unlist()
     language_info <- data_frame(
-      language = name,
+      language_name = name,
       wikidata_id = programming_language[[1]]$id,
       paradigms = paradigms
     )
