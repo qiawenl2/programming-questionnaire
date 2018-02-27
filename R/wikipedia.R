@@ -3,10 +3,31 @@ library(WikidataR)
 
 # Extract programming language metadata from Wikipedia
 get_language_info <- function(languages) {
-  unique(languages$response_str) %>%
+  unique(languages$language_name) %>%
     map(get_programming_paradigms) %>%
     bind_rows() %>%
     as_data_frame()
+}
+
+
+# Get the programming paradigms associated with a language from Wikipedia
+get_programming_paradigms <- function(name) {
+  language_info <- data.frame()
+  tryCatch({
+    programming_language <- get_programming_language(name)
+    instance_of <- "P31"  # identifier for "instance_of" Wikidata property
+    paradigms <- programming_language[[1]][["claims"]][[instance_of]][["mainsnak"]][["datavalue"]][["value"]][["id"]] %>%
+      purrr::map(get_label_from_id) %>%
+      unlist()
+    language_info <- data_frame(
+      language = name,
+      wikidata_id = programming_language[[1]]$id,
+      paradigms = paradigms
+    )
+  }, error = function(e) {
+    print(paste0('Error getting paradigms for language \'', name, '\': ', e))
+  })
+  language_info
 }
 
 
@@ -23,25 +44,7 @@ get_programming_language <- function(name) {
 }
 
 
-# Get the programming paradigms associated with this language
-get_programming_paradigms <- function(name) {
-  language_info <- data.frame()
-  tryCatch({
-    instance_of <- "P31"
-    programming_language <- get_programming_language(name)
-    paradigms <- programming_language[[1]][["claims"]][[instance_of]][["mainsnak"]][["datavalue"]][["value"]][["id"]] %>%
-      purrr::map(get_label_from_id) %>%
-      unlist()
-    language_info <- data_frame(
-      language = name,
-      wikidata_id = programming_language[[1]]$id,
-      paradigms = paradigms
-    )
-  }, error = function(e) {
-    print(paste0('Error getting paradigms for language \'', name, '\': ', e))
-  })
-  language_info
-}
+
 
 
 # Extract the label of a Wikidata item
