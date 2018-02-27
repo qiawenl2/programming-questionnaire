@@ -22,21 +22,20 @@
 | inter2         | Learning a certain programming language/programming style can cause real cognitive harm                                                                                                                                                                              |
 | inter3         | What are some ways in which learning a certain language or programming style cause cognitive harm?                                                                                                                                                                   |
 
-``` r
-questionnaire <- collect_table("questionnaire")
-```
-
-| subj\_id           | cr1 | cp1 | repo1 | rec1 | cfo1 | cfo2 | cfo3 | oss1 | oss2 | env1 | env2 | inter1 | inter2 | inter3 |
-| :----------------- | --: | --: | ----: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | -----: | -----: | -----: |
-| R\_02lGHY18refVcJj |   4 |   4 |     4 |    5 |    1 |    4 |   NA |    2 |   NA |    2 |    4 |      1 |      3 |     NA |
-| R\_08jNDkIvkIto1tT |   5 |   3 |     2 |    3 |    3 |    4 |   NA |    3 |   NA |    2 |    4 |      4 |      4 |     NA |
-| R\_09cRnr92gcEphIJ |  NA |  NA |    NA |   NA |   NA |   NA |   NA |   NA |   NA |   NA |   NA |     NA |     NA |     NA |
-| R\_0ctalwcZioraWVX |  NA |  NA |    NA |   NA |   NA |   NA |   NA |   NA |   NA |   NA |   NA |     NA |     NA |     NA |
-| R\_0OQ4IaRWONn8aDD |  NA |  NA |    NA |   NA |   NA |   NA |   NA |   NA |   NA |   NA |   NA |     NA |     NA |     NA |
-| R\_0PUV8ogrj6xS9u9 |   3 |  NA |    NA |   NA |   NA |   NA |   NA |   NA |   NA |   NA |   NA |     NA |     NA |     NA |
-
 ## Changed reasoning
 
     ## Joining, by = "subj_id"
 
 ![](questionnaire_files/figure-gfm/changed-reasoning-1.png)<!-- -->
+
+![](questionnaire_files/figure-gfm/personality-1.png)<!-- -->
+
+![](questionnaire_files/figure-gfm/recursion-1.png)<!-- -->
+
+![](questionnaire_files/figure-gfm/code-for-others-1.png)<!-- -->
+
+![](questionnaire_files/figure-gfm/code-for-team-1.png)<!-- -->
+
+![](questionnaire_files/figure-gfm/interference-1.png)<!-- -->
+
+![](questionnaire_files/figure-gfm/harm-1.png)<!-- -->
