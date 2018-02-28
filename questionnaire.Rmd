@@ -6,12 +6,14 @@ library(knitr)
 library(tidyverse)
 library(magrittr)
 opts_chunk$set(echo=FALSE, dpi=200)
+
+source("R/sqlite.R")
+source("R/ranks.R")
 ```
 
 # Questions
 
 ```{r question-map}
-source("R/sqlite.R")
 questions <- collect_table("questions")
 question_names <- c(
   "cr1", "cr1describe", "cr2describe", "cp1", "cp1describe",
@@ -31,17 +33,6 @@ questions %>%
 
 ```{r questionnaire}
 questionnaire <- collect_table("questionnaire")
-
-agreement_questions <- c(
-  "cr1", "cp1", "repo1", "rec1", "cfo1", "cfo2", "cfo3",
-  "oss1", "oss2", "env1", "env2", "inter1", "inter2", "inter3"
-)
-```
-
-## Changed reasoning
-
-```{r changed-reasoning}
-source("R/ranks.R")
 
 language_summary <- collect_table("languages") %>%
   group_by(language_name) %>%
@@ -89,30 +80,116 @@ by_language_plot <- function(name, x = "python", y = 2.5) {
     scale_x_discrete(position = "top") +
     labs(x = "", y = "agreement")
 }
-  
+
+language_info <- collect_table("language_info")
+top_paradigms <- language_info %>%
+  count(paradigms) %>%
+  arrange(desc(n)) %>%
+  mutate(rank = 1:n())
+
+top8_paradigms <- filter(top_paradigms, rank <= 8)$paradigms
+
+questionnaire_by_top8_paradigms <- collect_table("languages") %>%
+  left_join(language_info) %>%
+  filter(paradigms %in% top8_paradigms) %>%
+  left_join(questionnaire, .) %>%
+  drop_na(paradigms) %>%
+  group_by(paradigms) %>%
+  summarize(
+    cr1 = mean(cr1, na.rm = TRUE),
+    cp1 = mean(cp1, na.rm = TRUE),
+    rec1 = mean(rec1, na.rm = TRUE),
+    cfo1 = mean(cfo1, na.rm = TRUE),
+    cfo2 = mean(cfo2, na.rm = TRUE),
+    inter1 = mean(inter1, na.rm = TRUE),
+    inter2 = mean(inter2, na.rm = TRUE)
+  ) %>%
+  rank_by("cr1") %>%
+  rank_by("cp1") %>%
+  rank_by("rec1") %>%
+  rank_by("cfo1") %>%
+  rank_by("cfo2") %>%
+  rank_by("inter1") %>%
+  rank_by("inter2")
+
+by_paradigm_plot <- function(name) {
+  questionnaire_by_top8_paradigms %<>% order_paradigm_by(paste0(name, "_rank"))
+  ggplot(questionnaire_by_top8_paradigms) +
+    aes_string("paradigm_ordered", name) +
+    geom_point() +
+    # annotate("label", x = x, y = , label = paste(strwrap(get_question_text(name), 33), collapse = "\n")) +
+    coord_flip(ylim = c(1,5)) +
+    scale_x_discrete(position = "top") +
+    labs(x = "", y = "agreement")
+}
+```
+
+# Top 20 languages
+
+## Changed reasoning
+
+```{r changed-reasoning}
 by_language_plot("cr1")
 ```
+
+## Personality
 
 ```{r personality}
 by_language_plot("cp1")
 ```
 
+## Recursion
+
 ```{r recursion}
 by_language_plot("rec1")
 ```
+
+## Code for others
 
 ```{r code-for-others}
 by_language_plot("cfo1", y = 1.8)
 ```
 
+## Code for team
+
 ```{r code-for-team}
 by_language_plot("cfo2", y = 1.8)
 ```
+
+## Interference
 
 ```{r interference}
 by_language_plot("inter1", y = 4)
 ```
 
+## Harm
+
 ```{r harm}
 by_language_plot("inter2", y = 4)
+```
+
+# Top 8 paradigms
+
+```{r changed-reasoning-paradigm}
+by_paradigm_plot("cr1")
+```
+
+```{r personality-paradigm}
+by_paradigm_plot("cp1")
+```
+
+```{r recursion-paradigm}
+by_paradigm_plot("rec1")
+```
+
+```{r code-for-team-paradigm}
+by_paradigm_plot("cfo2")
+```
+
+```{r interference-paradigm}
+by_paradigm_plot("inter1")
+```
+
+```{r harm-paradigm}
+by_paradigm_plot("inter2")
 ```

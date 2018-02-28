@@ -18,3 +18,18 @@ order_language_by <- function(frame, rank_col, levels_only = FALSE, reverse = FA
   frame$language_ordered <- factor(frame$language_name, levels = levels)
   frame
 }
+
+# Order language paradigm by rank column
+order_paradigm_by <- function(frame, rank_col, levels_only = FALSE, reverse = FALSE, use_levels = NULL) {
+  if(!is.null(use_levels)) {
+    levels <- use_levels
+  } else {
+    levels <- frame %>%
+      arrange_(.dots = list(rank_col)) %>%
+      .$paradigms
+  }
+  if(reverse) levels <- rev(levels)
+  if(levels_only) return(levels)
+  frame$paradigm_ordered <- factor(frame$paradigms, levels = levels)
+  frame
+}

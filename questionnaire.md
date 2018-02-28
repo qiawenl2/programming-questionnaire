@@ -22,20 +22,52 @@
 | inter2         | Learning a certain programming language/programming style can cause real cognitive harm                                                                                                                                                                              |
 | inter3         | What are some ways in which learning a certain language or programming style cause cognitive harm?                                                                                                                                                                   |
 
-## Changed reasoning
+    ## Joining, by = "subj_id"
+
+    ## Joining, by = "language_name"
 
     ## Joining, by = "subj_id"
 
+# Top 20 languages
+
+## Changed reasoning
+
 ![](questionnaire_files/figure-gfm/changed-reasoning-1.png)<!-- -->
+
+## Personality
 
 ![](questionnaire_files/figure-gfm/personality-1.png)<!-- -->
 
+## Recursion
+
 ![](questionnaire_files/figure-gfm/recursion-1.png)<!-- -->
+
+## Code for others
 
 ![](questionnaire_files/figure-gfm/code-for-others-1.png)<!-- -->
 
+## Code for team
+
 ![](questionnaire_files/figure-gfm/code-for-team-1.png)<!-- -->
+
+## Interference
 
 ![](questionnaire_files/figure-gfm/interference-1.png)<!-- -->
 
+## Harm
+
 ![](questionnaire_files/figure-gfm/harm-1.png)<!-- -->
+
+# Top 8 paradigms
+
+![](questionnaire_files/figure-gfm/changed-reasoning-paradigm-1.png)<!-- -->
+
+![](questionnaire_files/figure-gfm/personality-paradigm-1.png)<!-- -->
+
+![](questionnaire_files/figure-gfm/recursion-paradigm-1.png)<!-- -->
+
+![](questionnaire_files/figure-gfm/code-for-team-paradigm-1.png)<!-- -->
+
+![](questionnaire_files/figure-gfm/interference-paradigm-1.png)<!-- -->
+
+![](questionnaire_files/figure-gfm/harm-paradigm-1.png)<!-- -->
