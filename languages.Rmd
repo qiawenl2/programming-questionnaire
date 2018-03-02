@@ -5,19 +5,13 @@ title: Programming languages
 library(knitr)
 library(tidyverse)
 library(magrittr)
-opts_chunk$set(echo=FALSE, message=FALSE, fig.width=3, fig.height=3)
+opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, fig.width=3, fig.height=3)
+devtools::load_all()
 ```
-
-# Top languages
-
-```{r top-languages}
-source("R/sqlite.R")
-source("R/question-types.R")
-source("R/ranks.R")
-
+```{r languages}
 languages <- collect_table("languages")
 language_ratings <- collect_table("language_ratings")
-# kable(head(languages), caption = "Sample rows of languages data.")
+language_info <- collect_table("language_info")
 
 language_summary <- languages %>%
   group_by(language_name) %>%
@@ -61,7 +55,7 @@ top20_ratings_summary <- language_ratings_summary %>%
   filter(language_name %in% top20_languages)
 ```
 
-## Frequency
+## Language frequency
 
 ```{r frequency}
 top20_language_summary %<>% order_language_by("frequency_rank", reverse = TRUE)
@@ -74,6 +68,10 @@ ggplot(top20_language_summary) +
 
 ## Experience
 
+```{r languages-per-person}
+
+```
+
 ```{r experience}
 top20_language_summary %<>% order_language_by("years_used_rank", reverse = TRUE)
 ggplot(top20_language_summary) +
@@ -82,6 +80,8 @@ ggplot(top20_language_summary) +
   coord_flip() +
   labs(x = "", y = "average years used", title = "Experience")
 ```
+
+
 
 ## Proficiency
 

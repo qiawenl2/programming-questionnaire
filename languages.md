@@ -1,6 +1,4 @@
-# Top languages
-
-## Frequency
+## Language frequency
 
 ![](languages_files/figure-gfm/frequency-1.png)<!-- -->
 
@@ -16,8 +14,6 @@
 
 ![](languages_files/figure-gfm/correlations-1.png)<!-- -->
 
-    ## Warning: Removed 47 rows containing missing values (geom_point).
-
 ![](languages_files/figure-gfm/experience-proficiency-correlation-1.png)<!-- -->
 
 ## Intuitiveness
@@ -32,14 +28,14 @@
 
 | paradigms                            | n\_top20 | pct\_top20 | n\_all |  pct\_all |
 | :----------------------------------- | -------: | ---------: | -----: | --------: |
-| multi-paradigm programming language  |       11 |  0.1447368 |     34 | 0.1133333 |
-| programming language                 |        9 |  0.1184211 |     63 | 0.2100000 |
-| functional programming language      |        8 |  0.1052632 |     28 | 0.0933333 |
-| imperative programming language      |        8 |  0.1052632 |     23 | 0.0766667 |
-| interpreted language                 |        8 |  0.1052632 |     19 | 0.0633333 |
-| object-oriented programming language |        6 |  0.0789474 |     28 | 0.0933333 |
-| procedural programming language      |        5 |  0.0657895 |     20 | 0.0666667 |
-| scripting language                   |        3 |  0.0394737 |     10 | 0.0333333 |
+| multi-paradigm programming language  |       11 |  0.1410256 |     27 | 0.1111111 |
+| programming language                 |       10 |  0.1282051 |     51 | 0.2098765 |
+| imperative programming language      |        8 |  0.1025641 |     20 | 0.0823045 |
+| object-oriented programming language |        8 |  0.1025641 |     24 | 0.0987654 |
+| functional programming language      |        7 |  0.0897436 |     24 | 0.0987654 |
+| interpreted language                 |        7 |  0.0897436 |     15 | 0.0617284 |
+| procedural programming language      |        5 |  0.0641026 |     18 | 0.0740741 |
+| scripting language                   |        3 |  0.0384615 |      7 | 0.0288066 |
 
 | language\_name | n\_top8\_paradigms |
 | :------------- | -----------------: |
@@ -52,11 +48,12 @@
 | haskell        |                  1 |
 | java           |                  1 |
 | javascript     |                  5 |
-| lisp           |                  5 |
 | matlab         |                  2 |
+| objective-c    |                  3 |
 | perl           |                  6 |
 | php            |                  6 |
 | python         |                  7 |
 | r              |                  1 |
 | ruby           |                  6 |
 | scala          |                  3 |
+| visual basic   |                  3 |

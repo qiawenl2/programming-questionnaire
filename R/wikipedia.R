@@ -22,7 +22,7 @@ get_programming_paradigms <- function(name) {
     language_info <- data_frame(
       language_name = name,
       wikidata_id = programming_language[[1]]$id,
-      paradigms = paradigms
+      paradigm = paradigms
     )
   }, error = function(e) {
     print(paste0('Error getting paradigms for language \'', name, '\': ', e))
@@ -44,9 +44,6 @@ get_programming_language <- function(name) {
 }
 
 
-
-
-
 # Extract the label of a Wikidata item
 get_wikidata_label <- function(item) {
   item[[1]]$labels$en$value
@@ -57,4 +54,14 @@ get_wikidata_label <- function(item) {
 get_label_from_id <- function(id) {
   item <- get_item(id)
   get_wikidata_label(item)
+}
+
+
+add_manual_languages <- function(wikipedia_languages) {
+  # manual_languages <- tibble::tribble(
+  #   ~language_name,          ~paradigm,
+  #   "unix shell", "scripting language"
+  # )
+  # bind_rows(wikipedia_languages, manual_languages)
+  wikipedia_languages
 }

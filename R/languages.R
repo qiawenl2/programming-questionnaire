@@ -1,5 +1,3 @@
-source("R/question-types.R")
-
 # Get languages represented in the survey
 get_languages <- function(responses) {
   language_questions <- unique(responses$question_label) %>%
@@ -37,19 +35,18 @@ get_languages <- function(responses) {
     ) %>%
     recode_agreement("proficiency", replace_with_num = TRUE)
 
-  languages <- left_join(languages, experience)
-  
-  languages
+  left_join(languages, experience)
 }
 
 
-get_language_ratings <- function(responses) {
+# Get ratings of languages in long format
+get_language_ratings <- function(responses, languages) {
   question_names <- c("intuitiveness", "reuse", "practices")
   ratings <- responses %>%
     filter(question_name %in% question_names) %>%
     match_language_question_str()
 
-  language_names <- get_languages(responses) %>%
+  language_names <- languages %>%
     select(subj_id, language_ix, language_name)
 
   ratings %>%
@@ -60,6 +57,7 @@ get_language_ratings <- function(responses) {
 }
 
 
+# Extract language ix and question tag from language question string
 match_language_question_str <- function(frame) {
   re_language_question <- "[a-z]+#\\d_Language(\\d)_([A-Za-z]+)"
   labels <- str_match(frame$question_str, re_language_question)[, 2:3] %>%
@@ -71,4 +69,66 @@ match_language_question_str <- function(frame) {
     mutate(language_ix = as.integer(language_ix))
   cbind(frame, labels) %>%
     as_data_frame()
+}
+
+
+# Overwrite some language names with corrections.
+recode_language_names <- function(languages) {
+tibble::tribble(
+                    ~language_name, ~new_language_name,
+               "apple/hyperscript",      "applescript",
+                       "assembler",         "assembly",
+                        "assembly",         "assembly",
+                  "assembly (x86)",         "assembly",
+               "assembly language",         "assembly",
+         "assembly language (x86)",         "assembly",
+                            "bash",       "unix shell",
+     "basic (vba/qb and variants)",            "basic",
+                         "c sharp",               "c#",
+                           "c/c++",              "c++",
+                   "clojurescript",          "clojure",
+                         "closure",          "clojure",
+                           "cmake",       "unix shell",
+                     "common lisp",             "lisp",
+                          "csharp",               "c#",
+                          "delphi",    "object pascal",
+                   "delphi/pascal",    "object pascal",
+                           "elixi",           "elixir",
+                      "emacs-lisp",             "lisp",
+                          "fsharp",               "f#",
+                            "gawk",       "unix shell",
+                          "golang",               "go",
+                          "haskel",          "haskell",
+                        "html/css",             "html",
+                            "jaca",             "java",
+             "javascript/css/html",       "javascript",
+                              "js",       "javascript",
+                     "jscript.net",       "javascript",
+                   "linux command",       "unix shell",
+          "lips (scheme, clojure)",          "clojure",
+                         "node.js",       "javascript",
+                          "o'caml",            "ocaml",
+                     "objective c",      "objective-c",
+                      "objectivec",      "objective-c",
+                          "pyhton",           "python",
+                           "shell",       "unix shell",
+                    "shell script",       "unix shell",
+                 "shell scripting",       "unix shell",
+                       "sml/ocaml",            "ocaml",
+                              "vb",     "visual basic",
+                          "vb.net",     "visual basic",
+                             "vba",     "visual basic",
+                             "vbs",     "visual basic",
+                        "vbscript",     "visual basic",
+                     "visualbasic",     "visual basic",
+                             "x86",         "assembly"
+     )
+
+  untouched <- languages %>%
+    filter(!(language_name %in% recoded_languages$language_name))
+  recoded <- languages %>%
+    inner_join(recoded_languages) %>%
+    select(-language_name) %>%
+    rename(language_name = new_language_name)
+  bind_rows(untouched, recoded)
 }

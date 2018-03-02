@@ -1,0 +1,168 @@
+language_name,new_language_name
+?++,
+123,
+abap,
+actionscript,
+amharic,
+apl,
+apple/hyperscript,applescript
+applescript,
+asp,asp.net
+assembler,assembly
+assembly,assembly
+assembly (x86),assembly
+assembly language,assembly
+assembly language (x86),assembly
+bash,unix shell
+basic,
+basic (vba/qb and variants),basic
+c,
+c sharp,c#
+c/c++,c++
+c#,
+c++,
+cecil,
+ciao,
+clojure,
+clojurescript,clojure
+closure,clojure
+cmake,unix shell
+cobol,
+coffeescript,
+common lisp,lisp
+coq,
+csharp,c#
+css,
+d,
+danmakufu scripting language,
+dart,
+datalog,
+delphi,object pascal
+delphi/pascal,object pascal
+drupal,
+dutch,
+e-prime,
+elixi,elixir
+elixir,
+elm,
+emacs-lisp,lisp
+en-us,
+english,
+erlang,
+etoys,
+excel,
+f#,
+fortran,
+french,
+fsharp,f#
+gawk,unix shell
+german,
+glsl,shading language
+go,
+golang,go
+grace,
+groovy,
+haskel,haskell
+haskell,
+haxe,
+hlsl,shading language
+html,
+html/css,html
+hypertalk,
+idl,
+inquisit programming language,
+isabelle/hol,
+italian,
+jaca,java
+java,
+javascript,
+javascript/css/html,javascript
+js,javascript
+jscript.net,javascript
+julia,
+kotlin,
+labview,
+latex,tex
+linux command,unix shell
+"lips (scheme, clojure)",clojure
+lisp,
+logo,
+lotusscript,
+lsl,linden scripting language
+lua,
+matlab,
+mirc scripting language,
+ml,
+motorola 68000 assembly language,assembly
+mstlsb,matlab
+node.js,javascript
+o'caml,ocaml
+object pascal,
+objective c,objective-c
+objective-c,
+objectivec,objective-c
+ocaml,
+octave,
+pascal,
+perl,
+pharo,
+php,
+polish,
+pony,
+portuguese,
+powershell,
+praat,
+presentation,
+prolog,
+pt-br,
+purescript,
+pyhton,python
+python,
+qbasic,
+quakec,
+r,
+racket,
+rascal,
+rdmlx,
+rexx,
+rpg,
+ruby,
+russian,
+rust,
+s,
+sas,
+scala,
+scheme,
+scratch,
+sdf,
+self,
+shell,unix shell
+shell script,unix shell
+shell scripting,unix shell
+smalltalk,
+sml,
+sml/ocaml,ocaml
+spanish,
+sql,
+stratego,
+swift,
+t-sql,
+tcl,
+tex,
+turbo pascal,
+turing,
+typescript,
+ukrainian,
+unrealscript,
+vb,visual basic
+vb.net,visual basic
+vba,visual basic
+vbs,visual basic
+vbscript,visual basic
+verilog,
+visual basic,
+visual foxpro,
+visualbasic,visual basic
+whiley,
+x86,assembly
+xaml,
