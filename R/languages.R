@@ -74,9 +74,10 @@ match_language_question_str <- function(frame) {
 
 # Overwrite some language names with corrections.
 recode_language_names <- function(languages) {
-tibble::tribble(
+  recoded_languages <- tibble::tribble(
                     ~language_name, ~new_language_name,
                "apple/hyperscript",      "applescript",
+                             "asp",          "asp.net",
                        "assembler",         "assembly",
                         "assembly",         "assembly",
                   "assembly (x86)",         "assembly",
@@ -98,15 +99,23 @@ tibble::tribble(
                           "fsharp",               "f#",
                             "gawk",       "unix shell",
                           "golang",               "go",
+                      "glsl","opengl shading language",
                           "haskel",          "haskell",
+                  "hlsl","high level shading language",
                         "html/css",             "html",
+                     "idl","interactive data language",
+                    "isabelle/hol",         "isabelle",
                             "jaca",             "java",
              "javascript/css/html",       "javascript",
                               "js",       "javascript",
                      "jscript.net",       "javascript",
+                           "latex",              "tex",
                    "linux command",       "unix shell",
           "lips (scheme, clojure)",          "clojure",
+                     "lsl","linden scripting language",
                          "node.js",       "javascript",
+"motorola 68000 assembly language",         "assembly",
+                          "mstlsb",           "matlab",
                           "o'caml",            "ocaml",
                      "objective c",      "objective-c",
                       "objectivec",      "objective-c",
@@ -114,15 +123,18 @@ tibble::tribble(
                            "shell",       "unix shell",
                     "shell script",       "unix shell",
                  "shell scripting",       "unix shell",
+                             "sml",      "standard ml",
                        "sml/ocaml",            "ocaml",
+                           "t-sql",     "transact-sql",
+                         "tcl","tool command language",
                               "vb",     "visual basic",
                           "vb.net",     "visual basic",
                              "vba",     "visual basic",
                              "vbs",     "visual basic",
                         "vbscript",     "visual basic",
                      "visualbasic",     "visual basic",
-                             "x86",         "assembly"
-     )
+                             "x86",         "assembly",
+       "xaml","extensible application markup language")
 
   untouched <- languages %>%
     filter(!(language_name %in% recoded_languages$language_name))
