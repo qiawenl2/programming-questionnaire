@@ -5,6 +5,14 @@ qualtrics.yml
 data-raw/*.rds
 *.sqlite
 
+# knitr files
+*_cache/
+*_files/
+
+# github publishing
+!*_files/
+
+# r+rstudio
 .Rproj.user
 .Rhistory
 .RData

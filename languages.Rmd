@@ -5,7 +5,8 @@ title: Programming languages
 library(knitr)
 library(tidyverse)
 library(magrittr)
-opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, fig.width=3, fig.height=3)
+opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE,
+               fig.width=3, fig.height=3)
 devtools::load_all()
 ```
 ```{r languages}
@@ -141,7 +142,7 @@ ggplot(top20_intuitive) +
   coord_flip(ylim = 1:5) +
   scale_y_continuous(breaks = 1:5) +
   facet_wrap("question_tag") +
-  labs(x = "", y = "", title = "Intuitiveness") 
+  labs(x = "", y = "", title = "Intuitiveness")
 ```
 
 ## Reuse
