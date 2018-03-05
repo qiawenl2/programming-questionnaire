@@ -3,7 +3,10 @@ qualtrics.yml
 
 # reproducible
 data-raw/*.rds
+
+# data
 *.sqlite
+data-raw/stack-overflow*
 
 # knitr files
 *_cache/
