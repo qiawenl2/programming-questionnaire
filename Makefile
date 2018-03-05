@@ -1,6 +1,6 @@
-all: languages.md questionnaire.md
+all: languages.md beliefs.md
 languages.md: languages.Rmd
-questionnaire.md: questionnaire.Rmd
+beliefs.md: beliefs.Rmd
 %.md: %.Rmd _output.yml
 	Rscript -e 'rmarkdown::render("$<", output_file = "$@")'
 clean:

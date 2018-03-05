@@ -35,10 +35,12 @@ top20_languages <- language_ranks %>%
   filter(frequency_rank <= 20) %>%
   .$language_name
 
-top20_questionnaire_ranks <- collect_table("languages") %>%
+top20_questionnaire <- collect_table("languages") %>%
   filter(language_name %in% top20_languages) %>%
   left_join(questionnaire, .) %>%
-  drop_na(language_name) %>%
+  drop_na(language_name)
+
+top20_questionnaire_ranks <- top20_questionnaire %>%
   group_by(language_name) %>%
   summarize(
     cr1 = mean(cr1, na.rm = TRUE),
@@ -59,15 +61,18 @@ top20_questionnaire_ranks <- collect_table("languages") %>%
   select(language_name, cr1_rank, cp1_rank, rec1_rank,
          cfo1_rank, cfo2_rank, inter1_rank, inter2_rank)
 
+
+
 by_language_plot <- function(name, x = "python", y = 2.5) {
-  questionnaire_by_top20_language %<>% order_language_by(paste0(name, "_rank"))
-  ggplot(questionnaire_by_top20_language) +
-    aes_string("language_ordered", name) +
-    geom_point() +
-    annotate("label", x = x, y = y, label = paste(strwrap(get_question_text(name), 33), collapse = "\n")) +
-    coord_flip(ylim = c(1,5)) +
-    scale_x_discrete(position = "top") +
-    labs(x = "", y = "agreement")
+  levels <- arrange_(top20_questionnaire_ranks, .dots = list(paste0(name, "_rank")))$language_name
+  top20_questionnaire %>%
+    order_language_by(use_levels = levels) %>%
+    ggplot() +
+      aes_string("language_ordered", name) +
+      stat_summary(geom = "errorbar", fun.data = "mean_se") +
+      coord_flip(ylim = c(1,5)) +
+      scale_x_discrete(position = "top") +
+      labs(x = "", y = "agreement", title = paste(strwrap(get_question_text(name), 50), collapse = "\n"))
 }
 
 # By paradigm ----

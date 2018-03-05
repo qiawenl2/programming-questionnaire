@@ -4,7 +4,7 @@ title: Beliefs about the effects of programming on thinking.
 ```{r config, include=FALSE}
 library(knitr)
 opts_chunk$set(echo=FALSE, dpi=300, cache=TRUE)
-read_chunk("questionnaire.R")
+read_chunk("beliefs.R")
 ```
 ```{r setup}
 ```
