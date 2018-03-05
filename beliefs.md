@@ -1,3 +1,33 @@
+    ## ── Attaching packages ────────────────────────────────── tidyverse 1.2.1 ──
+
+    ## ✔ ggplot2 2.2.1     ✔ purrr   0.2.4
+    ## ✔ tibble  1.4.1     ✔ dplyr   0.7.4
+    ## ✔ tidyr   0.7.2     ✔ stringr 1.2.0
+    ## ✔ readr   1.1.1     ✔ forcats 0.2.0
+
+    ## ── Conflicts ───────────────────────────────────── tidyverse_conflicts() ──
+    ## ✖ dplyr::filter() masks stats::filter()
+    ## ✖ dplyr::lag()    masks stats::lag()
+
+    ## 
+    ## Attaching package: 'magrittr'
+
+    ## The following object is masked from 'package:purrr':
+    ## 
+    ##     set_names
+
+    ## The following object is masked from 'package:tidyr':
+    ## 
+    ##     extract
+
+    ## Loading programmingquestionnaire
+
+    ## Joining, by = "subj_id"
+
+    ## Joining, by = "language_name"
+
+    ## Joining, by = "subj_id"
+
 # Questions
 
 | question\_name | question\_text                                                                                                                                                                                                                                                       |
@@ -22,52 +52,72 @@
 | inter2         | Learning a certain programming language/programming style can cause real cognitive harm                                                                                                                                                                              |
 | inter3         | What are some ways in which learning a certain language or programming style cause cognitive harm?                                                                                                                                                                   |
 
-    ## Joining, by = "subj_id"
-
-    ## Joining, by = "language_name"
-
-    ## Joining, by = "subj_id"
-
 # Top 20 languages
 
 ## Changed reasoning
 
-![](questionnaire_files/figure-gfm/changed-reasoning-1.png)<!-- -->
+    ## Warning: Removed 561 rows containing non-finite values (stat_summary).
+
+![](beliefs_files/figure-gfm/changed-reasoning-1.png)<!-- -->
 
 ## Personality
 
-![](questionnaire_files/figure-gfm/personality-1.png)<!-- -->
+    ## Warning: Removed 584 rows containing non-finite values (stat_summary).
+
+![](beliefs_files/figure-gfm/personality-1.png)<!-- -->
 
 ## Recursion
 
-![](questionnaire_files/figure-gfm/recursion-1.png)<!-- -->
+    ## Warning: Removed 596 rows containing non-finite values (stat_summary).
+
+![](beliefs_files/figure-gfm/recursion-1.png)<!-- -->
 
 ## Code for others
 
-![](questionnaire_files/figure-gfm/code-for-others-1.png)<!-- -->
+    ## Warning: Removed 636 rows containing non-finite values (stat_summary).
+
+![](beliefs_files/figure-gfm/code-for-others-1.png)<!-- -->
 
 ## Code for team
 
-![](questionnaire_files/figure-gfm/code-for-team-1.png)<!-- -->
+    ## Warning: Removed 636 rows containing non-finite values (stat_summary).
+
+![](beliefs_files/figure-gfm/code-for-team-1.png)<!-- -->
 
 ## Interference
 
-![](questionnaire_files/figure-gfm/interference-1.png)<!-- -->
+    ## Warning: Removed 656 rows containing non-finite values (stat_summary).
+
+![](beliefs_files/figure-gfm/interference-1.png)<!-- -->
 
 ## Harm
 
-![](questionnaire_files/figure-gfm/harm-1.png)<!-- -->
+    ## Warning: Removed 656 rows containing non-finite values (stat_summary).
+
+![](beliefs_files/figure-gfm/harm-1.png)<!-- -->
 
 # Top 8 paradigms
 
-![](questionnaire_files/figure-gfm/changed-reasoning-paradigm-1.png)<!-- -->
+    ## Warning: Unknown or uninitialised column: 'paradigms'.
 
-![](questionnaire_files/figure-gfm/personality-paradigm-1.png)<!-- -->
+![](beliefs_files/figure-gfm/changed-reasoning-paradigm-1.png)<!-- -->
 
-![](questionnaire_files/figure-gfm/recursion-paradigm-1.png)<!-- -->
+    ## Warning: Unknown or uninitialised column: 'paradigms'.
 
-![](questionnaire_files/figure-gfm/code-for-team-paradigm-1.png)<!-- -->
+![](beliefs_files/figure-gfm/personality-paradigm-1.png)<!-- -->
 
-![](questionnaire_files/figure-gfm/interference-paradigm-1.png)<!-- -->
+    ## Warning: Unknown or uninitialised column: 'paradigms'.
 
-![](questionnaire_files/figure-gfm/harm-paradigm-1.png)<!-- -->
+![](beliefs_files/figure-gfm/recursion-paradigm-1.png)<!-- -->
+
+    ## Warning: Unknown or uninitialised column: 'paradigms'.
+
+![](beliefs_files/figure-gfm/code-for-team-paradigm-1.png)<!-- -->
+
+    ## Warning: Unknown or uninitialised column: 'paradigms'.
+
+![](beliefs_files/figure-gfm/interference-paradigm-1.png)<!-- -->
+
+    ## Warning: Unknown or uninitialised column: 'paradigms'.
+
+![](beliefs_files/figure-gfm/harm-paradigm-1.png)<!-- -->
