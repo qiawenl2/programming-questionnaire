@@ -26,16 +26,16 @@
 
 ## Paradigms
 
-| paradigms                            | n\_top20 | pct\_top20 | n\_all |  pct\_all |
+| paradigm                             | n\_top20 | pct\_top20 | n\_all |  pct\_all |
 | :----------------------------------- | -------: | ---------: | -----: | --------: |
-| multi-paradigm programming language  |       11 |  0.1410256 |     27 | 0.1111111 |
-| programming language                 |       10 |  0.1282051 |     51 | 0.2098765 |
-| imperative programming language      |        8 |  0.1025641 |     20 | 0.0823045 |
-| object-oriented programming language |        8 |  0.1025641 |     24 | 0.0987654 |
-| functional programming language      |        7 |  0.0897436 |     24 | 0.0987654 |
-| interpreted language                 |        7 |  0.0897436 |     15 | 0.0617284 |
-| procedural programming language      |        5 |  0.0641026 |     18 | 0.0740741 |
-| scripting language                   |        3 |  0.0384615 |      7 | 0.0288066 |
+| multi-paradigm programming language  |       11 |  0.1392405 |     27 | 0.1097561 |
+| programming language                 |       10 |  0.1265823 |     52 | 0.2113821 |
+| imperative programming language      |        8 |  0.1012658 |     20 | 0.0813008 |
+| object-oriented programming language |        8 |  0.1012658 |     24 | 0.0975610 |
+| functional programming language      |        7 |  0.0886076 |     24 | 0.0975610 |
+| interpreted language                 |        7 |  0.0886076 |     15 | 0.0609756 |
+| procedural programming language      |        5 |  0.0632911 |     18 | 0.0731707 |
+| scripting language                   |        4 |  0.0506329 |      8 | 0.0325203 |
 
 | language\_name | n\_top8\_paradigms |
 | :------------- | -----------------: |
@@ -56,4 +56,5 @@
 | r              |                  1 |
 | ruby           |                  6 |
 | scala          |                  3 |
+| unix shell     |                  1 |
 | visual basic   |                  3 |
