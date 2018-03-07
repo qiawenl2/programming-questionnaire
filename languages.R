@@ -9,6 +9,7 @@ language_ratings <- collect_table("language_ratings")
 language_info <- collect_table("language_info")
 
 language_summary <- languages %>%
+  filter(language_name %in% unique(language_info$language_name)) %>%
   group_by(language_name) %>%
   summarize(
     frequency = n(),
@@ -65,6 +66,8 @@ top20_reuse <- filter(top20_ratings_summary, question_name == "reuse") %>%
 # paradigms ----
 language_info <- collect_table("language_info")
 language_info_summary <- language_info %>%
+  filter(property_type == "paradigm") %>%
+  rename(paradigm = property_name) %>%
   group_by(paradigm) %>%
   summarize(n = n()) %>%
   mutate(pct = prop.table(n)) %>%
@@ -74,6 +77,8 @@ top20_language_info <- language_info %>%
   filter(language_name %in% top20_languages)
 
 top20_language_info_summary <- top20_language_info %>%
+  filter(property_type == "paradigm") %>%
+  rename(paradigm = property_name) %>%
   group_by(paradigm) %>%
   summarize(n = n()) %>%
   mutate(pct = prop.table(n)) %>%
@@ -84,8 +89,28 @@ top_paradigms_tbl <- left_join(top20_language_info_summary, language_info_summar
 top_paradigms <- top_paradigms_tbl$paradigm
 
 top20_language_paradigms <- top20_language_info %>%
+  filter(property_type == "paradigm") %>%
+  rename(paradigm = property_type) %>%
   filter(paradigm %in% top_paradigms) %>%
   group_by(language_name) %>%
   summarize(n_top8_paradigms = n())
 
 # ---- languages-per-person ----
+languages <- collect_table("languages") %>%
+  filter(language_name %in% language_info$language_name) %>%
+  drop_na(proficiency)
+
+subj_proficiencies <- languages %>%
+  group_by(subj_id) %>%
+  summarize(
+    mean_proficiency = mean(proficiency, na.rm = TRUE),
+    proficiency_var = var(proficiency, na.rm = TRUE)
+  ) %>%
+  arrange(desc(mean_proficiency))
+
+languages$subj_id_ordered <- factor(languages$subj_id, levels = subj_proficiencies$subj_id)
+
+ggplot(languages) +
+  aes(subj_id_ordered, proficiency) +
+  stat_summary(geom = "linerange", fun.data = "mean_se") +
+  scale_x_discrete("", labels = NULL, breaks = NULL)

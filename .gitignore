@@ -9,11 +9,12 @@ data-raw/*.rds
 data-raw/stack-overflow*
 
 # knitr files
+*.html
 *_cache/
 *_files/
 
 # github publishing
-!*_files/
+!*_files/figure-gfm/
 
 # r+rstudio
 .Rproj.user

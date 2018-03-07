@@ -26,9 +26,24 @@ write_tables_to_sqlite(db_name,
                        irq = irq,
                        overwrite = TRUE)
 
-
-language_info <- get_language_info(languages) %>%
+language_info <- unique(languages$language_name) %>%
+  fetch_language_info_from_wikidata() %>%
   add_manual_languages()
+
 write_tables_to_sqlite(db_name,
                        language_info = language_info,
+                       overwrite = TRUE)
+
+stack_overflow <- get_stack_overflow()
+n_respondents <- length(unique(stack_overflow$respondent))
+stack_overflow_ranks <- stack_overflow %>%
+  count(language_name) %>%
+  arrange(desc(n)) %>%
+  mutate(
+    rank = 1:n(),
+    pct = round(n/n_respondents, digits = 2)
+  )
+write_tables_to_sqlite(db_name,
+                       stack_overflow = stack_overflow,
+                       stack_overflow_ranks = stack_overflow_ranks,
                        overwrite = TRUE)
