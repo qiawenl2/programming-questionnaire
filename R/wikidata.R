@@ -3,13 +3,16 @@ library(WikidataR)
 
 # Retrieve metadata about programming languages from Wikidata
 fetch_language_info_from_wikidata <- function(language_names) {
-    language_info <- data_frame(language_name = language_names) %>%
+    language_info <- data_frame(language_name = language_names[1:20]) %>%
       get_all_programming_languages() %>%
       extract_instance_of_properties() %>%
       extract_programming_paradigms() %>%
       select(language_name, instance_of, paradigm) %>%
       gather(property_type, property_name, -language_name) %>%
-      unnest()
+      unnest() %>%
+      mutate(paradigm_name = str_replace(property_name, " programming( language)?", "")) %>%
+      select(language_name, paradigm_name) %>%
+      unique()
 }
 
 get_all_programming_languages <- function(languages) {
@@ -125,8 +128,8 @@ get_label_from_id <- function(id) {
 
 add_manual_languages <- function(wikipedia_languages) {
   manual_languages <- tibble::tribble(
-    ~language_name, ~property_type,       ~property_name,
-    "unix shell",       "paradigm", "scripting language"
+    ~language_name,          ~paradigm,
+    "unix shell", "scripting language"
   )
   bind_rows(wikipedia_languages, manual_languages)
   wikipedia_languages
