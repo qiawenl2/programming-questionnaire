@@ -4,7 +4,7 @@ languages := data-raw/language-paradigms.csv data-raw/stack-overflow.csv data-ra
 
 .PHONY: neo4j
 
-all: qualtrics survey languages
+all: programming-questionnaire.sqlite languages.md beliefs.md
 
 qualtrics: $(qualtrics)
 $(qualtrics): bin/qualtrics.R
@@ -29,6 +29,6 @@ neo4j: bin/neo4j.R
 languages.md: languages.Rmd
 beliefs.md: beliefs.Rmd
 %.md: %.Rmd _output.yml
-	Rscript -e 'rmarkdown::render("$<", output_file = "$@")'
+	Rscript -e 'rmarkdown::render("$<", output_format = "md_document", output_file = "$@")'
 clean:
 	rm -rf languages.md beliefs.md *_cache/ *_files/

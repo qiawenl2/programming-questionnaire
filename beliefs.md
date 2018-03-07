@@ -1,8 +1,8 @@
     ## ── Attaching packages ────────────────────────────────── tidyverse 1.2.1 ──
 
     ## ✔ ggplot2 2.2.1     ✔ purrr   0.2.4
-    ## ✔ tibble  1.4.1     ✔ dplyr   0.7.4
-    ## ✔ tidyr   0.7.2     ✔ stringr 1.2.0
+    ## ✔ tibble  1.4.2     ✔ dplyr   0.7.4
+    ## ✔ tidyr   0.8.0     ✔ stringr 1.2.0
     ## ✔ readr   1.1.1     ✔ forcats 0.2.0
 
     ## ── Conflicts ───────────────────────────────────── tidyverse_conflicts() ──
@@ -21,6 +21,9 @@
     ##     extract
 
     ## Loading programmingquestionnaire
+
+    ## Warning: changing locked binding for 'length.path' in 'httr' whilst loading
+    ## 'RNeo4j'
 
     ## Joining, by = "subj_id"
 
@@ -98,26 +101,14 @@
 
 # Top 8 paradigms
 
-    ## Warning: Unknown or uninitialised column: 'paradigms'.
-
 ![](beliefs_files/figure-gfm/changed-reasoning-paradigm-1.png)<!-- -->
-
-    ## Warning: Unknown or uninitialised column: 'paradigms'.
 
 ![](beliefs_files/figure-gfm/personality-paradigm-1.png)<!-- -->
 
-    ## Warning: Unknown or uninitialised column: 'paradigms'.
-
 ![](beliefs_files/figure-gfm/recursion-paradigm-1.png)<!-- -->
-
-    ## Warning: Unknown or uninitialised column: 'paradigms'.
 
 ![](beliefs_files/figure-gfm/code-for-team-paradigm-1.png)<!-- -->
 
-    ## Warning: Unknown or uninitialised column: 'paradigms'.
-
 ![](beliefs_files/figure-gfm/interference-paradigm-1.png)<!-- -->
-
-    ## Warning: Unknown or uninitialised column: 'paradigms'.
 
 ![](beliefs_files/figure-gfm/harm-paradigm-1.png)<!-- -->

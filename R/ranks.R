@@ -26,10 +26,10 @@ order_paradigm_by <- function(frame, rank_col, levels_only = FALSE, reverse = FA
   } else {
     levels <- frame %>%
       arrange_(.dots = list(rank_col)) %>%
-      .$paradigms
+      .$paradigm_name
   }
   if(reverse) levels <- rev(levels)
   if(levels_only) return(levels)
-  frame$paradigm_ordered <- factor(frame$paradigm, levels = levels)
+  frame$paradigm_ordered <- factor(frame$paradigm_name, levels = levels)
   frame
 }

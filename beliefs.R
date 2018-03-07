@@ -76,9 +76,9 @@ by_language_plot <- function(name, x = "python", y = 2.5) {
 }
 
 # By paradigm ----
-language_info <- collect_table("language_info")
-paradigm_ranks <- language_info %>%
-  group_by(paradigm) %>%
+language_paradigms <- collect_table("language_paradigms")
+paradigm_ranks <- language_paradigms %>%
+  group_by(paradigm_name) %>%
   summarize(
     n_languages = n()
   ) %>%
@@ -86,14 +86,14 @@ paradigm_ranks <- language_info %>%
 top8_paradigms <- paradigm_ranks %>%
   arrange(n_languages_rank) %>%
   filter(n_languages_rank <= 8) %>%
-  .$paradigm
+  .$paradigm_name
 
 questionnaire_by_top8_paradigms <- collect_table("languages") %>%
-  left_join(language_info) %>%
-  filter(paradigm %in% top8_paradigms) %>%
+  left_join(language_paradigms) %>%
+  filter(paradigm_name %in% top8_paradigms) %>%
   left_join(questionnaire, .) %>%
-  drop_na(paradigm) %>%
-  group_by(paradigm) %>%
+  drop_na(paradigm_name) %>%
+  group_by(paradigm_name) %>%
   summarize(
     cr1 = mean(cr1, na.rm = TRUE),
     cp1 = mean(cp1, na.rm = TRUE),
