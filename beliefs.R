@@ -75,6 +75,8 @@ by_language_plot <- function(name, x = "python", y = 2.5) {
       labs(x = "", y = "agreement", title = paste(strwrap(get_question_text(name), 50), collapse = "\n"))
 }
 
+
+
 # By paradigm ----
 language_paradigms <- collect_table("language_paradigms")
 paradigm_ranks <- language_paradigms %>%
@@ -121,3 +123,17 @@ by_paradigm_plot <- function(name) {
     scale_x_discrete(position = "top") +
     labs(x = "", y = "agreement")
 }
+
+# Functional v imperative ----
+functional_v_imperative <- collect_table("languages") %>%
+  left_join(language_paradigms) %>%
+  filter(paradigm_name %in% c("functional", "imperative")) %>%
+  inner_join(get_functional_v_imperative()) %>%
+  filter(language_ix == 1) %>%
+  left_join(questionnaire, .) %>%
+  drop_na(paradigm_name)
+
+functional_v_imperative_plot <- ggplot(functional_v_imperative) +
+  aes(paradigm_name, cr1) +
+  geom_point(position = position_jitter(width = 0.2, height = 0.1)) +
+  stat_summary(geom = "errorbar", fun.data = "mean_se", width = 0.2)

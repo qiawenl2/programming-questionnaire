@@ -7,6 +7,34 @@ connect_neo4j <- function(username = NULL, password = NULL) {
              username = username, password = password)
 }
 
+get_functional_v_imperative <- function() {
+  bind_rows(
+    functional = get_functional_not_imperative(),
+    imperative = get_imperative_not_functional(),
+    .id = "paradigm_name"
+  )
+}
+
+get_functional_not_imperative <- function() {
+  graph <- connect_neo4j()
+  query = '
+  MATCH (language:Language)
+  MATCH (language) -[:TYPEOF]-> (functional:Paradigm { name: "functional" })
+  WHERE NOT (language)-[:TYPEOF]-> (:Paradigm { name: "imperative" })
+  RETURN language.name as language_name'
+  cypher(graph, query)
+}
+
+get_imperative_not_functional <- function() {
+  graph <- connect_neo4j()
+  query = '
+  MATCH (language:Language)
+  MATCH (language) -[:TYPEOF]-> (imperative:Paradigm { name: "imperative" })
+  WHERE NOT (language)-[:TYPEOF]-> (:Paradigm { name: "functional" })
+  RETURN language.name as language_name'
+  cypher(graph, query)
+}
+
 load_languages_in_graph_db <- function(language_info) {
   graph <- connect_neo4j()
   

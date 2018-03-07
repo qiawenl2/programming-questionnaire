@@ -3,7 +3,9 @@ title: Beliefs about the effects of programming on thinking.
 ---
 ```{r config, include=FALSE}
 library(knitr)
-opts_chunk$set(echo=FALSE, dpi=300, cache=TRUE)
+opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE,
+               fig.width=4, fig.height=4, dpi=300,
+               cache=TRUE)
 read_chunk("beliefs.R")
 ```
 ```{r setup}
@@ -24,6 +26,10 @@ questions %>%
 
 ```{r changed-reasoning}
 by_language_plot("cr1")
+```
+
+```{r functional-v-imperative}
+functional_v_imperative_plot
 ```
 
 ## Personality
