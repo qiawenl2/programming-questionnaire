@@ -5,42 +5,26 @@ library(magrittr)
 library(ggrepel)
 devtools::load_all()
 
-t_ <- list(base = theme_minimal(base_size=18),
-           geom_text_size = 6)
 
-languages <- collect_table("languages")
-language_ratings <- collect_table("language_ratings")
-language_paradigms <- collect_table("language_paradigms")
+filter_first_languages <- . %>%
+  filter(language_ix == 1)
 
-language_summary <- languages %>%
-  filter(language_name %in% unique(language_paradigms$language_name)) %>%
-  group_by(language_name) %>%
-  summarize(
-    frequency = n(),
-    proficiency = mean(proficiency, na.rm = TRUE),
-    years_used = mean(years_used, na.rm = TRUE)
-  ) %>%
-  rank_by("frequency") %>%
-  rank_by("years_used") %>%
-  rank_by("proficiency")
+filter_known_languages <- function(frame) {
+  known_languages <- unique(collect_table("language_paradigms")$language_name)
+  filter(frame, language_name %in% known_languages)
+}
 
-# must be ordered!
-top20_languages <- order_language_by(language_summary, "frequency_rank", levels_only = TRUE)[1:20]
-top20_language_names <- top20_languages
-
-top20_language_summary <- language_summary %>%
-  filter(language_name %in% top20_languages)
-
-language_ratings_summary <- language_ratings %>%
-  group_by(language_name, question_name, question_tag) %>%
-  summarize(
-    n = n(),
-    agreement_num = mean(agreement_num, na.rm = TRUE)
-  ) %>%
-  ungroup()
-
-top20_ratings_summary <- language_ratings_summary %>%
-  filter(language_name %in% top20_languages)
+recode_functional_v_imperative <- function(frame) {
+  levels <- c("imperative", "both", "functional")
+  map <- data_frame(
+    paradigm_name = levels,
+    paradigm_label = factor(levels, levels = levels),
+    functional_v_imperative = c(1, 0, 0),
+    functional_v_both = c(0, 1, 0)
+  )
+  if(missing(frame)) return(map)
+  left_join(frame, map)
+}
 
 recode_reuse <- function(frame) {
   reuse_levels <- c("adapt",  "reuse", "adopt")
@@ -52,17 +36,37 @@ recode_reuse <- function(frame) {
   left_join(frame, reuse_map)
 }
 
-top20_reuse <- filter(top20_ratings_summary, question_name == "reuse") %>%
-  recode_reuse()
+t_ <- list(base = theme_minimal(base_size=18),
+           geom_text_size = 6)
+
+languages <- collect_table("languages")
+
+# must be ordered!
+top25_language_names <- languages %>%
+  filter_known_languages() %>%
+  group_by(language_name) %>%
+  summarize(frequency = n()) %>%
+  arrange(desc(frequency)) %>%
+  .$language_name %>%
+  .[1:20]
 
 # representativeness ----
-top20_language_summary %<>% order_language_by("frequency_rank", reverse = TRUE)
-freq_plot <- ggplot(top20_language_summary) +
-  aes(language_ordered, frequency) +
-  geom_bar(stat = "identity") +
+language_frequencies <- languages %>%
+  filter(language_name %in% top25_language_names)
+
+language_frequency_order <- language_frequencies %>%
+  count(language_name) %>%
+  arrange(desc(n)) %>%
+  .$language_name
+language_frequencies$language_ordered <- factor(language_frequencies$language_name,
+                                                levels = rev(language_frequency_order))
+  
+freq_plot <- ggplot(language_frequencies) +
+  aes(language_ordered) +
+  geom_bar(stat = "count") +
   scale_x_discrete("") +
   scale_y_continuous(breaks = seq(0, 200, by = 50)) +
-  coord_flip(ylim = c(0, 240), expand = FALSE) +
+  coord_flip(ylim = c(0, 160), expand = FALSE) +
   labs(x = "", y = "", title = "Frequency in sample") +
   t_$base
 
@@ -203,6 +207,12 @@ get_question_text <- function(name) {
   filter(questions, question_name == name)$question_text
 }
 
+create_wrapped_title <- function(name) {
+   get_question_text(name) %>%
+    strwrap(50) %>%
+    paste(collapse = "\n")
+}
+
 questionnaire <- collect_table("questionnaire")
 
 # By language ----
@@ -250,18 +260,17 @@ top20_questionnaire_ranks <- top20_questionnaire %>%
   select(language_name, cr1_rank, cp1_rank, rec1_rank,
          cfo1_rank, cfo2_rank, inter1_rank, inter2_rank)
 
-
-
 by_language_plot <- function(name, x = "python", y = 2.5) {
   levels <- arrange_(top20_questionnaire_ranks, .dots = list(paste0(name, "_rank")))$language_name
   top20_questionnaire %>%
+    filter_first_languages() %>%
     order_language_by(use_levels = levels) %>%
     ggplot() +
     aes_string("language_ordered", name) +
     stat_summary(geom = "errorbar", fun.data = "mean_se") +
     coord_flip(ylim = c(1,5)) +
     scale_x_discrete(position = "top") +
-    labs(x = "", y = "agreement", title = paste(strwrap(get_question_text(name), 50), collapse = "\n")) +
+    labs(x = "", y = "agreement", title = create_wrapped_title(name)) +
     t_$base
 }
 
@@ -313,15 +322,24 @@ by_paradigm_plot <- function(name) {
 }
 
 # Functional v imperative ----
+
+
 functional_v_imperative <- collect_table("languages") %>%
-  left_join(language_paradigms) %>%
-  filter(paradigm_name %in% c("functional", "imperative")) %>%
+  filter_first_languages() %>%
   inner_join(get_functional_v_imperative()) %>%
-  filter(language_ix == 1) %>%
   left_join(questionnaire, .) %>%
+  recode_functional_v_imperative() %>%
   drop_na(paradigm_name)
 
 functional_v_imperative_plot <- ggplot(functional_v_imperative) +
-  aes(paradigm_name, cr1) +
-  geom_point(position = position_jitter(width = 0.2, height = 0.1)) +
-  stat_summary(geom = "errorbar", fun.data = "mean_se", width = 0.2)
+  aes(paradigm_label, cr1, color = paradigm_name) +
+  geom_point(position = position_jitter(width = 0.15, height = 0.2),
+             shape = 1, size = 2) +
+  stat_summary(geom = "errorbar", fun.data = "mean_se", width = 0.2, size = 1.5) +
+  scale_x_discrete(position = "top") +
+  scale_color_brewer(palette = "Set2") +
+  t_$base +
+  theme(legend.position = "none") +
+  coord_flip() +
+  labs(x = "", y = "agreement", title = create_wrapped_title("cr1"))
+

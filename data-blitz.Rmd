@@ -110,5 +110,5 @@ by_language_plot("cr1")
 # Changed reasoning
 
 ```{r changed-reasoning-by-paradigm, cache=FALSE}
-by_paradigm_plot("cr1")
+functional_v_imperative_plot
 ```
