@@ -14,7 +14,8 @@
 The results of the survey are presented in the following
 reports.
 
-[Programming languages](languages.md)
+[1. Programming languages](languages.md)
 :   What programming languages are represented in the survey?
-[Beliefs about programming](beliefs.md)
+
+[2. Beliefs about programming](beliefs.md)
 :   Correlations between languages and beliefs about programming.
