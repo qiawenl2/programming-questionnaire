@@ -10,6 +10,7 @@ connect_neo4j <- function(username = NULL, password = NULL) {
 get_functional_v_imperative <- function() {
   bind_rows(
     functional = get_functional_not_imperative(),
+    both = get_functional_and_imperative(),
     imperative = get_imperative_not_functional(),
     .id = "paradigm_name"
   )
@@ -19,8 +20,18 @@ get_functional_not_imperative <- function() {
   graph <- connect_neo4j()
   query = '
   MATCH (language:Language)
-  MATCH (language) -[:TYPEOF]-> (functional:Paradigm { name: "functional" })
+  MATCH (language) -[:TYPEOF]-> (:Paradigm { name: "functional" })
   WHERE NOT (language)-[:TYPEOF]-> (:Paradigm { name: "imperative" })
+  RETURN language.name as language_name'
+  cypher(graph, query)
+}
+
+get_functional_and_imperative <- function() {
+  graph <- connect_neo4j()
+  query = '
+  MATCH (language:Language)
+  MATCH (language) -[:TYPEOF]-> (:Paradigm { name: "functional" })
+  MATCH (language) -[:TYPEOF]-> (:Paradigm { name: "imperative" })
   RETURN language.name as language_name'
   cypher(graph, query)
 }
@@ -29,7 +40,7 @@ get_imperative_not_functional <- function() {
   graph <- connect_neo4j()
   query = '
   MATCH (language:Language)
-  MATCH (language) -[:TYPEOF]-> (imperative:Paradigm { name: "imperative" })
+  MATCH (language) -[:TYPEOF]-> (:Paradigm { name: "imperative" })
   WHERE NOT (language)-[:TYPEOF]-> (:Paradigm { name: "functional" })
   RETURN language.name as language_name'
   cypher(graph, query)

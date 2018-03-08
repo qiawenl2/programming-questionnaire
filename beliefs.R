@@ -1,4 +1,4 @@
-# ---- setup ----
+# ---- beliefs ----
 library(tidyverse)
 library(magrittr)
 devtools::load_all()
