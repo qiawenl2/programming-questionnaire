@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+set -x
+mv ~/Downloads/graph.svg imgs/$1.svg

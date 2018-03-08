@@ -6,6 +6,9 @@ languages := data-raw/language-paradigms.csv data-raw/stack-overflow.csv data-ra
 
 all: programming-questionnaire.sqlite languages.md beliefs.md
 
+data-blitz.pdf: data-blitz.Rmd
+	Rscript -e 'rmarkdown::render("$<", output_format = "all", ouput_file = "$@")'
+
 qualtrics: $(qualtrics)
 $(qualtrics): bin/qualtrics.R
 	./bin/qualtrics.R
@@ -27,8 +30,10 @@ neo4j: bin/neo4j.R
 	./bin/neo4j.R --clear
 
 languages.md: languages.Rmd
+	Rscript -e 'rmarkdown::render("$<", output_format = "md_document", output_file = "$@")'
 beliefs.md: beliefs.Rmd
-%.md: %.Rmd _output.yml
 	Rscript -e 'rmarkdown::render("$<", output_format = "md_document", output_file = "$@")'
 clean:
-	rm -rf languages.md beliefs.md *_cache/ *_files/
+	rm -rf languages_cache/ languages_files/
+	rm -rf beliefs_cache/ beliefs_files/
+	rm -rf data-blitz_cache/ data-blitz_files/

@@ -9,9 +9,14 @@ data-raw/stack-overflow-developer-survey-2017*
 *.sqlite
 
 # knitr files
+*.pdf
 *.html
 *_cache/
 *_files/
+
+# tex
+*.nav
+*.snm
 
 # github publishing
 !*_files/figure-gfm/

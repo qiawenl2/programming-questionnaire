@@ -1,164 +1,626 @@
-## Representativeness
+Representativeness
+------------------
 
-![](languages_files/figure-gfm/representativeness-1.png)<!-- -->
+![](languages_files/figure-markdown_strict/representativeness-1.png)
 
-## Experience
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Survey</th>
+<th style="text-align: right;">N Respondents</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Our Survey</td>
+<td style="text-align: right;">499</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Stack Overflow Developer Survey</td>
+<td style="text-align: right;">2</td>
+</tr>
+</tbody>
+</table>
 
-![](languages_files/figure-gfm/languages-per-person-1.png)<!-- -->
+Experience
+----------
 
-## Proficiency
+![](languages_files/figure-markdown_strict/languages-per-person-1.png)
 
-![](languages_files/figure-gfm/proficiency-1.png)<!-- -->
+Proficiency
+-----------
 
-## Rank correlations
+![](languages_files/figure-markdown_strict/proficiency-1.png)
 
-![](languages_files/figure-gfm/correlations-1.png)<!-- -->
+Rank correlations
+-----------------
 
-![](languages_files/figure-gfm/experience-proficiency-correlation-1.png)<!-- -->
+![](languages_files/figure-markdown_strict/correlations-1.png)
 
-## Intuitiveness
+![](languages_files/figure-markdown_strict/experience-proficiency-correlation-1.png)
 
-![](languages_files/figure-gfm/intuitiveness-1.png)<!-- -->
+Intuitiveness
+-------------
 
-## Reuse
+![](languages_files/figure-markdown_strict/intuitiveness-1.png)
 
-![](languages_files/figure-gfm/reuse-1.png)<!-- -->
+Reuse
+-----
 
-## Paradigms
+![](languages_files/figure-markdown_strict/reuse-1.png)
 
-| paradigm\_name       | n\_top20 | pct\_top20 | n\_all |  pct\_all |
-| :------------------- | -------: | ---------: | -----: | --------: |
-| functional           |       13 |  0.1056911 |     13 | 0.1056911 |
-| multi-paradigm       |       13 |  0.1056911 |     13 | 0.1056911 |
-| imperative           |       12 |  0.0975610 |     12 | 0.0975610 |
-| object-oriented      |       11 |  0.0894309 |     11 | 0.0894309 |
-| programming language |       11 |  0.0894309 |     11 | 0.0894309 |
-| interpreted language |        8 |  0.0650407 |      8 | 0.0650407 |
-| procedural           |        7 |  0.0569106 |      7 | 0.0569106 |
-| scripting language   |        4 |  0.0325203 |      4 | 0.0325203 |
+Paradigms
+---------
 
-| language\_name | paradigm\_name             |
-| :------------- | :------------------------- |
-| javascript     | scripting language         |
-| javascript     | computing platform         |
-| javascript     | interpreted language       |
-| javascript     | multi-paradigm             |
-| javascript     | prototype-based            |
-| javascript     | imperative                 |
-| javascript     | functional                 |
-| javascript     | event-driven               |
-| perl           | programming language       |
-| perl           | procedural                 |
-| perl           | object-oriented            |
-| perl           | multi-paradigm             |
-| perl           | imperative                 |
-| perl           | interpreted language       |
-| ocaml          | object-oriented            |
-| ocaml          | functional                 |
-| ocaml          | multi-paradigm             |
-| ocaml          | imperative                 |
-| java           | multi-paradigm             |
-| haskell        | purely functional          |
-| haskell        | lazy evaluation            |
-| haskell        | non-strict                 |
-| haskell        | modular                    |
-| haskell        | interpreted language       |
-| c              | programming language       |
-| c              | imperative                 |
-| c              | procedural                 |
-| c              | structured                 |
-| c++            | object-oriented            |
-| c++            | multi-paradigm             |
-| c++            | procedural                 |
-| c++            | functional                 |
-| c++            | generic                    |
-| c++            | programming language       |
-| c\#            | multi-paradigm             |
-| lua            | functional                 |
-| lua            | object-oriented            |
-| lua            | scripting language         |
-| lua            | programming language       |
-| lua            | multi-paradigm             |
-| lua            | imperative                 |
-| lua            | procedural                 |
-| lua            | prototype-based            |
-| lua            | interpreted language       |
-| r              | GNU package                |
-| r              | multi-paradigm             |
-| r              | statistical package        |
-| julia          | programming language       |
-| julia          | object-oriented            |
-| julia          | functional                 |
-| julia          | array                      |
-| julia          | multi-paradigm             |
-| julia          | imperative                 |
-| julia          | interpreted language       |
-| matlab         | array                      |
-| matlab         | imperative                 |
-| matlab         | interpreted language       |
-| visual basic   | programming language       |
-| visual basic   | event-driven               |
-| visual basic   | procedural                 |
-| visual basic   | object-oriented            |
-| php            | scripting language         |
-| php            | procedural                 |
-| php            | object-oriented            |
-| php            | multi-paradigm             |
-| php            | imperative                 |
-| php            | interpreted language       |
-| python         | object-oriented            |
-| python         | dynamic                    |
-| python         | functional                 |
-| python         | scripting language         |
-| python         | multi-paradigm             |
-| python         | imperative                 |
-| python         | interpreted language       |
-| python         | general-purpose            |
-| python         | high-level                 |
-| python         | programming language       |
-| elixir         | functional                 |
-| elixir         | programming language       |
-| erlang         | programming language       |
-| erlang         | multi-paradigm             |
-| erlang         | concurrent                 |
-| erlang         | functional                 |
-| erlang         | declarative                |
-| sql            | declarative                |
-| sql            | query language             |
-| sql            | file format                |
-| sql            | programming language       |
-| coq            | programming language       |
-| coq            | proof assistant            |
-| coq            | purely functional          |
-| rust           | procedural                 |
-| rust           | functional                 |
-| rust           | multi-paradigm             |
-| rust           | imperative                 |
-| rust           | System                     |
-| java           | structured                 |
-| java           | object-oriented            |
-| java           | functional                 |
-| java           | generic                    |
-| java           | imperative                 |
-| java           | concurrent computing       |
-| java           | class-based                |
-| java           | concurrent object-oriented |
-| java           | reflective                 |
-| haskell        | functional                 |
-| c\#            | structured                 |
-| c\#            | imperative                 |
-| c\#            | object-oriented            |
-| c\#            | event-driven               |
-| c\#            | functional                 |
-| c\#            | generic                    |
-| c\#            | reflective                 |
-| c\#            | concurrent computing       |
-| c\#            | class-based                |
-| r              | functional                 |
-| r              | array                      |
-| r              | object-oriented            |
-| visual basic   | Object-based language      |
-| python         | reflection                 |
-| erlang         | concurrent computing       |
-| coq            | purely functional          |
-| rust           | compiled language          |
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">paradigm_name</th>
+<th style="text-align: right;">n_top20</th>
+<th style="text-align: right;">pct_top20</th>
+<th style="text-align: right;">n_all</th>
+<th style="text-align: right;">pct_all</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">functional</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">0.1056911</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">0.1056911</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">multi-paradigm</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">0.1056911</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">0.1056911</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">imperative</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">0.0975610</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">0.0975610</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">object-oriented</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">0.0894309</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">0.0894309</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">programming language</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">0.0894309</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">0.0894309</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">interpreted language</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">0.0650407</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">0.0650407</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">procedural</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">0.0569106</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">0.0569106</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">scripting language</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0325203</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0325203</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">language_name</th>
+<th style="text-align: left;">paradigm_name</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">javascript</td>
+<td style="text-align: left;">scripting language</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">javascript</td>
+<td style="text-align: left;">computing platform</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">javascript</td>
+<td style="text-align: left;">interpreted language</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">javascript</td>
+<td style="text-align: left;">multi-paradigm</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">javascript</td>
+<td style="text-align: left;">prototype-based</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">javascript</td>
+<td style="text-align: left;">imperative</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">javascript</td>
+<td style="text-align: left;">functional</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">javascript</td>
+<td style="text-align: left;">event-driven</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">perl</td>
+<td style="text-align: left;">programming language</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">perl</td>
+<td style="text-align: left;">procedural</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">perl</td>
+<td style="text-align: left;">object-oriented</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">perl</td>
+<td style="text-align: left;">multi-paradigm</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">perl</td>
+<td style="text-align: left;">imperative</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">perl</td>
+<td style="text-align: left;">interpreted language</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ocaml</td>
+<td style="text-align: left;">object-oriented</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ocaml</td>
+<td style="text-align: left;">functional</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ocaml</td>
+<td style="text-align: left;">multi-paradigm</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ocaml</td>
+<td style="text-align: left;">imperative</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">java</td>
+<td style="text-align: left;">multi-paradigm</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">haskell</td>
+<td style="text-align: left;">purely functional</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">haskell</td>
+<td style="text-align: left;">lazy evaluation</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">haskell</td>
+<td style="text-align: left;">non-strict</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">haskell</td>
+<td style="text-align: left;">modular</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">haskell</td>
+<td style="text-align: left;">interpreted language</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">c</td>
+<td style="text-align: left;">programming language</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">c</td>
+<td style="text-align: left;">imperative</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">c</td>
+<td style="text-align: left;">procedural</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">c</td>
+<td style="text-align: left;">structured</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">c++</td>
+<td style="text-align: left;">object-oriented</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">c++</td>
+<td style="text-align: left;">multi-paradigm</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">c++</td>
+<td style="text-align: left;">procedural</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">c++</td>
+<td style="text-align: left;">functional</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">c++</td>
+<td style="text-align: left;">generic</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">c++</td>
+<td style="text-align: left;">programming language</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">c#</td>
+<td style="text-align: left;">multi-paradigm</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">lua</td>
+<td style="text-align: left;">functional</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">lua</td>
+<td style="text-align: left;">object-oriented</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">lua</td>
+<td style="text-align: left;">scripting language</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">lua</td>
+<td style="text-align: left;">programming language</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">lua</td>
+<td style="text-align: left;">multi-paradigm</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">lua</td>
+<td style="text-align: left;">imperative</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">lua</td>
+<td style="text-align: left;">procedural</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">lua</td>
+<td style="text-align: left;">prototype-based</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">lua</td>
+<td style="text-align: left;">interpreted language</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">r</td>
+<td style="text-align: left;">GNU package</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">r</td>
+<td style="text-align: left;">multi-paradigm</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">r</td>
+<td style="text-align: left;">statistical package</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">julia</td>
+<td style="text-align: left;">programming language</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">julia</td>
+<td style="text-align: left;">object-oriented</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">julia</td>
+<td style="text-align: left;">functional</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">julia</td>
+<td style="text-align: left;">array</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">julia</td>
+<td style="text-align: left;">multi-paradigm</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">julia</td>
+<td style="text-align: left;">imperative</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">julia</td>
+<td style="text-align: left;">interpreted language</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">matlab</td>
+<td style="text-align: left;">array</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">matlab</td>
+<td style="text-align: left;">imperative</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">matlab</td>
+<td style="text-align: left;">interpreted language</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">visual basic</td>
+<td style="text-align: left;">programming language</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">visual basic</td>
+<td style="text-align: left;">event-driven</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">visual basic</td>
+<td style="text-align: left;">procedural</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">visual basic</td>
+<td style="text-align: left;">object-oriented</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">php</td>
+<td style="text-align: left;">scripting language</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">php</td>
+<td style="text-align: left;">procedural</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">php</td>
+<td style="text-align: left;">object-oriented</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">php</td>
+<td style="text-align: left;">multi-paradigm</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">php</td>
+<td style="text-align: left;">imperative</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">php</td>
+<td style="text-align: left;">interpreted language</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">python</td>
+<td style="text-align: left;">object-oriented</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">python</td>
+<td style="text-align: left;">dynamic</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">python</td>
+<td style="text-align: left;">functional</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">python</td>
+<td style="text-align: left;">scripting language</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">python</td>
+<td style="text-align: left;">multi-paradigm</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">python</td>
+<td style="text-align: left;">imperative</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">python</td>
+<td style="text-align: left;">interpreted language</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">python</td>
+<td style="text-align: left;">general-purpose</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">python</td>
+<td style="text-align: left;">high-level</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">python</td>
+<td style="text-align: left;">programming language</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">elixir</td>
+<td style="text-align: left;">functional</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">elixir</td>
+<td style="text-align: left;">programming language</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">erlang</td>
+<td style="text-align: left;">programming language</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">erlang</td>
+<td style="text-align: left;">multi-paradigm</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">erlang</td>
+<td style="text-align: left;">concurrent</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">erlang</td>
+<td style="text-align: left;">functional</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">erlang</td>
+<td style="text-align: left;">declarative</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">sql</td>
+<td style="text-align: left;">declarative</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">sql</td>
+<td style="text-align: left;">query language</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">sql</td>
+<td style="text-align: left;">file format</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">sql</td>
+<td style="text-align: left;">programming language</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">coq</td>
+<td style="text-align: left;">programming language</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">coq</td>
+<td style="text-align: left;">proof assistant</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">coq</td>
+<td style="text-align: left;">purely functional</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">rust</td>
+<td style="text-align: left;">procedural</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">rust</td>
+<td style="text-align: left;">functional</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">rust</td>
+<td style="text-align: left;">multi-paradigm</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">rust</td>
+<td style="text-align: left;">imperative</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">rust</td>
+<td style="text-align: left;">System</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">java</td>
+<td style="text-align: left;">structured</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">java</td>
+<td style="text-align: left;">object-oriented</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">java</td>
+<td style="text-align: left;">functional</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">java</td>
+<td style="text-align: left;">generic</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">java</td>
+<td style="text-align: left;">imperative</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">java</td>
+<td style="text-align: left;">concurrent computing</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">java</td>
+<td style="text-align: left;">class-based</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">java</td>
+<td style="text-align: left;">concurrent object-oriented</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">java</td>
+<td style="text-align: left;">reflective</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">haskell</td>
+<td style="text-align: left;">functional</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">c#</td>
+<td style="text-align: left;">structured</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">c#</td>
+<td style="text-align: left;">imperative</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">c#</td>
+<td style="text-align: left;">object-oriented</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">c#</td>
+<td style="text-align: left;">event-driven</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">c#</td>
+<td style="text-align: left;">functional</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">c#</td>
+<td style="text-align: left;">generic</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">c#</td>
+<td style="text-align: left;">reflective</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">c#</td>
+<td style="text-align: left;">concurrent computing</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">c#</td>
+<td style="text-align: left;">class-based</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">r</td>
+<td style="text-align: left;">functional</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">r</td>
+<td style="text-align: left;">array</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">r</td>
+<td style="text-align: left;">object-oriented</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">visual basic</td>
+<td style="text-align: left;">Object-based language</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">python</td>
+<td style="text-align: left;">reflection</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">erlang</td>
+<td style="text-align: left;">concurrent computing</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">coq</td>
+<td style="text-align: left;">purely functional</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">rust</td>
+<td style="text-align: left;">compiled language</td>
+</tr>
+</tbody>
+</table>

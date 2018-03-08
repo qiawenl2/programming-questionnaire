@@ -1,0 +1,86 @@
+---
+title: Correlations between programming languages and beliefs about programming
+author: |
+  Pierce Edmiston
+  <pedmiston@wisc.edu>
+output:
+  beamer_presentation:
+    theme: metropolis
+---
+```{r config, include=FALSE}
+library(knitr)
+opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE,
+               cache=TRUE)
+read_chunk("languages.R")
+devtools::load_all()
+```
+```{r setup}
+```
+
+# Research questions
+
+- How is our ability to solve problems affected by the tools we use to
+  solve them?
+- How do people solve the same problems using different programming languages?
+
+This data blitz:
+
+- Explore survey responses given by professional and academic programmers.
+- We asked them what languages they knew and their beliefs about programming.
+
+# Who cares about programming languages?
+
+- Hundreds of different programming languages, but all are formally equivalent.
+- Computer scientists think a lot about the differences between
+  languages.
+- Can we measure the *impact* of different programming languages on
+  individual computer scientists?
+  
+# Can we measure differences between programmers who use different languages?
+
+Of course! What should we predict and why does it matter?
+
+> [Lisp] has assisted a number of our most gifted fellow humans in thinking previously 
+  impossible thoughts. (Dijkstra, 1972)
+
+H1
+: Functional languages are more transformative than other language paradigms.
+
+H2
+: Languages with more paradigms are easier to master.
+
+# What languages did they know?
+
+```{r representativeness}
+gridExtra::grid.arrange(freq_plot, rank_corr_plot, nrow = 1)
+```
+
+# Functional programming languages
+
+```{r functional-languages}
+crotchet::draw_svg("imgs/functional-languages.svg")
+```
+
+# Programming languages have many paradigms
+
+```{r python-paradigms}
+crotchet::draw_svg("imgs/python-paradigms.svg")
+```
+
+# Functional versus imperative languages
+
+```{r functional-v-imperative}
+crotchet::draw_svg("imgs/functional-v-imperative.svg")
+```
+
+# Functional versus object-oriented languages
+
+```{r functional-v-object-oriented}
+crotchet::draw_svg("imgs/functional-v-object.svg")
+```
+
+# Full Venn Diagram
+
+```{r functional-v-object-v-imperative}
+crotchet::draw_svg("imgs/functional-v-object-v-imperative.svg")
+```
