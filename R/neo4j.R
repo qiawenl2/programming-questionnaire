@@ -46,6 +46,45 @@ get_imperative_not_functional <- function() {
   cypher(graph, query)
 }
 
+get_functional_v_object <- function() {
+  bind_rows(
+    functional = get_functional_not_object(),
+    both = get_functional_and_object(),
+    `object-oriented` = get_object_not_functional(),
+    .id = "paradigm_name"
+  )
+}
+
+get_functional_not_object <- function() {
+  graph <- connect_neo4j()
+  query = '
+  MATCH (language:Language)
+  MATCH (language) -[:TYPEOF]-> (:Paradigm { name: "functional" })
+  WHERE NOT (language)-[:TYPEOF]-> (:Paradigm { name: "object-oriented" })
+  RETURN language.name as language_name'
+  cypher(graph, query)
+}
+
+get_functional_and_object <- function() {
+  graph <- connect_neo4j()
+  query = '
+  MATCH (language:Language)
+  MATCH (language) -[:TYPEOF]-> (:Paradigm { name: "functional" })
+  MATCH (language) -[:TYPEOF]-> (:Paradigm { name: "object-oriented" })
+  RETURN language.name as language_name'
+  cypher(graph, query)
+}
+
+get_object_not_functional <- function() {
+  graph <- connect_neo4j()
+  query = '
+  MATCH (language:Language)
+  MATCH (language) -[:TYPEOF]-> (:Paradigm { name: "object-oriented" })
+  WHERE NOT (language)-[:TYPEOF]-> (:Paradigm { name: "functional" })
+  RETURN language.name as language_name'
+  cypher(graph, query)
+}
+
 load_languages_in_graph_db <- function(language_info) {
   graph <- connect_neo4j()
   

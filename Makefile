@@ -7,7 +7,7 @@ languages := data-raw/language-paradigms.csv data-raw/stack-overflow.csv data-ra
 all: programming-questionnaire.sqlite languages.md beliefs.md
 
 data-blitz.pdf: data-blitz.Rmd
-	Rscript -e 'rmarkdown::render("$<", output_format = "all", ouput_file = "$@")'
+	Rscript -e 'rmarkdown::render("$<", output_file = "$@")'
 
 qualtrics: $(qualtrics)
 $(qualtrics): bin/qualtrics.R

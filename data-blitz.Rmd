@@ -1,7 +1,7 @@
 ---
 title: Correlations between programming languages and beliefs about programming
 author: |
-  Pierce Edmiston
+  Pierce Edmiston  
   <pedmiston@wisc.edu>
 output:
   beamer_presentation:
@@ -14,30 +14,29 @@ opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE,
 read_chunk("data-blitz.R")
 devtools::load_all()
 ```
-```{r languages}
-```
-```{r beliefs}
+```{r data-blitz}
 ```
 
-# Research questions
+# My research questions
 
-- How is our ability to solve problems affected by the tools we use to
-  solve them?
-- How do people solve the same problems using different programming languages?
+How is our ability to solve problems affected by the tools we use to
+solve them?  
+How do people solve the same problems using different programming languages?
 
-This data blitz:
+## This data blitz:
+\vspace{0.1cm}
 
-- Explore survey responses given by professional and academic programmers.
+- Explore survey responses given by professional and academic programmers.  
 - We asked them what languages they knew and their beliefs about programming.
 
 # Who cares about programming languages?
 
-- Hundreds of different programming languages, but all are formally equivalent.
-- Computer scientists think a lot about the differences between languages.
-- Can we measure the *impact* of different programming languages on
-  individual computer scientists?
+Hundreds of different programming languages, but all are formally equivalent.  
+Computer scientists think a lot about the differences between languages.  
+Can we measure the *impact* of different programming languages on
+individual computer scientists?
   
-# Can we measure differences between programmers who use different languages?
+# Can we measure differences between programmers?
 
 Of course! What should we predict and why does it matter?
 
@@ -50,7 +49,7 @@ H2
 # What languages did they know?
 
 ```{r representativeness}
-gridExtra::grid.arrange(freq_plot, rank_corr_plot, nrow = 1)
+gridExtra::grid.arrange(language_frequencies_plot, rank_corr_plot, nrow = 1)
 ```
 
 # Language paradigms
@@ -59,7 +58,7 @@ gridExtra::grid.arrange(freq_plot, rank_corr_plot, nrow = 1)
   impossible thoughts.  
 > -- Dijkstra, 1972
 
-# Lisp is a type of functional languages
+# Lisp is a type of functional language
 
 ```{r functional-languages}
 crotchet::draw_svg("imgs/functional-languages.svg")
@@ -77,10 +76,46 @@ crotchet::draw_svg("imgs/python-paradigms.svg")
 crotchet::draw_svg("imgs/functional-v-imperative.svg")
 ```
 
+# Tower of Hanoi: Imperative versus functional
+
+```c
+void hanoi(int n, int a, int b, int c)
+{
+  if (n > 0) {
+    hanoi(n - 1, a, c, b);
+    printf("Move disk from pole %d to pole %d\n", a, b);
+    hanoi(n - 1, c, b, a);
+  }
+}
+```
+
+```haskell
+hanoi :: Integer -> a -> a -> a -> [(a, a)]
+hanoi 0 _ _ _ = []
+hanoi n a b c = hanoi (n-1) a c b ++ [(a,b)] ++ hanoi (n-1) c b a
+```
+
 # Functional versus object-oriented languages
 
 ```{r functional-v-object-oriented}
 crotchet::draw_svg("imgs/functional-v-object.svg")
+```
+
+# Tower of Hanoi: Object-oriented
+
+```objective-c
+#import <Foundation/NSObject.h>
+ 
+@interface TowersOfHanoi: NSObject {
+	int pegFrom;
+	int pegTo;
+	int pegVia;
+	int numDisks;
+}
+ 
+-(void) setPegFrom: (int) from andSetPegTo: (int) to andSetPegVia: (int) via andSetNumDisks: (int) disks;
+-(void) movePegFrom: (int) from andMovePegTo: (int) to andMovePegVia: (int) via andWithNumDisks: (int) disks;
+@end
 ```
 
 # Programming paradigm venn
@@ -95,20 +130,50 @@ crotchet::draw_svg("imgs/functional-v-object-v-imperative.svg")
 crotchet::draw_svg("imgs/multiple-languages.svg")
 ```
 
+# Languages per programmer
+
+```{r languages-per-programmer}
+languages_per_person_plot
+```
+
 # Solutions to the multiple languages problem
 
 - Top language only.
 - Count all reported languages.
 - _Weigh languages based on self reported proficiency._
 
-# Changed reasoning
+# Changed reasoning: Top language
 
-```{r changed-reasoning-by-language, cache=FALSE}
-by_language_plot("cr1")
+```{r changed-reasoning-functional-v-imperative-top}
+functional_v_imperative_top_language_plot
 ```
 
-# Changed reasoning
+# Changed reasoning: All languages
 
-```{r changed-reasoning-by-paradigm, cache=FALSE}
-functional_v_imperative_plot
+```{r changed-reasoning-functional-v-imperative-all}
+functional_v_imperative_all_language_plot
 ```
+
+# Changed reasoning: All languages
+
+```{r changed-reasoning-functional-v-object}
+functional_v_object_all_language_plot
+```
+
+# Language paradigms and years to proficiency
+
+```{r python-proficiency-plot}
+python_proficiency_plot
+```
+
+# Experience and proficiency
+
+```{r proficiency-plot}
+proficiency_plot
+```
+
+# Conclusions
+
+Programming languages are a test bed for questions about human problem solving.  
+Pithy intuitions from computer scientists need to be tested with experimental work.  
+Maybe the differences between programming languages are overblown.

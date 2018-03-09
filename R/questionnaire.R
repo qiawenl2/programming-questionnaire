@@ -16,3 +16,14 @@ get_questionnaire <- function(responses) {
 
   questionnaire[c("subj_id", question_names)]  # reorder columns
 }
+
+get_question_text <- function(name) {
+  questions <- collect_table("questions")
+  filter(questions, question_name == name)$question_text
+}
+
+create_wrapped_title <- function(name) {
+  get_question_text(name) %>%
+    strwrap(50) %>%
+    paste(collapse = "\n")
+}
