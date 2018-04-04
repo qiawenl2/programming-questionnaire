@@ -3,7 +3,7 @@ library(RNeo4j)
 connect_neo4j <- function(username = NULL, password = NULL) {
   if(is.null(username)) username <- "neo4j"
   if(is.null(password)) password <- Sys.getenv("NEO4J_PASSWORD")
-  startGraph('http://ec2-54-245-155-164.us-west-2.compute.amazonaws.com:80/db/data',
+  startGraph('http://localhost:7474/db/data',
              username = username, password = password)
 }
 
