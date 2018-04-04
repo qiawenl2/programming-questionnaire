@@ -3,6 +3,7 @@ library(knitr)
 library(tidyverse)
 library(magrittr)
 library(ggrepel)
+library(lme4)
 devtools::load_all()
 
 t_ <- list(base = theme_minimal(base_size=18),
