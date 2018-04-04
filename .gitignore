@@ -12,14 +12,10 @@ data-raw/stack-overflow-developer-survey-2017*
 *.pdf
 *.html
 *_cache/
-*_files/
-
-# tex
-*.nav
-*.snm
+*_files/*
 
 # github publishing
-!*_files/figure-gfm/
+!*_files/figure-markdown_strict/
 
 # r+rstudio
 .Rproj.user
