@@ -1,0 +1,9 @@
+name: questionnaire
+root: ~/Research/ProgrammingLanguages/questionnaire
+tmux_options: -2
+windows:
+  - main:
+      layout: even-horizontal
+      panes:
+        - source .environment && git status && inv -l
+        - source .environment && vim .
