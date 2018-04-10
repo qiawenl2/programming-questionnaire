@@ -48,7 +48,7 @@ get_programming_language <- function(name) {
         return(programming_language)
     }
   }
-  
+
   stop(paste(name, "is not a programming language"))
 }
 
@@ -109,7 +109,7 @@ get_programming_paradigms <- function(programming_language) {
   }, error = function(e) {
     stop(paste0('Error getting paradigms for language \'', name, '\'.'))
   })
-  
+
   return(paradigms)
 }
 
