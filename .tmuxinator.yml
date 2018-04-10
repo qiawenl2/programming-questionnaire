@@ -7,3 +7,7 @@ windows:
       panes:
         - source .environment && git status && inv -l
         - source .environment && vim .
+  - Makefile:
+      panes: vim Makefile
+  - README:
+      panes: vim README.md
