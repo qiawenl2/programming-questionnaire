@@ -7,6 +7,7 @@ data-raw/*.rds
 data-raw/*.csv
 data-raw/stack-overflow-developer-survey-2017*
 *.sqlite
+data/*.rda
 
 # knitr files
 *.pdf
