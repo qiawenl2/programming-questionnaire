@@ -3,11 +3,11 @@
 ## Methods
 
 - We designed a survey to assess whether people who know different
-  programming languages feel differently about the programming.
+  programming languages feel differently about programming.
 - The survey was administered first at an Association for Computing
   Machinery (ACM) sponsored conference and later on social media.
 - For more details about the methods, including on how to work on this project
-  or reproduce results, see the [methods.md](methods.md).
+  or reproduce results, see [Methods](methods.md).
 
 ## Reports
 
