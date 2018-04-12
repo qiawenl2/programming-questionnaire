@@ -8,7 +8,7 @@ md_document:
 ```{r config, include=FALSE}
 library(knitr)
 opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE,
-               fig.width=4, fig.height=4, dpi=300,
+               fig.width=4, fig.height=4, dpi=144,
                cache=TRUE)
 read_chunk("languages.R")
 library(programmingquestionnaire)
@@ -43,7 +43,7 @@ tribble(
 # Proficiency
 
 ```{r proficiency}
-top20_language_summary %<>% order_language_by("proficiency_rank", reverse = TRUE)
+top20_language_summary %<>% programmingquestionnaire:::order_language_by("proficiency_rank", reverse = TRUE)
 ggplot(top20_language_summary) +
   aes(language_ordered, proficiency) +
   geom_point(stat = "identity") +
@@ -56,8 +56,8 @@ ggplot(top20_language_summary) +
 
 ```{r correlations}
 top20_language_summary %>%
-  rank_by("proficiency") %>%
-  rank_by("years_used") %>%
+  programmingquestionnaire:::rank_by("proficiency") %>%
+  programmingquestionnaire:::rank_by("years_used") %>%
   filter(language_name != "other") %>%
   select(-c(frequency, proficiency, years_used, language_ordered)) %>%
   gather(rank_var, rank, -language_name) %>%
@@ -88,9 +88,9 @@ top20_intuitive <- filter(top20_ratings_summary, question_name == "intuitiveness
 
 top20_intuitive_for_all_levels <- top20_intuitive %>%
   filter(question_tag == "forAll") %>%
-  rank_by("agreement_num") %>%
-  order_language_by("agreement_num_rank", levels_only = TRUE)
-top20_intuitive %<>% order_language_by(use_levels = top20_intuitive_for_all_levels, reverse = TRUE)
+  programmingquestionnaire:::rank_by("agreement_num") %>%
+  programmingquestionnaire:::order_language_by("agreement_num_rank", levels_only = TRUE)
+top20_intuitive %<>% programmingquestionnaire:::order_language_by(use_levels = top20_intuitive_for_all_levels, reverse = TRUE)
 
 ggplot(top20_intuitive) +
   aes(language_ordered, agreement_num) +
@@ -106,9 +106,9 @@ ggplot(top20_intuitive) +
 ```{r reuse, fig.width=6}
 top20_reuse_adaptive_levels <- top20_reuse %>%
   filter(question_tag == "adapt") %>%
-  rank_by("agreement_num") %>%
-  order_language_by("agreement_num_rank", levels_only = TRUE)
-top20_reuse %<>% order_language_by(use_levels = top20_reuse_adaptive_levels, reverse = TRUE)
+  programmingquestionnaire:::rank_by("agreement_num") %>%
+  programmingquestionnaire:::order_language_by("agreement_num_rank", levels_only = TRUE)
+top20_reuse %<>% programmingquestionnaire:::order_language_by(use_levels = top20_reuse_adaptive_levels, reverse = TRUE)
 
 ggplot(top20_reuse) +
   aes(language_ordered, agreement_num) +
@@ -124,29 +124,29 @@ ggplot(top20_reuse) +
 ## Functional programming languages
 
 ```{r functional-languages}
-crotchet::draw_svg("imgs/functional-languages.svg")
+crotchet::draw_svg("img/functional-languages.svg")
 ```
 
 ## Programming languages have many paradigms
 
 ```{r python-paradigms}
-crotchet::draw_svg("imgs/python-paradigms.svg")
+crotchet::draw_svg("img/python-paradigms.svg")
 ```
 
 ## Functional versus imperative languages
 
 ```{r functional-v-imperative}
-crotchet::draw_svg("imgs/functional-v-imperative.svg")
+crotchet::draw_svg("img/functional-v-imperative.svg")
 ```
 
 ## Functional versus object-oriented languages
 
 ```{r functional-v-object-oriented}
-crotchet::draw_svg("imgs/functional-v-object.svg")
+crotchet::draw_svg("img/functional-v-object.svg")
 ```
 
 # Full Venn Diagram
 
 ```{r functional-v-object-v-imperative}
-crotchet::draw_svg("imgs/functional-v-object-v-imperative.svg")
+crotchet::draw_svg("img/functional-v-object-v-imperative.svg")
 ```

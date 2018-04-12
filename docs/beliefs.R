@@ -25,9 +25,9 @@ language_ranks <- languages %>%
     proficiency = mean(proficiency, na.rm = TRUE),
     years_used = mean(years_used, na.rm = TRUE)
   ) %>%
-  rank_by("frequency") %>%
-  rank_by("years_used") %>%
-  rank_by("proficiency") %>%
+  programmingquestionnaire:::rank_by("frequency") %>%
+  programmingquestionnaire:::rank_by("years_used") %>%
+  programmingquestionnaire:::rank_by("proficiency") %>%
   select(language_name, frequency_rank, years_used_rank, proficiency_rank)
 
 # must be ordered!
@@ -52,13 +52,13 @@ top20_questionnaire_ranks <- top20_questionnaire %>%
     inter1 = mean(inter1, na.rm = TRUE),
     inter2 = mean(inter2, na.rm = TRUE)
   ) %>%
-  rank_by("cr1") %>%
-  rank_by("cp1") %>%
-  rank_by("rec1") %>%
-  rank_by("cfo1") %>%
-  rank_by("cfo2") %>%
-  rank_by("inter1") %>%
-  rank_by("inter2") %>%
+  programmingquestionnaire:::rank_by("cr1") %>%
+  programmingquestionnaire:::rank_by("cp1") %>%
+  programmingquestionnaire:::rank_by("rec1") %>%
+  programmingquestionnaire:::rank_by("cfo1") %>%
+  programmingquestionnaire:::rank_by("cfo2") %>%
+  programmingquestionnaire:::rank_by("inter1") %>%
+  programmingquestionnaire:::rank_by("inter2") %>%
   select(language_name, cr1_rank, cp1_rank, rec1_rank,
          cfo1_rank, cfo2_rank, inter1_rank, inter2_rank)
 
@@ -67,7 +67,7 @@ top20_questionnaire_ranks <- top20_questionnaire %>%
 by_language_plot <- function(name, x = "python", y = 2.5) {
   levels <- arrange_(top20_questionnaire_ranks, .dots = list(paste0(name, "_rank")))$language_name
   top20_questionnaire %>%
-    order_language_by(use_levels = levels) %>%
+    programmingquestionnaire:::order_language_by(use_levels = levels) %>%
     ggplot() +
       aes_string("language_ordered", name) +
       stat_summary(geom = "errorbar", fun.data = "mean_se") +
@@ -79,19 +79,20 @@ by_language_plot <- function(name, x = "python", y = 2.5) {
 
 
 # By paradigm ----
-language_paradigms <- collect_table("language_paradigms")
+data("language_paradigms")
 paradigm_ranks <- language_paradigms %>%
   group_by(paradigm_name) %>%
   summarize(
     n_languages = n()
   ) %>%
-  rank_by("n_languages")
+  programmingquestionnaire:::rank_by("n_languages")
 top8_paradigms <- paradigm_ranks %>%
   arrange(n_languages_rank) %>%
   filter(n_languages_rank <= 8) %>%
   .$paradigm_name
 
-questionnaire_by_top8_paradigms <- collect_table("languages") %>%
+data("languages")
+questionnaire_by_top8_paradigms <- languages %>%
   left_join(language_paradigms) %>%
   filter(paradigm_name %in% top8_paradigms) %>%
   left_join(questionnaire, .) %>%
@@ -106,16 +107,16 @@ questionnaire_by_top8_paradigms <- collect_table("languages") %>%
     inter1 = mean(inter1, na.rm = TRUE),
     inter2 = mean(inter2, na.rm = TRUE)
   ) %>%
-  rank_by("cr1") %>%
-  rank_by("cp1") %>%
-  rank_by("rec1") %>%
-  rank_by("cfo1") %>%
-  rank_by("cfo2") %>%
-  rank_by("inter1") %>%
-  rank_by("inter2")
+  programmingquestionnaire:::rank_by("cr1") %>%
+  programmingquestionnaire:::rank_by("cp1") %>%
+  programmingquestionnaire:::rank_by("rec1") %>%
+  programmingquestionnaire:::rank_by("cfo1") %>%
+  programmingquestionnaire:::rank_by("cfo2") %>%
+  programmingquestionnaire:::rank_by("inter1") %>%
+  programmingquestionnaire:::rank_by("inter2")
 
 by_paradigm_plot <- function(name) {
-  questionnaire_by_top8_paradigms %<>% order_paradigm_by(paste0(name, "_rank"))
+  questionnaire_by_top8_paradigms %<>% programmingquestionnaire:::order_paradigm_by(paste0(name, "_rank"))
   ggplot(questionnaire_by_top8_paradigms) +
     aes_string("paradigm_ordered", name) +
     geom_point() +
@@ -126,10 +127,12 @@ by_paradigm_plot <- function(name) {
 }
 
 # Functional v imperative ----
-functional_v_imperative <- collect_table("languages") %>%
+data("languages")
+functional_v_imperative_languages <- programmingquestionnaire:::get_functional_v_imperative()
+functional_v_imperative <- languages %>%
   left_join(language_paradigms) %>%
   filter(paradigm_name %in% c("functional", "imperative")) %>%
-  inner_join(get_functional_v_imperative()) %>%
+  inner_join(functional_v_imperative_languages) %>%
   filter(language_ix == 1) %>%
   left_join(questionnaire, .) %>%
   drop_na(paradigm_name)

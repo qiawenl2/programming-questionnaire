@@ -19,3 +19,10 @@ use_data(qualtrics, questions, responses,
          questionnaire, irq, language_paradigms,
          stack_overflow, stack_overflow_ranks,
          overwrite = TRUE)
+
+args <- commandArgs(trailingOnly = TRUE)
+if(args[[1]] == '--install') {
+    document()
+    install()
+}
+

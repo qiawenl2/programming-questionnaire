@@ -2,9 +2,9 @@ qualtrics := data-raw/qualtrics.csv data-raw/questions.csv data-raw/responses.cs
 survey := data-raw/languages.csv data-raw/language-ratings.csv data-raw/questionnaire.csv data-raw/demographics.csv data-raw/irq.csv
 languages := data-raw/language-paradigms.csv data-raw/stack-overflow.csv data-raw/stack-overflow-ranks.csv
 
-.PHONY: neo4j
+.PHONY: neo4j rdata
 
-all: programming-questionnaire.sqlite docs/languages.md docs/beliefs.md
+all: programming-questionnaire.sqlite rdata docs/languages.md docs/beliefs.md
 
 data-blitz.pdf: docs/data-blitz.Rmd
 	Rscript -e 'rmarkdown::render("$<", output_file = "$@")'
@@ -26,14 +26,20 @@ data-raw/stack-overflow.csv data-raw/stack-overflow-ranks.csv: bin/language-rank
 programming-questionnaire.sqlite: bin/sqlite.R $(qualtrics) $(survey) $(languages)
 	./bin/sqlite.R
 
+rdata: bin/rdata.R $(qualtrics) $(survey) $(languages)
+	./bin/rdata.R --install
+
 neo4j: bin/neo4j.R
 	./bin/neo4j.R --clear
 
 docs/languages.md: docs/languages.Rmd
-	Rscript -e 'rmarkdown::render("$<", output_format = "md_document", output_file = "$@")'
+	Rscript -e 'rmarkdown::render("$<", output_format = "md_document")'
 docs/beliefs.md: docs/beliefs.Rmd
-	Rscript -e 'rmarkdown::render("$<", output_format = "md_document", output_file = "$@")'
+	Rscript -e 'rmarkdown::render("$<", output_format = "md_document")'
 clean:
+	rm -f docs/languages.md docs/beliefs.md
+	rm -f programming-questionnaire.sqlite
+	rm -rf ${qualtrics} ${survey} ${languages} data/*.rda
 	rm -rf docs/languages_cache/ docs/languages_files/
 	rm -rf docs/beliefs_cache/ docs/beliefs_files/
 	rm -rf docs/data-blitz_cache/ docs/data-blitz_files/
