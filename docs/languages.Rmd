@@ -11,7 +11,7 @@ opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE,
                fig.width=4, fig.height=4, dpi=300,
                cache=TRUE)
 read_chunk("languages.R")
-devtools::load_all()
+library(programmingquestionnaire)
 ```
 ```{r languages}
 ```
@@ -23,8 +23,11 @@ gridExtra::grid.arrange(freq_plot, rank_corr_plot, nrow = 1)
 ```
 
 ```{r stack-overflow-table, results='asis'}
-n_survey <- length(unique(collect_table("responses")$subj_id))
-n_stack_overflow <- length(unique(collect_table("stack_overflow")))
+data("responses")
+data("stack_overflow")
+
+n_survey <- length(unique(responses$subj_id))
+n_stack_overflow <- length(unique(stack_overflow))
 
 tribble(
   ~Survey, ~`N Respondents`,

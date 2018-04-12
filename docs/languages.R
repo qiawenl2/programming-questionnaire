@@ -4,14 +4,14 @@ library(tidyverse)
 library(magrittr)
 library(ggrepel)
 library(lme4)
-devtools::load_all()
+
+library(programmingquestionnaire)
+data("languages")
+data("language_ratings")
+data("language_paradigms")
 
 t_ <- list(base = theme_minimal(base_size=18),
            geom_text_size = 6)
-
-languages <- collect_table("languages")
-language_ratings <- collect_table("language_ratings")
-language_paradigms <- collect_table("language_paradigms")
 
 language_summary <- languages %>%
   filter(language_name %in% unique(language_paradigms$language_name)) %>%
@@ -21,12 +21,12 @@ language_summary <- languages %>%
     proficiency = mean(proficiency, na.rm = TRUE),
     years_used = mean(years_used, na.rm = TRUE)
   ) %>%
-  rank_by("frequency") %>%
-  rank_by("years_used") %>%
-  rank_by("proficiency")
+  programmingquestionnaire:::rank_by("frequency") %>%
+  programmingquestionnaire:::rank_by("years_used") %>%
+  programmingquestionnaire:::rank_by("proficiency")
 
 # must be ordered!
-top20_languages <- order_language_by(language_summary, "frequency_rank", levels_only = TRUE)[1:20]
+top20_languages <- programmingquestionnaire:::order_language_by(language_summary, "frequency_rank", levels_only = TRUE)[1:20]
 top20_language_names <- top20_languages
 
 top20_language_summary <- language_summary %>%
@@ -57,7 +57,7 @@ top20_reuse <- filter(top20_ratings_summary, question_name == "reuse") %>%
   recode_reuse()
 
 # representativeness ----
-top20_language_summary %<>% order_language_by("frequency_rank", reverse = TRUE)
+top20_language_summary %<>% programmingquestionnaire:::order_language_by("frequency_rank", reverse = TRUE)
 freq_plot <- ggplot(top20_language_summary) +
   aes(language_ordered, frequency) +
   geom_bar(stat = "identity") +
@@ -67,13 +67,13 @@ freq_plot <- ggplot(top20_language_summary) +
   labs(x = "", y = "", title = "Frequency in sample") +
   t_$base
 
-survey_languages <- collect_table("languages") %>%
+survey_languages <- languages %>%
   count(language_name) %>%
   arrange(desc(n)) %>%
   mutate(survey_rank = 1:n()) %>%
   select(language_name, survey_rank)
 
-stack_overflow <- collect_table("stack_overflow") %>%
+stack_overflow <- stack_overflow %>%
   count(language_name) %>%
   arrange(desc(n)) %>%
   mutate(stack_overflow_rank = 1:n()) %>%
@@ -95,8 +95,6 @@ rank_corr_plot <- ggplot(compare_ranks) +
   t_$base
 
 # paradigms ----
-language_paradigms <- collect_table("language_paradigms")
-
 paradigm_ranks <- language_paradigms %>%
   group_by(paradigm_name) %>%
   summarize(n = n()) %>%
@@ -115,7 +113,7 @@ top20_language_paradigms_summary <- top20_language_paradigms %>%
   arrange(desc(n))
 
 # ---- languages-per-person ----
-languages <- collect_table("languages") %>%
+languages <- languages %>%
   filter(language_name %in% unique(language_paradigms$language_name)) %>%
   drop_na(proficiency)
 
@@ -146,7 +144,7 @@ mutate_years_used_sqr <- function(frame) {
 
 z_score <- function(x) (x - mean(x, na.rm = TRUE))/sd(x, na.rm = TRUE)
 
-top20_languages <- collect_table("languages") %>%
+top20_languages <- languages %>%
   filter(language_name %in% top20_language_names) %>%
   group_by(language_name) %>%
   mutate(years_used_z = z_score(years_used)) %>%
@@ -186,8 +184,8 @@ proficiency_mod_language_coefs <- coef(proficiency_mod)$language_name %>%
   as_data_frame() %>%
   rename(y0 = `(Intercept)`, b1 = years_used_z, b2 = years_used_z_sqr)
 
-ggplot(top20_languages) +
+ggplot(proficiency_mod_language_coefs) +
   aes(years_used, proficiency, group = language_name) +
-  geom_smooth(method = "lm", formula = y ~ x + I(x^2), stat = "identity",
-              data = proficiency_mod_language_coefs) +
+  geom_line() +
   t_$base
+

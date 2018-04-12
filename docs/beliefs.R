@@ -1,9 +1,12 @@
 # ---- beliefs ----
 library(tidyverse)
 library(magrittr)
-devtools::load_all()
 
-questions <- collect_table("questions")
+library(programmingquestionnaire)
+data("questions")
+data("questionnaire")
+data("languages")
+
 question_names <- c(
   "cr1", "cr1describe", "cr2describe", "cp1", "cp1describe",
   "repo1", "repo1describe", "rec1", "rec1describe", "cfo1", "cfo2", "cfo3",
@@ -14,10 +17,8 @@ get_question_text <- function(name) {
   filter(questions, question_name == name)$question_text
 }
 
-questionnaire <- collect_table("questionnaire")
-
 # By language ----
-language_ranks <- collect_table("languages") %>%
+language_ranks <- languages %>%
   group_by(language_name) %>%
   summarize(
     frequency = n(),
@@ -35,7 +36,7 @@ top20_languages <- language_ranks %>%
   filter(frequency_rank <= 20) %>%
   .$language_name
 
-top20_questionnaire <- collect_table("languages") %>%
+top20_questionnaire <- languages %>%
   filter(language_name %in% top20_languages) %>%
   left_join(questionnaire, .) %>%
   drop_na(language_name)

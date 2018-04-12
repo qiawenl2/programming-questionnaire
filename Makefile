@@ -4,9 +4,9 @@ languages := data-raw/language-paradigms.csv data-raw/stack-overflow.csv data-ra
 
 .PHONY: neo4j
 
-all: programming-questionnaire.sqlite languages.md beliefs.md
+all: programming-questionnaire.sqlite docs/languages.md docs/beliefs.md
 
-data-blitz.pdf: data-blitz.Rmd
+data-blitz.pdf: docs/data-blitz.Rmd
 	Rscript -e 'rmarkdown::render("$<", output_file = "$@")'
 
 qualtrics: $(qualtrics)
@@ -29,11 +29,11 @@ programming-questionnaire.sqlite: bin/sqlite.R $(qualtrics) $(survey) $(language
 neo4j: bin/neo4j.R
 	./bin/neo4j.R --clear
 
-languages.md: languages.Rmd
+docs/languages.md: docs/languages.Rmd
 	Rscript -e 'rmarkdown::render("$<", output_format = "md_document", output_file = "$@")'
-beliefs.md: beliefs.Rmd
+docs/beliefs.md: docs/beliefs.Rmd
 	Rscript -e 'rmarkdown::render("$<", output_format = "md_document", output_file = "$@")'
 clean:
-	rm -rf languages_cache/ languages_files/
-	rm -rf beliefs_cache/ beliefs_files/
-	rm -rf data-blitz_cache/ data-blitz_files/
+	rm -rf docs/languages_cache/ docs/languages_files/
+	rm -rf docs/beliefs_cache/ docs/beliefs_files/
+	rm -rf docs/data-blitz_cache/ docs/data-blitz_files/

@@ -4,14 +4,21 @@ library(tidyverse)
 library(magrittr)
 library(ggrepel)
 library(lme4)
-devtools::load_all()
+
+library(programmingquestionnaire)
+data("languages")
+data("stack_overflow")
+data("language_paradigms")
+data("questions")
+
+functional_v_imperative <- programmingquestionnaire:::get_functional_v_imperative()
 
 t_ <- list(base = theme_minimal(base_size=18),
            geom_text_size = 6)
 
 # must be ordered!
-top20_language_names <- collect_table("languages") %>%
-  filter_known_languages() %>%
+top20_language_names <- languages %>%
+  programmingquestionnaire:::filter_known_languages() %>%
   group_by(language_name) %>%
   summarize(frequency = n()) %>%
   arrange(desc(frequency)) %>%
@@ -19,7 +26,7 @@ top20_language_names <- collect_table("languages") %>%
   .[1:20]
 
 # language frequencies ----
-language_frequencies <- collect_table("languages") %>%
+language_frequencies <- languages %>%
   filter(language_name %in% top20_language_names)
 language_frequencies$language_ordered <- factor(language_frequencies$language_name,
                                                 levels = rev(top20_language_names))
@@ -34,13 +41,13 @@ language_frequencies_plot <- ggplot(language_frequencies) +
   t_$base
 
 # representativeness ----
-survey_languages <- collect_table("languages") %>%
+survey_languages <- languages %>%
   count(language_name) %>%
   arrange(desc(n)) %>%
   mutate(survey_rank = 1:n()) %>%
   select(language_name, survey_rank)
 
-stack_overflow <- collect_table("stack_overflow") %>%
+stack_overflow <- stack_overflow %>%
   count(language_name) %>%
   arrange(desc(n)) %>%
   mutate(stack_overflow_rank = 1:n()) %>%
@@ -62,8 +69,8 @@ rank_corr_plot <- ggplot(compare_ranks) +
   t_$base
 
 # languages-per-person ----
-languages_per_person <- collect_table("languages") %>%
-  filter_known_languages() %>%
+languages_per_person <- languages %>%
+  programmingquestionnaire:::filter_known_languages() %>%
   group_by(subj_id) %>%
   summarize(n = n())
 
@@ -75,7 +82,7 @@ languages_per_person_plot <- ggplot(languages_per_person) +
   labs(title = "Languages per person")
 
 # experience ----
-years_used <- collect_table("languages") %>%
+years_used <- languages %>%
   filter(language_name %in% top20_language_names)
 
 years_used_density_plot <- ggplot(years_used) +
@@ -86,10 +93,10 @@ years_used_density_plot <- ggplot(years_used) +
   labs(x = "years used", title = "Language experience")
 
 # proficiency ----
-proficiency_data <- collect_table("languages") %>%
+proficiency_data <- languages %>%
   filter(language_name %in% top20_language_names) %>%
-  standardize_years_used_by_language() %>%
-  mutate_years_used_sqr() %>%
+  programmingquestionnaire:::standardize_years_used_by_language() %>%
+  programmingquestionnaire:::mutate_years_used_sqr() %>%
   drop_na(proficiency) %>%
   filter(years_used > 1)
 
@@ -126,18 +133,16 @@ python_proficiency_plot <- filter(proficiency_data, language_name == "python") %
 
 
 # paradigms per language ----
-n_paradigms <- collect_table("language_paradigms") %>%
+n_paradigms <- language_paradigms %>%
   group_by(language_name) %>%
   summarize(n_paradigms = n())
 
-questionnaire <- collect_table("questionnaire")
-
 # Functional v imperative top ----
-functional_v_imperative_top_language <- collect_table("languages") %>%
-  filter_first_languages() %>%
-  inner_join(get_functional_v_imperative()) %>%
+functional_v_imperative_top_language <- languages %>%
+  programmingquestionnaire:::filter_first_languages() %>%
+  inner_join(functional_v_imperative) %>%
   left_join(questionnaire, .) %>%
-  recode_functional_v_imperative() %>%
+  programmingquestionnaire:::recode_functional_v_imperative() %>%
   drop_na(paradigm_name)
 
 functional_v_imperative_top_language_plot <- ggplot(functional_v_imperative_top_language) +
@@ -154,11 +159,11 @@ functional_v_imperative_top_language_plot <- ggplot(functional_v_imperative_top_
 
 
 # Functional v imperative all ----
-functional_v_imperative_all_language <- collect_table("languages") %>%
-  filter_known_languages() %>%
-  inner_join(get_functional_v_imperative()) %>%
+functional_v_imperative_all_language <- languages %>%
+  programmingquestionnaire:::filter_known_languages() %>%
+  inner_join(functional_v_imperative) %>%
   left_join(questionnaire, .) %>%
-  recode_functional_v_imperative() %>%
+  programmingquestionnaire:::recode_functional_v_imperative() %>%
   drop_na(paradigm_name)
 
 functional_v_imperative_all_language_plot <- ggplot(functional_v_imperative_all_language) +
@@ -175,11 +180,11 @@ functional_v_imperative_all_language_plot <- ggplot(functional_v_imperative_all_
 
 
 # Functional v object all ----
-functional_v_object_all_language <- collect_table("languages") %>%
-  filter_known_languages() %>%
-  inner_join(get_functional_v_object()) %>%
+functional_v_object_all_language <- languages %>%
+  programmingquestionnaire:::filter_known_languages() %>%
+  inner_join(functional_v_object) %>%
   left_join(questionnaire, .) %>%
-  recode_functional_v_object() %>%
+  programmingquestionnaire:::recode_functional_v_object() %>%
   drop_na(paradigm_name)
 
 functional_v_object_all_language_plot <- ggplot(functional_v_object_all_language) +
