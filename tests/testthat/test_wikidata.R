@@ -26,10 +26,10 @@ context("programming paradigms")
 test_that("expected paradigms are found", {
   tests <- list(
     "python" = c("imperative programming"),
-    "javascript" = c("functional programming language")
+    "javascript" = c("functional programming")
   )
   for (name in names(tests)) {
     programming_paradigms <- get_programming_paradigms(name)
-    expect_true(all(tests[[name]] %in% programming_paradigms$paradigm))
+    expect_true(all(tests[[name]] %in% programming_paradigms))
   }
 })

@@ -18,8 +18,9 @@ get_questionnaire <- function(responses) {
 }
 
 get_question_text <- function(name) {
-  questions <- collect_table("questions")
-  filter(questions, question_name == name)$question_text
+  e_ <- new.env()
+  data("questions", package = "programmingquestionnaire", envir = e_)
+  filter(e_$questions, question_name == name)$question_text
 }
 
 create_wrapped_title <- function(name) {

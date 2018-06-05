@@ -5,7 +5,7 @@ qualtrics.yml
 # data
 data-raw/*.rds
 data-raw/*.csv
-data-raw/stack-overflow-developer-survey-2017*
+data-raw/stack-overflow-developer-survey*
 *.sqlite
 data/*.rda
 

@@ -119,4 +119,3 @@ SQLite wrapper functions are stored in "R/sqlite.R".
 source("R/sqlite.R")
 responses <- collect_table("responses")  # expects "programming-questionnaire.sqlite"
 ```
-

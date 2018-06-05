@@ -61,19 +61,19 @@ gridExtra::grid.arrange(language_frequencies_plot, rank_corr_plot, nrow = 1)
 # Lisp is a type of functional language
 
 ```{r functional-languages}
-crotchet::draw_svg("imgs/functional-languages.svg")
+crotchet::draw_svg("img/functional-languages.svg")
 ```
 
 # Programming languages have many paradigms
 
 ```{r python-paradigms}
-crotchet::draw_svg("imgs/python-paradigms.svg")
+crotchet::draw_svg("img/python-paradigms.svg")
 ```
 
 # Functional versus imperative languages
 
 ```{r functional-v-imperative}
-crotchet::draw_svg("imgs/functional-v-imperative.svg")
+crotchet::draw_svg("img/functional-v-imperative.svg")
 ```
 
 # Tower of Hanoi: Imperative versus functional
@@ -98,7 +98,7 @@ hanoi n a b c = hanoi (n-1) a c b ++ [(a,b)] ++ hanoi (n-1) c b a
 # Functional versus object-oriented languages
 
 ```{r functional-v-object-oriented}
-crotchet::draw_svg("imgs/functional-v-object.svg")
+crotchet::draw_svg("img/functional-v-object.svg")
 ```
 
 # Tower of Hanoi: Object-oriented
@@ -121,13 +121,13 @@ crotchet::draw_svg("imgs/functional-v-object.svg")
 # Programming paradigm venn
 
 ```{r functional-v-object-v-imperative}
-crotchet::draw_svg("imgs/functional-v-object-v-imperative.svg")
+crotchet::draw_svg("img/functional-v-object-v-imperative.svg")
 ```
 
 # Programmers know multiple languages
 
 ```{r multiple-languages}
-crotchet::draw_svg("imgs/multiple-languages.svg")
+crotchet::draw_svg("img/multiple-languages.svg")
 ```
 
 # Languages per programmer

@@ -3,6 +3,8 @@ filter_first_languages <- function(frame) {
 }
 
 filter_known_languages <- function(frame) {
-  known_languages <- unique(collect_table("language_paradigms")$language_name)
+  e_ <- new.env()
+  data("language_paradigms", package = "programmingquestionnaire", envir = e_)
+  known_languages <- unique(e_$language_paradigms$language_name)
   filter(frame, language_name %in% known_languages)
 }

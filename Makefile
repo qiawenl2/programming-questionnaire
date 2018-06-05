@@ -6,9 +6,6 @@ languages := data-raw/language-paradigms.csv data-raw/stack-overflow.csv data-ra
 
 all: programming-questionnaire.sqlite rdata docs/languages.md docs/beliefs.md
 
-data-blitz.pdf: docs/data-blitz.Rmd
-	Rscript -e 'rmarkdown::render("$<", output_file = "$@")'
-
 qualtrics: $(qualtrics)
 $(qualtrics): bin/qualtrics.R
 	./bin/qualtrics.R
@@ -42,4 +39,3 @@ clean:
 	rm -rf ${qualtrics} ${survey} ${languages} data/*.rda
 	rm -rf docs/languages_cache/ docs/languages_files/
 	rm -rf docs/beliefs_cache/ docs/beliefs_files/
-	rm -rf docs/data-blitz_cache/ docs/data-blitz_files/

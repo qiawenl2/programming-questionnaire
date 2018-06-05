@@ -12,6 +12,7 @@ data("language_paradigms")
 data("questions")
 
 functional_v_imperative <- programmingquestionnaire:::get_functional_v_imperative()
+functional_v_object <- programmingquestionnaire:::get_functional_v_object()
 
 t_ <- list(base = theme_minimal(base_size=18),
            geom_text_size = 6)
@@ -155,7 +156,7 @@ functional_v_imperative_top_language_plot <- ggplot(functional_v_imperative_top_
   t_$base +
   theme(legend.position = "none") +
   coord_flip() +
-  labs(x = "", y = "agreement", title = create_wrapped_title("cr1"))
+  labs(x = "", y = "agreement", title = programmingquestionnaire:::create_wrapped_title("cr1"))
 
 
 # Functional v imperative all ----
@@ -176,7 +177,7 @@ functional_v_imperative_all_language_plot <- ggplot(functional_v_imperative_all_
   t_$base +
   theme(legend.position = "none") +
   coord_flip() +
-  labs(x = "", y = "agreement", title = create_wrapped_title("cr1"))
+  labs(x = "", y = "agreement", title = programmingquestionnaire:::create_wrapped_title("cr1"))
 
 
 # Functional v object all ----
@@ -197,5 +198,5 @@ functional_v_object_all_language_plot <- ggplot(functional_v_object_all_language
   t_$base +
   theme(legend.position = "none") +
   coord_flip() +
-  labs(x = "", y = "agreement", title = create_wrapped_title("cr1"))
+  labs(x = "", y = "agreement", title = programmingquestionnaire:::create_wrapped_title("cr1"))
 
