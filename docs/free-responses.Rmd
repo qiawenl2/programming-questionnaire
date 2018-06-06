@@ -1,0 +1,51 @@
+---
+title: Free responses
+output: 
+  html_document:
+    runtime: shiny
+---
+```{r config, include=FALSE}
+library(knitr)
+library(shiny)
+
+opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE,
+               fig.width=4, fig.height=4, dpi=144)
+
+read_chunk("free-responses.R")
+```
+```{r free-responses}
+```
+
+# Free response questions
+
+```{r questions-table, results="asis"}
+questions %>%
+  filter(question_name %in% free_response_question_names) %>%
+  select(question_name, question_text) %>%
+  kable()
+```
+
+# Free responses
+
+```{r}
+selectInput(
+  inputId = "question_name", 
+  label = h3("Free response question"), 
+  choices = free_response_question_names, 
+  selected = 1)
+
+selected_data <- reactive({
+  questionnaire[, c("subj_id", input$question_name)] %>%
+    drop_na()
+})
+
+selected_question <- reactive({
+  get_question_text(input$question_name)
+})
+```
+
+`r h4(renderText(selected_question()))`
+
+```{r}
+renderTable({ selected_data() })
+```

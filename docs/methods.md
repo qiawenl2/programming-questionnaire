@@ -54,6 +54,18 @@ source("R/wikidata.R")
 language_info <- get_language_info(languages)
 ```
 
+## Neo4j
+
+The relationships between languages and programming paradigms lends itself
+nicely to graph-based analysis.
+
+```bash
+brew install neo4j  # install the Neo4j graph database with homebrew
+neo4j start         # start the db, open a browser to localhost:7474, and set a password
+export NEO4J_PASSWORD=mysecretpassword
+bin/neo4j.R         # load language data in the graph db
+```
+
 ## StackOverflow Developer Survey
 
 The results of the annual StackOverflow Developer Survey

@@ -5,7 +5,16 @@ get_questionnaire <- function(responses) {
     "cr1", "cp1", "repo1", "rec1", "cfo1", "cfo2", "cfo3",
     "oss1", "oss2", "env1", "env2", "inter1", "inter2", "inter3"
   )
-  free_response_questions <- c("cr1describe", "cr2describe", "cp1describe", "repo1describe", "rec1describe")
+  free_response_questions <- c(
+    "cr1describe", "cr2describe", "cp1describe",
+    "repo1describe", "rec1describe",
+    "fp1describe", "pipe1describe",
+    "cfo3", "oss2", "inter3", "fp5",
+    "pa1example",
+    "best",
+    "design1", "recursive", "metaphor", "history",
+    "design2", "reusable", "challenges", "nontransfer"
+  )
   question_names <- c(agreement_questions, free_response_questions)
 
   questionnaire <- responses %>%

@@ -2,9 +2,9 @@ Package: programmingquestionnaire
 Title: Programming Questionnaire
 Version: 0.0.0.1
 Authors@R: person("Pierce", "Edmiston", email = "pierce.edmiston@gmail.com", role = c("aut", "cre"))
-Description: The results of a questionnaire of programmers.
+Description: The results of a questionnaire given to academic and professional programmers.
 Depends: R (>= 3.4.3)
-License: What license is it under?
+License: MIT
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1

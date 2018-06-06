@@ -8,7 +8,7 @@ md_document:
 ```{r config, include=FALSE}
 library(knitr)
 opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE,
-               fig.width=4, fig.height=4, dpi=300,
+               fig.width=4, fig.height=4, dpi=144,
                cache=TRUE)
 read_chunk("beliefs.R")
 ```
@@ -70,30 +70,4 @@ by_language_plot("inter1", y = 4)
 
 ```{r harm}
 by_language_plot("inter2", y = 4)
-```
-
-# Top 8 paradigms
-
-```{r changed-reasoning-paradigm}
-by_paradigm_plot("cr1")
-```
-
-```{r personality-paradigm}
-by_paradigm_plot("cp1")
-```
-
-```{r recursion-paradigm}
-by_paradigm_plot("rec1")
-```
-
-```{r code-for-team-paradigm}
-by_paradigm_plot("cfo2")
-```
-
-```{r interference-paradigm}
-by_paradigm_plot("inter1")
-```
-
-```{r harm-paradigm}
-by_paradigm_plot("inter2")
 ```
