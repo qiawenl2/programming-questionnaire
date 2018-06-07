@@ -1,4 +1,4 @@
-# Correlations between programming languages and beliefs about programming
+# Beliefs about programming
 
 ## Methods
 
@@ -23,12 +23,19 @@ reports and interactive documents.
 
 ### Reports
 
-- [Programming languages](docs/languages.md)
+[Programming languages](docs/languages.md)
 :   What programming languages are represented in the survey?
 
-- [Beliefs about programming](docs/beliefs.md)
+[Beliefs about programming](docs/beliefs.md)
 :   Correlations between languages and beliefs about programming.
 
 ### Interactive documents
 
-- [Answers to free response questions](docs/free-responses.Rmd)
+[Answers to free response questions](docs/free-responses.Rmd)
+:   Answers to free response questions can be explored in an interactive document.
+
+### Presentations
+
+[Data blitz](docs/data-blitz.pdf)
+:   A lightning talk presentation on the relationship between beliefs about
+    programming and the programming languages one uses.
