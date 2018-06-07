@@ -24,7 +24,8 @@ get_qualtrics_questions <- function(survey_name, ...) {
   questions <- as_data_frame(getSurveyQuestions(survey_id))
   
   questions %>%
-    rename(question_id = qid, question_name = qnames, question_text = question)
+    rename(question_id = qid, question_name = qnames, question_text = question) %>%
+    mutate(question_text = remove_html(question_text))
 }
 
 
@@ -97,3 +98,6 @@ write_tables_to_sqlite <- function(sqlite_db, ..., overwrite = FALSE) {
   DBI::dbDisconnect(con)
 }
 
+remove_html <- function(question_text) {
+  gsub("<.*?>", "", question_text)
+}
