@@ -6,16 +6,29 @@ We designed a survey to assess whether people who know different programming
 languages feel differently about programming. The survey was administered first
 at an Association for Computing Machinery (ACM) sponsored conference and later
 distributed on social media. For more details about the methods, including
-how to work on this project or reproduce results, see
-[Methods](docs/methods.md).
+how to work on this project or reproduce results, see the [Methods](docs/methods.md)
+document.
 
-## Reports
+**Data privacy.** Raw survey data is not stored in this repo. The results of the
+survey are presented in aggregate form as figures and statistics.
+
+**Open science.** The code used to analyze the data is included in this repo.
+All results can be reproduced by cloning this repo and compiling the Rmarkdown
+documents, once access has been granted to an anonymized version of the data.
+
+## Results
 
 The results of the survey are presented in the following
-reports.
+reports and interactive documents.
 
-1. [Programming languages](docs/languages.md)
+### Reports
+
+- [Programming languages](docs/languages.md)
 :   What programming languages are represented in the survey?
 
-2. [Beliefs about programming](docs/beliefs.md)
+- [Beliefs about programming](docs/beliefs.md)
 :   Correlations between languages and beliefs about programming.
+
+### Interactive documents
+
+- [Answers to free response questions](docs/free-responses.Rmd)

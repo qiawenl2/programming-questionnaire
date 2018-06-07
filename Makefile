@@ -26,8 +26,8 @@ programming-questionnaire.sqlite: bin/sqlite.R $(qualtrics) $(survey) $(language
 rdata: bin/rdata.R $(qualtrics) $(survey) $(languages)
 	./bin/rdata.R --install
 
-neo4j: bin/neo4j.R
-	./bin/neo4j.R --clear
+neo4j: bin/load-neo4j.R
+	./bin/load-neo4j.R --clear
 
 docs/languages.md: docs/languages.Rmd
 	Rscript -e 'rmarkdown::render("$<", output_format = "md_document")'

@@ -5,13 +5,18 @@ output:
     runtime: shiny
 ---
 ```{r config, include=FALSE}
+
+# free-responses.Rmd is an interactive document. To run it,
+# clone this repo, and open this file in RStudio. Then select
+# the Run Document command.
+
 library(knitr)
 library(shiny)
 
 opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE,
                fig.width=4, fig.height=4, dpi=144)
 
-read_chunk("free-responses.R")
+read_chunk("R/free-responses.R")
 ```
 ```{r free-responses}
 ```

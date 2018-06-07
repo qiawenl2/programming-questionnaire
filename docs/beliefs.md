@@ -127,18 +127,3 @@ Harm
 ----
 
 ![](beliefs_files/figure-markdown_strict/harm-1.png)
-
-Top 8 paradigms
-===============
-
-![](beliefs_files/figure-markdown_strict/changed-reasoning-paradigm-1.png)
-
-![](beliefs_files/figure-markdown_strict/personality-paradigm-1.png)
-
-![](beliefs_files/figure-markdown_strict/recursion-paradigm-1.png)
-
-![](beliefs_files/figure-markdown_strict/code-for-team-paradigm-1.png)
-
-![](beliefs_files/figure-markdown_strict/interference-paradigm-1.png)
-
-![](beliefs_files/figure-markdown_strict/harm-paradigm-1.png)

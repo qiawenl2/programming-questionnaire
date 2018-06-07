@@ -1,7 +1,6 @@
 # Methods
 
 The materials required to reproduce our research are included in this repo.
-To get started, start by cloning this repo.
 
 ```bash
 git clone https://github.com/lupyanlab/programming-questionnaire.git
@@ -45,25 +44,28 @@ questions <- get_qualtrics_questions("programming questionnaire")
 
 ## Wikidata
 
-Meta-data on programming languages was taken from the Wikidata service.
+Meta-data on programming languages was collected from the Wikidata service.
 
 Note: The R package "WikidataR" is required for downloading language info.
 
 ```R
 source("R/wikidata.R")
-language_info <- get_language_info(languages)
+languages <- c("python", "java", "go")
+paradigms <- get_programming_paradigms(languages)
 ```
 
-## Neo4j
+## Graph data
 
 The relationships between languages and programming paradigms lends itself
-nicely to graph-based analysis.
+nicely to graph-based analysis. To load the languages and their paradigms
+collected from Wikidata into a graph database, follow the steps below which
+are required to run the "bin/load-neo4j.R" script.
 
 ```bash
 brew install neo4j  # install the Neo4j graph database with homebrew
 neo4j start         # start the db, open a browser to localhost:7474, and set a password
 export NEO4J_PASSWORD=mysecretpassword
-bin/neo4j.R         # load language data in the graph db
+bin/load-neo4j.R    # load language data in the graph db
 ```
 
 ## StackOverflow Developer Survey
@@ -72,9 +74,17 @@ The results of the annual StackOverflow Developer Survey
 can be downloaded from here:
 [insights.stackoverflow.com/survey](https://insights.stackoverflow.com/survey)
 
-## Data
+## SQLite Database
 
-Once acquired, the data were processed to yield the following tables.
+The data were processed to yield the following tables. To create all tables and
+store them in a SQLite DB, run the "make" command. See the
+[Makefile](./Makefile) for more targets of the "make" command.
+
+Note: The R package "RSQLite" is required for storing the data in a SQLite DB.
+
+```bash
+make programming-questionnaire.sqlite  # creates "programming-questionnaire.sqlite" with all tables
+```
 
 ### Tables
 
@@ -91,43 +101,36 @@ languages
 : Programming languages represented in the the sample.
 
 questionnaire
-: Responses to agreement questions and short responses in wide format.
+: Responses to agreement and free response questions in wide format.
 
-language_info
+language_paradigms
 : Information about programming languages taken from Wikipedia.
-
-### Create all tables in a SQLite DB
-
-To create all tables and store them in the SQLite DB, run the "make-sqlite.R" script.
-
-Note: The R package "RSQLite" is required for storing the data in a SQLite DB.
-
-```bash
-make programming-questionnaire.sqlite  # creates "programming-questionnaire.sqlite" with all tables
-```
 
 ### Reading tables from the SQLite DB
 
-The logic for reading a table in from a SQLite DB file is simple in R and python.
+Examples of how to read tables in from a SQLite DB in both R and python are included
+below.
 
 ```R
 # in R
 library(dplyr)
 con <- DBI::dbConnect(RSQLite::SQLite(), "programming-questionnaire.sqlite")
-responses <- tbl(con, "responses") %>% collect()
+table_name <- "responses"
+responses <- tbl(con, table_name) %>% collect()
 ```
 
 ```python
-# in python
+# in python3
 import sqlite3
 import pandas
 con = sqlite3.connect("programming-questionnaire.sqlite")
-responses <- pandas.read_sql_query('select * from responses', con)
+table_name = 'responses'
+responses <- pandas.read_sql_query(f'select * from {table_name}', con)
 ```
 
 SQLite wrapper functions are stored in "R/sqlite.R".
 
 ```
 source("R/sqlite.R")
-responses <- collect_table("responses")  # expects "programming-questionnaire.sqlite"
+responses <- collect_table("responses")  # expects "programming-questionnaire.sqlite" to exist
 ```
