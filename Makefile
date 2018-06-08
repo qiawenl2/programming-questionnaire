@@ -26,16 +26,16 @@ programming-questionnaire.sqlite: bin/sqlite.R $(qualtrics) $(survey) $(language
 rdata: bin/rdata.R $(qualtrics) $(survey) $(languages)
 	./bin/rdata.R --install
 
-neo4j: bin/neo4j.R
-	./bin/neo4j.R --clear
+neo4j: bin/load-neo4j.R
+	./bin/load-neo4j.R --clear
 
 docs/languages.md: docs/languages.Rmd
 	Rscript -e 'rmarkdown::render("$<", output_format = "md_document")'
 docs/beliefs.md: docs/beliefs.Rmd
 	Rscript -e 'rmarkdown::render("$<", output_format = "md_document")'
 clean:
-	rm -f docs/languages.md docs/beliefs.md
 	rm -f programming-questionnaire.sqlite
-	rm -rf ${qualtrics} ${survey} ${languages} data/*.rda
-	rm -rf docs/languages_cache/ docs/languages_files/
-	rm -rf docs/beliefs_cache/ docs/beliefs_files/
+	rm -rf $(qualtrics) $(survey) $(languages) data/*.rda
+	# rm -f docs/languages.md docs/beliefs.md
+	# rm -rf docs/languages_cache/ docs/languages_files/
+	# rm -rf docs/beliefs_cache/ docs/beliefs_files/

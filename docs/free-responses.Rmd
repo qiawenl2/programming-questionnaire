@@ -5,24 +5,123 @@ output:
     runtime: shiny
 ---
 ```{r config, include=FALSE}
+
+# free-responses.Rmd is an interactive document. To run it,
+# clone this repo, and open this file in RStudio. Then select
+# the Run Document command.
+
 library(knitr)
 library(shiny)
 
 opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE,
                fig.width=4, fig.height=4, dpi=144)
-
-read_chunk("free-responses.R")
 ```
-```{r free-responses}
+```{r free-responses, include=FALSE}
+library(tidyverse)
+library(magrittr)
+
+library(programmingquestionnaire)
+data("questions")
+data("questionnaire")
+
+get_question_text <- function(name) {
+  filter(questions, question_name == name)$question_text
+}
+
+create_wrapped_title <- function(name, width = 80) {
+  get_question_text(name) %>%
+    strwrap(width) %>%
+    paste(collapse = "\n")
+}
+
+# Filter question data ----
+filter_question_names <- c(
+  "cr1", "cp1",
+  "repo1","rec1", "cfo1", "cfo2",
+  "oss1", "env1", "env2", "inter1", "inter2"
+)
+
+# Free response data ----
+free_response_question_names <- c(
+  "cr1describe", "cr2describe", "cp1describe",
+  "repo1describe", "rec1describe",
+  "fp1describe", "pipe1describe",
+  "cfo3", "oss2", "inter3", "fp5",
+  "pa1example",
+  "best",
+  "design1", "recursive", "metaphor", "history",
+  "design2", "reusable", "challenges", "nontransfer"
+)
 ```
 
-# Free response questions
+# All free response questions
 
-```{r questions-table, results="asis"}
-questions %>%
-  filter(question_name %in% free_response_question_names) %>%
-  select(question_name, question_text) %>%
-  kable()
+```{r}
+renderTable({
+  filter(questions, question_name %in% free_response_question_names) %>%
+    select(question_name, question_text)
+})
+```
+
+# Filter question
+
+Optional. Filter free responses by people who responded in a certain way on a
+filter question.
+
+```{r}
+checkboxInput(
+  inputId = "filter_on",
+  label = "Filter",
+  value = 0
+)
+```
+
+```{r}
+conditionalPanel(
+  'input.filter_on == 1',
+  renderTable({
+    filter(questions, question_name %in% filter_question_names) %>%
+      select(question_name, question_text)
+  })
+)
+```
+
+```{r}
+conditionalPanel(
+  'input.filter_on == 1',
+  inputPanel(
+    selectInput(
+      inputId = "filter_question_name",
+      label = "Filter question",
+      choices = filter_question_names,
+      selected = 1
+    ),
+    checkboxGroupInput(
+      inputId = "filter_responses",
+      label = "Filter responses",
+      choices = 1:5,
+      selected = 1:5,
+      inline = TRUE
+    )
+  )
+)
+```
+
+```{r}
+conditionalPanel(
+  'input.filter_on == 1',
+  renderPlot({
+    selected_data <- questionnaire[, c("subj_id", input$filter_question_name)]
+    colnames(selected_data) <- c("subj_id", "agreement")
+  
+    selected_data$is_filtered <- factor(selected_data$agreement %in% input$filter_responses, levels = c(F, T))
+    ggplot(selected_data) +
+      aes(agreement, y = ..count.., fill = is_filtered) +
+      geom_bar(width = 0.9, color = "gray") +
+      scale_fill_manual(values = c("white", "gray"), drop = FALSE) +
+      ggtitle(create_wrapped_title(input$filter_question_name))
+  })
+)
 ```
 
 # Free responses
@@ -30,22 +129,31 @@ questions %>%
 ```{r}
 selectInput(
   inputId = "question_name", 
-  label = h3("Free response question"), 
+  label = "Question", 
   choices = free_response_question_names, 
   selected = 1)
-
-selected_data <- reactive({
-  questionnaire[, c("subj_id", input$question_name)] %>%
-    drop_na()
-})
-
-selected_question <- reactive({
-  get_question_text(input$question_name)
-})
 ```
 
-`r h4(renderText(selected_question()))`
+```{r}
+h4(renderText({
+  get_question_text(input$question_name)
+}))
+```
 
 ```{r}
-renderTable({ selected_data() })
+renderTable({
+  if(input$filter_question_name != "none") {
+    free_responses <- questionnaire[, c("subj_id", input$filter_question_name, input$question_name)] %>%
+      drop_na()
+    
+    is_filtered <- free_responses[[input$filter_question_name]] %in% input$filter_responses
+    free_responses <- free_responses[is_filtered, ] %>%
+      arrange_(.dots = input$filter_question_name)
+    free_responses <- free_responses[rev(rownames(free_responses)), ]
+  } else {
+    free_responses <- questionnaire[, c("subj_id", input$question_name)] %>%
+      drop_na()
+  }
+  free_responses
+})
 ```

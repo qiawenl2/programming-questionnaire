@@ -10,7 +10,7 @@ library(knitr)
 opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE,
                fig.width=4, fig.height=4, dpi=144,
                cache=TRUE)
-read_chunk("languages.R")
+read_chunk("R/languages.R")
 library(programmingquestionnaire)
 ```
 ```{r languages}
