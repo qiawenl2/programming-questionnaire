@@ -11,8 +11,8 @@ try({
   }
 })
 
-language_info <- collect_table("language_info")
-load_languages_in_graph_db(language_info)
+language_paradigms <- collect_table("language_paradigms")
+load_languages_in_graph_db(language_paradigms)
 
 stack_overflow_ranks <- collect_table("stack_overflow_ranks")
 load_stack_overflow_language_ranks(stack_overflow_ranks)
