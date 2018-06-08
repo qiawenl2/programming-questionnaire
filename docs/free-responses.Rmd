@@ -14,9 +14,10 @@ library(knitr)
 library(shiny)
 
 opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE,
-               fig.width=4, fig.height=4, dpi=144)
+               fig.width=4, fig.height=4, dpi=144,
+               cache=FALSE)
 ```
-```{r free-responses, include=FALSE}
+```{r free-responses, include=FALSE, cache=TRUE}
 library(tidyverse)
 library(magrittr)
 
@@ -56,7 +57,7 @@ free_response_question_names <- c(
 
 # All free response questions
 
-```{r}
+```{r free-response-questions}
 renderTable({
   filter(questions, question_name %in% free_response_question_names) %>%
     select(question_name, question_text)
@@ -68,7 +69,7 @@ renderTable({
 Optional. Filter free responses by people who responded in a certain way on a
 filter question.
 
-```{r}
+```{r filter-checkbox}
 checkboxInput(
   inputId = "filter_on",
   label = "Filter",
@@ -76,7 +77,7 @@ checkboxInput(
 )
 ```
 
-```{r}
+```{r filter-questions}
 conditionalPanel(
   'input.filter_on == 1',
   renderTable({
@@ -86,14 +87,14 @@ conditionalPanel(
 )
 ```
 
-```{r}
+```{r filter-options}
 conditionalPanel(
   'input.filter_on == 1',
   inputPanel(
     selectInput(
       inputId = "filter_question_name",
       label = "Filter question",
-      choices = filter_question_names,
+      choices = c("none", filter_question_names),
       selected = 1
     ),
     checkboxGroupInput(
@@ -107,9 +108,9 @@ conditionalPanel(
 )
 ```
 
-```{r}
+```{r filter-question-responses}
 conditionalPanel(
-  'input.filter_on == 1',
+  'input.filter_on == 1 && input.filter_question_name != "none"',
   renderPlot({
     selected_data <- questionnaire[, c("subj_id", input$filter_question_name)]
     colnames(selected_data) <- c("subj_id", "agreement")
@@ -126,7 +127,7 @@ conditionalPanel(
 
 # Free responses
 
-```{r}
+```{r free-response-question}
 selectInput(
   inputId = "question_name", 
   label = "Question", 
@@ -134,13 +135,13 @@ selectInput(
   selected = 1)
 ```
 
-```{r}
+```{r free-response-question-text}
 h4(renderText({
   get_question_text(input$question_name)
 }))
 ```
 
-```{r}
+```{r filtered-free-resonses}
 renderTable({
   if(input$filter_question_name != "none") {
     free_responses <- questionnaire[, c("subj_id", input$filter_question_name, input$question_name)] %>%
