@@ -35,7 +35,7 @@ docs/beliefs.md: docs/beliefs.Rmd
 	Rscript -e 'rmarkdown::render("$<", output_format = "md_document")'
 clean:
 	rm -f programming-questionnaire.sqlite
-	rm -rf $(qualtrics) $(survey) $(languages) data/*.rda
+	rm -rf $(qualtrics) $(survey) $(languages) data/*.rda data-raw/*.rds
 	# rm -f docs/languages.md docs/beliefs.md
 	# rm -rf docs/languages_cache/ docs/languages_files/
 	# rm -rf docs/beliefs_cache/ docs/beliefs_files/
