@@ -46,7 +46,7 @@ free_response_question_names <- c(
   "cr1describe", "cr2describe", "cp1describe",
   "repo1describe", "rec1describe",
   "fp1describe", "pipe1describe",
-  "cfo3", "oss2", "inter3", "fp5",
+  "cfo3describe", "oss1describe", "inter2describe", "fp5describe",
   "pa1example",
   "best",
   "design1", "recursive", "metaphor", "history",
