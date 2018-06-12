@@ -38,7 +38,11 @@ create_wrapped_title <- function(name, width = 80) {
 filter_question_names <- c(
   "cr1", "cp1",
   "repo1","rec1", "cfo1", "cfo2",
-  "oss1", "env1", "env2", "inter1", "inter2"
+  "env1", "env2", "inter1", "inter2",
+  # agreement w/ other questions
+  "oss1", "fp3", "fp4", "psych",
+  # multiple choice questions
+  "fp1", "pipe1", "computer"
 )
 
 # Free response data ----
@@ -58,7 +62,7 @@ free_response_question_names <- c(
 
 ```{r}
 renderTable({
-  filter(questions, question_name %in% free_response_question_names) %>%
+  filter(questions, question_name %in% filter_question_names) %>%
     select(question_name, question_text)
 })
 ```
@@ -80,7 +84,8 @@ checkboxInput(
 conditionalPanel(
   'input.filter_on == 1',
   renderTable({
-    filter(questions, question_name %in% filter_question_names) %>%
+    filter_questions <- filter_question_names
+    filter(questions, question_name %in% filter_questions) %>%
       select(question_name, question_text)
   })
 )
