@@ -14,6 +14,7 @@ fetch_language_info_from_wikidata <- function(language_names) {
       mutate(paradigm_name = str_replace(property_name, " programming( language)?", "")) %>%
       select(language_name, paradigm_name) %>%
       unique()
+    language_info
 }
 
 get_all_programming_languages <- function(languages) {

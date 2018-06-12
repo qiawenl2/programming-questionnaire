@@ -3,8 +3,18 @@
 The materials required to reproduce our research are included in this repo.
 
 ```bash
+# Quickstart
 git clone https://github.com/lupyanlab/programming-questionnaire.git
 cd programming-questionnaire/
+cp qualtrics.yml.template qualtrics.yml
+# edit qualtrics.yml to enter your Qualtrics API token
+make  # downloads all data and installs it in an R package called "programmingquestionnaire"
+```
+
+Requirements:
+
+```R
+install.packages(c("qualtRics", "WikidataR", "RSQLite"))
 ```
 
 ## Qualtrics
