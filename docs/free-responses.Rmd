@@ -59,24 +59,21 @@ free_response_question_names <- c(
 )
 ```
 
-# All free response questions
-
 ```{r free-response-questions}
 renderTable({
   filter(questions, question_name %in% filter_question_names) %>%
     select(question_name, question_text)
-})
+},
+  caption = "Question text for all free response questions.",
+  caption.placement = "top"
+)
 ```
 
-# Filter question
-
-Optional. Filter free responses by people who responded in a certain way on a
-filter question.
 
 ```{r filter-checkbox}
 checkboxInput(
   inputId = "filter_on",
-  label = "Filter",
+  label = strong("Optional filter question"),
   value = 0
 )
 ```
@@ -88,29 +85,37 @@ conditionalPanel(
     filter_questions <- filter_question_names
     filter(questions, question_name %in% filter_questions) %>%
       select(question_name, question_text)
-  })
+  },
+    caption = "Question text for filter questions.",
+    caption.placement = "top"
+  ),
+  selectInput(
+    inputId = "filter_question_name",
+    label = "Filter question",
+    choices = c("none", filter_question_names),
+    selected = 1
+  )
 )
 ```
 
 ```{r filter-options}
-conditionalPanel(
-  'input.filter_on == 1',
-  inputPanel(
-    selectInput(
-      inputId = "filter_question_name",
-      label = "Filter question",
-      choices = c("none", filter_question_names),
-      selected = 1
-    ),
+get_question_choices <- function(question_name) {
+  return(rep(question_name, 3))
+}
+
+renderUI({
+  choices <- get_question_choices(input$filter_question_name)
+  conditionalPanel(
+    'input.filter_question_name != "none"',
     checkboxGroupInput(
       inputId = "filter_responses",
       label = "Filter responses",
-      choices = 1:5,
-      selected = 1:5,
+      choices = choices,
+      selected = choices,
       inline = TRUE
     )
   )
-)
+})
 ```
 
 ```{r filter-question-responses}
