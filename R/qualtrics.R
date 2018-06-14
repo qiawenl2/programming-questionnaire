@@ -23,11 +23,15 @@ get_qualtrics_questions <- function(survey_name, ...) {
   survey_id <- get_survey_id_from_name(survey_name)
   questions <- as_data_frame(getSurveyQuestions(survey_id))
   
-  questions %>%
+  questions <- questions %>%
     rename(question_id = qid, question_name = qnames, question_text = question) %>%
     mutate(question_text = remove_html(question_text))
+  
+  questions[questions$question_name == "fp1", "question_text"] <- "Consider the following two snippets of code performing the same function (determining all the words in a list have an odd number of characters): ..."
+  questions[questions$question_name == "pipe1", "question_text"] <- "Do you see any advantage to \"piping\" rather than traditional function composition? ..."
+  
+  questions
 }
-
 
 # Melt the Qualtrics data to long format, and merge in labels and names for questions.
 tidy_qualtrics <- function(qualtrics) {

@@ -24,11 +24,11 @@ get_questionnaire <- function(responses) {
     filter(question_name %in% question_names) %>%
     select(subj_id, question_name, response_str) %>%
     spread(question_name, response_str) %>%
-    recode_all_agreement(agreement_questions) %>%
+    recode_all_agreement() %>%
     recode_all_agreement_other() %>%
     recode_all_multiple_choice()
 
-  questionnaire[c("subj_id", question_names)]  # reorder columns
+  questionnaire
 }
 
 get_question_text <- function(name) {
