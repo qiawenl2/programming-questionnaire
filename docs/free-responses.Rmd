@@ -17,7 +17,7 @@ opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE,
                fig.width=4, fig.height=4, dpi=144,
                cache=FALSE)
 ```
-```{r free-responses, include=FALSE, cache=TRUE}
+```{r setup, include=FALSE}
 library(tidyverse)
 library(magrittr)
 
@@ -59,35 +59,51 @@ free_response_question_names <- c(
 )
 ```
 
-```{r free-response-questions}
-renderTable({
-  filter(questions, question_name %in% filter_question_names) %>%
-    select(question_name, question_text)
-},
-  caption = "Question text for all free response questions.",
-  caption.placement = "top"
-)
-```
-
-
-```{r filter-checkbox}
+```{r free-response-questions-table}
 checkboxInput(
-  inputId = "filter_on",
-  label = strong("Optional filter question"),
+  inputId = "show_free_response_question_texts_table",
+  label = "Show table of free response questions",
   value = 0
+)
+
+conditionalPanel(
+  'input.show_free_response_question_texts_table == 1',
+  renderTable({
+    filter(questions, question_name %in% filter_question_names) %>%
+      select(question_name, question_text)
+  },
+    caption = "Question text for all free response questions.",
+    caption.placement = "top"
+  )
 )
 ```
 
 ```{r filter-questions}
+checkboxInput(
+  inputId = "filter_on",
+  label = "Filter free responses by responses to a multiple choice question",
+  value = 0
+)
+
 conditionalPanel(
   'input.filter_on == 1',
-  renderTable({
-    filter_questions <- filter_question_names
-    filter(questions, question_name %in% filter_questions) %>%
-      select(question_name, question_text)
-  },
-    caption = "Question text for filter questions.",
-    caption.placement = "top"
+  renderUI({
+    checkboxInput(
+      inputId = "show_filter_question_texts_table",
+      label = "Show table of filter questions",
+      value = 0
+    )
+  }),
+  conditionalPanel(
+    'input.show_filter_question_texts_table == 1',
+    renderTable({
+      filter_questions <- filter_question_names
+      filter(questions, question_name %in% filter_questions) %>%
+        select(question_name, question_text)
+    },
+      caption = "Question text for filter questions.",
+      caption.placement = "top"
+    )
   ),
   selectInput(
     inputId = "filter_question_name",
@@ -96,51 +112,44 @@ conditionalPanel(
     selected = 1
   )
 )
-```
 
-```{r filter-options}
-get_question_choices <- function(question_name) {
-  return(rep(question_name, 3))
-}
 
-renderUI({
-  choices <- get_question_choices(input$filter_question_name)
   conditionalPanel(
-    'input.filter_question_name != "none"',
-    checkboxGroupInput(
-      inputId = "filter_responses",
-      label = "Filter responses",
-      choices = choices,
-      selected = choices,
-      inline = TRUE
-    )
+    'input.filter_on == 1 && input.filter_question_name != "none"',
+    renderUI({
+      checkboxGroupInput(
+        inputId = "filter_responses",
+        label = "Filter responses",
+        choices = levels(questionnaire[, input$filter_question_name]),
+        selected = levels(questionnaire[, input$filter_question_name]),
+        inline = TRUE
+      )
+    })
   )
-})
-```
 
-```{r filter-question-responses}
 conditionalPanel(
   'input.filter_on == 1 && input.filter_question_name != "none"',
   renderPlot({
+    if(input$filter_question_name == "none") return(NULL)
+    
     selected_data <- questionnaire[, c("subj_id", input$filter_question_name)]
-    colnames(selected_data) <- c("subj_id", "agreement")
+    colnames(selected_data) <- c("subj_id", "response")
   
-    selected_data$is_filtered <- factor(selected_data$agreement %in% input$filter_responses, levels = c(F, T))
+    selected_data$is_filtered <- factor(selected_data$response %in% input$filter_responses, levels = c(F, T))
     ggplot(selected_data) +
-      aes(agreement, y = ..count.., fill = is_filtered) +
+      aes(response, y = ..count.., fill = is_filtered) +
       geom_bar(width = 0.9, color = "gray") +
+      labs(x = "", y = "count") +
       scale_fill_manual(values = c("white", "gray"), drop = FALSE) +
       ggtitle(create_wrapped_title(input$filter_question_name))
   })
 )
 ```
 
-# Free responses
-
 ```{r free-response-question}
 selectInput(
   inputId = "question_name", 
-  label = "Question", 
+  label = "Free response question", 
   choices = free_response_question_names, 
   selected = 1)
 ```
