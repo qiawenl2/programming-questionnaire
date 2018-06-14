@@ -1,0 +1,46 @@
+---
+title: "Correlations"
+output:
+  html_document: {}
+---
+```{r config, include=FALSE}
+library(knitr)
+opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE)
+```
+```{r setup, include=FALSE}
+library(tidyverse)
+library(programmingquestionnaire)
+data("questions")
+data("questionnaire")
+
+questionnaire_corr <- questionnaire %>%
+  select(contains("_int")) %>%
+  rename_all(funs(gsub("_int", "", .)))
+
+questions_corr <- questions %>%
+  filter(question_name %in% colnames(questionnaire_corr)) %>%
+  select(question_name, question_text)
+```
+
+```{r corr-questions, results="asis"}
+kable(questions_corr)
+```
+
+```{r corr-plot}
+corr_mat <- cor(questionnaire_corr, 
+                use = "pairwise.complete.obs")
+
+alpha <- .05
+p.mat <- corrplot::cor.mtest(questionnaire_corr,
+                             conf.level = (1-alpha),  
+                             use = "pairwise.complete.obs")$p
+
+cols = rev(colorRampPalette(c("red", "white", "blue"))(100))
+
+corrplot::corrplot(corr_mat, method = "color",  col = cols,
+                   type = "upper", order = "original", number.cex = .7,
+                   addCoef.col = "black", 
+                   p.mat = p.mat, sig.level = alpha, insig = "blank", 
+                   tl.col = "black", tl.srt = 90,
+                   diag = FALSE)
+```
