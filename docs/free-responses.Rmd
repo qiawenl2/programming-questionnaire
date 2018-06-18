@@ -117,11 +117,12 @@ conditionalPanel(
   conditionalPanel(
     'input.filter_on == 1 && input.filter_question_name != "none"',
     renderUI({
+      choices <- levels(questionnaire[[input$filter_question_name]])
       checkboxGroupInput(
         inputId = "filter_responses",
         label = "Filter responses",
-        choices = levels(questionnaire[, input$filter_question_name]),
-        selected = levels(questionnaire[, input$filter_question_name]),
+        choices = choices,
+        selected = choices,
         inline = TRUE
       )
     })
