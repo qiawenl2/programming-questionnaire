@@ -84,6 +84,13 @@ The results of the annual StackOverflow Developer Survey
 can be downloaded from here:
 [insights.stackoverflow.com/survey](https://insights.stackoverflow.com/survey)
 
+After the results have been downloaded, move them into the expected directory:
+
+```bash
+mv ~/Downloads/developer_survey_2017.zip ./data-raw/stack-overflow-developer-survey-2017.zip
+unzip ./data-raw/stack-overflow-developer-survey-2017.zip -d ./data-raw/stack-overflow-developer-survey-2017
+```
+
 ## SQLite Database
 
 The data were processed to yield the following tables. To create all tables and
