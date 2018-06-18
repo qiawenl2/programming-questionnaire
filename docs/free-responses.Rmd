@@ -133,7 +133,8 @@ conditionalPanel(
   renderPlot({
     if(input$filter_question_name == "none") return(NULL)
     
-    selected_data <- questionnaire[, c("subj_id", input$filter_question_name)]
+    selected_data <- questionnaire[, c("subj_id", input$filter_question_name)] %>%
+      drop_na()
     colnames(selected_data) <- c("subj_id", "response")
   
     selected_data$is_filtered <- factor(selected_data$response %in% input$filter_responses, levels = c(F, T))
