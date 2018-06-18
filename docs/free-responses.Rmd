@@ -123,7 +123,8 @@ conditionalPanel(
         label = "Filter responses",
         choices = choices,
         selected = choices,
-        inline = TRUE
+        inline = TRUE,
+        width = "100%"
       )
     })
   )
@@ -143,7 +144,8 @@ conditionalPanel(
       geom_bar(width = 0.9, color = "gray") +
       labs(x = "", y = "count") +
       scale_fill_manual(values = c("white", "gray"), drop = FALSE) +
-      ggtitle(create_wrapped_title(input$filter_question_name))
+      ggtitle(create_wrapped_title(input$filter_question_name)) +
+      coord_flip()
   })
 )
 ```
