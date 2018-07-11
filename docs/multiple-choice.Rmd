@@ -23,7 +23,7 @@ questions_corr <- questions %>%
 ```
 
 ```{r corr-questions, results="asis"}
-kable(questions_corr)
+kable(questions_corr, "html", escape=FALSE)
 ```
 
 ```{r corr-plot}
