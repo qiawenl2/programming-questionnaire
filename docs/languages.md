@@ -13,7 +13,7 @@ Representativeness
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Our Survey</td>
-<td style="text-align: right;">512</td>
+<td style="text-align: right;">533</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Stack Overflow Developer Survey</td>
