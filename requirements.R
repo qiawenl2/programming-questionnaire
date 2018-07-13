@@ -1,8 +1,11 @@
+# Set CRAN mirror so this can be run as a script
+repos <- getOption("repos")
+repos["CRAN"] <- "https://cran.rstudio.com/"
+options(repos = repos)
+
+install.packages("tidyverse")
 install.packages("qualtRics")
 install.packages("WikidataR")
 install.packages("RSQLite")
-devtools::install_github("nicolewhite/RNeo4j")
-# Requires cairo librsvg. Install with "brew install librsvg v8@3.15"
-devtools::install_github("sjp/grConvert")
-devtools::install_github("sjp/grImport2")
-install.packages("lme4")
+install.packages("ggridges")
+install.packages("patchwork")
