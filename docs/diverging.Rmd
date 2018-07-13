@@ -67,6 +67,25 @@ by people who know different languages on a particular question. The results are
 table below. The distributions of responses by each language can be viewed in the ridgelines
 plot below the table.
 
+```{r multiple-choice}
+checkboxInput(
+  inputId = "show_multiple_choice_questions_table",
+  label = "Show table of multiple choice questions",
+  value = 0
+)
+
+conditionalPanel(
+  'input.show_multiple_choice_questions_table == 1',
+  renderTable({
+    filter(questions, question_name %in% question_names) %>%
+      select(question_name, question_text)
+  },
+    caption = "Multiple choice questions.",
+    caption.placement = "top"
+  )
+)
+```
+
 ```{r most-diverging}
 renderTable({
   questionnaire_by_language %>%
