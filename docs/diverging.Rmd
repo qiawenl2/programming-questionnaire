@@ -14,12 +14,12 @@ opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE,
 ```{r setup, include=FALSE}
 library(tidyverse)
 library(ggridges)
+library(patchwork)
 library(magrittr)
 
 library(programmingquestionnaire)
 data("questionnaire")
 data("languages")
-data("stack_overflow_ranks")
 data("questions")
 
 top20_languages <- languages %>%
@@ -110,12 +110,25 @@ renderPlot({
   question_by_language$language_ordered <- factor(question_by_language$language_name, levels = ordered_languages)
   language_means$language_ordered <- factor(language_means$language_name, levels = ordered_languages)
   
-  ggplot(question_by_language) +
+  dist_plot <- ggplot(question_by_language) +
     aes(response, language_ordered) +
     geom_density_ridges(bandwidth = 0.5) +
     geom_segment(data = language_means,
                  aes(x = response, xend = response, y = as.numeric(language_ordered), yend = as.numeric(language_ordered) + .9)) +
     ylab("") +
     theme_ridges()
+  
+  ylim <- max(count(question_by_language, language_ordered)$n)
+  
+  hist_plot <- ggplot(question_by_language) +
+    aes(language_ordered) +
+    geom_histogram(stat = "count") +
+    stat_count(geom = "text", aes(label = ..count..), hjust = -0.5) +
+    labs(x = "") +
+    theme_ridges() +
+    coord_flip(ylim = c(0, ylim + 5))
+  
+  dist_plot + hist_plot +
+    plot_layout(widths = c(0.6, 0.4))
 })
 ```
