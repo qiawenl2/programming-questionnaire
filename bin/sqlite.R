@@ -1,4 +1,5 @@
 #!/usr/bin/env Rscript
+library(tidyverse)
 devtools::load_all()
 
 write_tables_to_sqlite("programming-questionnaire.sqlite",

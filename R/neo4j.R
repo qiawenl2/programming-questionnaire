@@ -1,5 +1,3 @@
-library(RNeo4j)
-
 connect_neo4j <- function(username = NULL, password = NULL) {
   if(is.null(username)) username <- "neo4j"
   if(is.null(password)) password <- Sys.getenv("NEO4J_PASSWORD")

@@ -1,4 +1,5 @@
 #!/usr/bin/env Rscript
+library(tidyverse)
 devtools::load_all()
 
 stack_overflow <- get_stack_overflow()

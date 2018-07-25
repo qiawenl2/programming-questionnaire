@@ -1,5 +1,3 @@
-source("R/question-types.R")
-
 get_questionnaire <- function(responses) {
   agreement_questions <- c(
     "cr1", "cp1", "repo1", "rec1", "cfo1", "cfo2",

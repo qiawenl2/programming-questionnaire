@@ -1,4 +1,3 @@
-
 recode_functional_v_imperative <- function(frame) {
   levels <- c("imperative", "both", "functional")
   map <- data_frame(

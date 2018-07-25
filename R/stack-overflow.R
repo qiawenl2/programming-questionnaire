@@ -1,4 +1,3 @@
-
 get_stack_overflow <- function() {
   responses <- readr::read_csv("data-raw/stack-overflow-developer-survey-2017/survey_results_public.csv")
   languages <- responses %>%

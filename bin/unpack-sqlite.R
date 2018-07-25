@@ -1,5 +1,6 @@
 #!/usr/bin/env Rscript
 # Unpack tables from programming-questionnaire.sqlite
+library(tidyverse)
 devtools::load_all()
 
 csv_names <- list(

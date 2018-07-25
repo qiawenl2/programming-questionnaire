@@ -1,8 +1,5 @@
 #!/usr/bin/env Rscript
-library(devtools)
-library(readr)
-library(dplyr)
-
+library(tidyverse)
 source("R/question-types.R")
 
 qualtrics <- read_csv("data-raw/responses.csv")

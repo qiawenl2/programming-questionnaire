@@ -1,5 +1,7 @@
 #!/usr/bin/env Rscript
+library(tidyverse)
 devtools::load_all()
+
 responses <- read_csv("data-raw/responses.csv")
 
 languages <- get_languages(responses) %>%

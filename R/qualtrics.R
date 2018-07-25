@@ -1,11 +1,8 @@
-library(tidyverse)
-library(yaml)
-
-
 # Authenticate all qualtRics calls to the Qualtrics API
-library(qualtRics)
-creds <- yaml.load_file("qualtrics.yml")
-registerOptions(api_token = creds$api_token, root_url = creds$root_url)
+authenticate_qualtrics <- function(qualtrics_config = "qualtrics.yml") {
+  creds <- yaml::yaml.load_file("qualtrics.yml")
+  qualtRics::registerOptions(api_token = creds$api_token, root_url = creds$root_url)
+}
 
 
 # Get raw responses from Qualtrics in wide format with one column per subquestion.
@@ -14,14 +11,14 @@ get_qualtrics_responses <- function(survey_name, ...) {
 
   data_dir <- "data-raw"
   if (!dir.exists(data_dir)) dir.create(data_dir)
-  as_data_frame(getSurvey(survey_id, save_dir = data_dir, ...))
+  as_data_frame(qualtRics::getSurvey(survey_id, save_dir = data_dir, ...))
 }
 
 
 # Get survey questions from Qualtrics.
 get_qualtrics_questions <- function(survey_name, ...) {
   survey_id <- get_survey_id_from_name(survey_name)
-  questions <- as_data_frame(getSurveyQuestions(survey_id))
+  questions <- as_data_frame(qualtRics::getSurveyQuestions(survey_id))
   
   questions <- questions %>%
     rename(question_id = qid, question_name = qnames, question_text = question) %>%

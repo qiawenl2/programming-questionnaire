@@ -1,7 +1,3 @@
-library(tidyverse)
-library(WikidataR)
-
-
 # Retrieve metadata about programming languages from Wikidata
 fetch_language_info_from_wikidata <- function(language_names) {
     language_info <- data_frame(language_name = language_names[1:20]) %>%
@@ -33,7 +29,7 @@ get_all_programming_languages <- function(languages) {
 
 # Get the Wikidata item for a programming language
 get_programming_language <- function(name) {
-  candidates <- find_item(name)
+  candidates <- WikidataR::find_item(name)
   for(candidate in candidates) {
     if(is.null(candidate$description)) {
       description <- ""
@@ -46,7 +42,7 @@ get_programming_language <- function(name) {
       "programming language" %in% get_instance_of_properties(candidate$id)
     )
     if(is_programming_language) {
-        programming_language <- get_item(candidate$id)[[1]]
+        programming_language <- WikidataR::get_item(candidate$id)[[1]]
         return(programming_language)
     }
   }
@@ -72,7 +68,7 @@ extract_instance_of_properties <- function(languages) {
 
 get_instance_of_properties <- function(wikidata_item) {
   if(typeof(wikidata_item) == "character") {
-    wikidata_item <- get_item(wikidata_item)[[1]]
+    wikidata_item <- WikidataR::get_item(wikidata_item)[[1]]
   }
   instance_of <- "P31"  # identifier for "instance_of" Wikidata property
   wikidata_item$claims[[instance_of]]$mainsnak$datavalue$value$id %>%
@@ -123,7 +119,7 @@ get_wikidata_label <- function(item) {
 
 # Get the label for a Wikidata item from its id
 get_label_from_id <- function(id) {
-  item <- get_item(id)
+  item <- WikidataR::get_item(id)
   get_wikidata_label(item)
 }
 

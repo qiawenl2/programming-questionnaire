@@ -1,4 +1,5 @@
 #!/usr/bin/env Rscript
+library(tidyverse)
 devtools::load_all()
 
 args <- commandArgs(trailingOnly = TRUE)
