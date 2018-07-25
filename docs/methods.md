@@ -11,10 +11,10 @@ cp qualtrics.yml.template qualtrics.yml
 make  # downloads all data and installs it in an R package called "programmingquestionnaire"
 ```
 
-Requirements:
+## Required R packages
 
 ```R
-install.packages(c("qualtRics", "WikidataR", "RSQLite"))
+install.packages(c("tidyverse", "devtools", "qualtRics", "WikidataR", "RSQLite"))
 ```
 
 ## Qualtrics
@@ -47,7 +47,8 @@ to these functions is the name of the Qualtrics survey being downloaded.
 Note: The R package `qualtRics` is required for downloading the data.
 
 ```R
-source("R/qualtrics.R")  # authenticates with qualtrics.yml
+source("R/qualtrics.R")
+authenticate_qualtrics()  # authenticates with qualtrics.yml
 qualtrics <- get_qualtrics_responses("programming questionnaire")
 questions <- get_qualtrics_questions("programming questionnaire")
 ```
@@ -150,4 +151,31 @@ SQLite wrapper functions are stored in "R/sqlite.R".
 ```
 source("R/sqlite.R")
 responses <- collect_table("responses")  # expects "programming-questionnaire.sqlite" to exist
+```
+
+### Installing the R package from a sqlite database
+
+The commands for unpacking the sqlite database, compiling the \*.rda files, and
+installing it as an R package are stored in R scripts in the "bin/" directory.
+First, make sure the required packages are installed.
+
+```R
+install.packages(c("tidyverse", "devtools", "RSQLite"))
+```
+
+Then run the commands in these three R scripts.
+
+```bash
+Rscript bin/unpack-sqlite.R
+Rscript bin/compile-rda.R
+Rscript bin/install-r-package.R
+```
+
+Now you can load the programmingquestionnaire R package, and view and
+load specific datasets.
+
+```R
+library("programmingquestionnaire")
+help(package = "programmingquestionnaire")  # view datasets
+data("responses")                           # load "responses" data
 ```
